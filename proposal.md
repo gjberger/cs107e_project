@@ -50,7 +50,7 @@ Finley - $27.27
 Finley has and will confirm functionality
 - (optional) pressure senses (if gyroscope/accelerometer doesn't work)
 - button to start game (and potentially jump)
-- $14.18
+Finley - $14.18
 ## Tasks, member responsibilities
 Outlining Tasks:
 There are two major components to the project:
