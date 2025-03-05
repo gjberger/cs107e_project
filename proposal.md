@@ -27,10 +27,24 @@ would be being able to jump over obstacles.
 A fallback would be to nix the jumping idea.
 
 ## Resources, budget
-
+- Two skate boards (already ordered)
+Gabe - $36.00
+Finley - $27.27
+- Gyroscope/Accelerometer
+Finley has and will confirm functionality
+- (optional) pressure senses (if gyroscope/accelerometer doesn't work)
 
 ## Tasks, member responsibilities
-Each team member should be responsible for a clearly identifiable part of the project.
+Outlining Tasks:
+There are two major components to the project:
+- Graphical component (Subway Surfers' visual output)
+- Hardware (skateboard with sensors)
+- Integration
+
+Gabe will take more charge over the graphical component while Finley will take more charge
+over the hardware. We will both work on both parts of the project to get exposure to each
+side, and this will make integration easier. Further, we are going to try get the skateboard
+done immediately to make integration further down the line easier.
 
 ## Schedule, midpoint milestones
 Sketch a timeline for steady progress across full project period
