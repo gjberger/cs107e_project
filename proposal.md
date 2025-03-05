@@ -8,6 +8,9 @@ Short description of project idea and end goal you are aiming for.
 Include stretch goals and/or fallback position to indicate how you 
 might fine-tune the project scope if needed.
 
+
+We want to make an interactive subway surfers type game. The user will stand on
+
 ## Resources, budget
 Itemize components/materials you will need and plan for acquiring them.
 We can reimburse cost of parts up to $20 per person.
