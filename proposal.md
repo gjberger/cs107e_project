@@ -8,12 +8,26 @@ Short description of project idea and end goal you are aiming for.
 Include stretch goals and/or fallback position to indicate how you 
 might fine-tune the project scope if needed.
 
+We want to make an interactive subway surfers type game.
 
-We want to make an interactive subway surfers type game. The user will stand on
+The user will stand on a skateboard modified to sense backward and forward movements.
+We will do this with either a gyroscope, accelerometer, or pressure sensors.
+
+We will sync the player's movements with graphical output mimicing the game Subway Surfers.
+
+The graphical output will use multiple framebuffers to represent the various possible scenes.
+
+We will draw on these and constantly redraw where the character is relative to the other objects.
+Recall that the character moves in a forward motion in an alley with 3 lanes, moving back and forth
+to avoid obstacles. If a player hits the obstacles, the game is over.
+
+The base idea is simply to have the player move back and forth to switch lanes, but a stretch goal
+would be being able to jump over obstacles.
+
+A fallback would be to nix the jumping idea.
 
 ## Resources, budget
-Itemize components/materials you will need and plan for acquiring them.
-We can reimburse cost of parts up to $20 per person.
+
 
 ## Tasks, member responsibilities
 Each team member should be responsible for a clearly identifiable part of the project.
