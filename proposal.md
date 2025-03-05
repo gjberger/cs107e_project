@@ -1,6 +1,7 @@
 ## Title of your project
 
 ## Team members
+Gabriel Berger and Finley Desai
 
 ## Project goals
 Short description of project idea and end goal you are aiming for.
