@@ -3,8 +3,10 @@
 # Additional source file(s) mymodule.c (edit SOURCES to change)
 # Link against your libmango + reference libmango (edit LDLIBS, LDFLAGS to change)
 
-PROGRAM = myprogram.bin
-SOURCES = $(PROGRAM:.bin=.c) mymodule.c
+PROGRAM = test_mpu.bin #myprogram.bin
+TEST_MPU_PROGRAM = test_mpu.bin
+
+SOURCES = $(PROGRAM:.bin=.c) mpu6050.c i2c.c #test_mpu.c  
 
 all: $(PROGRAM)
 
@@ -38,6 +40,10 @@ OBJECTS = $(addsuffix .o, $(basename $(SOURCES)))
 # Build and run the application binary
 run: $(PROGRAM)
 	mango-run $<
+
+# Test the mpu functions
+#test_mpu: $(TEST_MPU_PROGRAM)
+#	mango_run $<
 
 # Remove all build products
 clean:

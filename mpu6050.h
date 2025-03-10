@@ -1,9 +1,11 @@
 #ifndef _MPU_6050_H
 #define _MPU_6050_H
 
-void config_mpu(i2c_device_t *dev);
+void say_hello(const char *name);
+
 i2c_device_t *mpu_init(void);
 
+void config_mpu(i2c_device_t *dev);
 uint16_t read_accel_x(i2c_device_t *dev);
 uint16_t read_accel_y(i2c_device_t *dev);
 uint16_t read_accel_z(i2c_device_t *dev);
