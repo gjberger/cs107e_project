@@ -5,13 +5,13 @@
 #include <stdint.h>
 
 static void print_accel_data(i2c_device_t *dev) {
-	uint16_t *data = read_accel_data(dev);	
+	int16_t *data = read_accel_data(dev);	
 	printf("x accel = %6d | y accel = %6d | z accel = %6d\n", data[0], data[1], data[2]);
 	timer_delay(1);
 }
 
 static void print_gyro_data(i2c_device_t *dev) {
-	uint16_t *data = read_gyro_data(dev);	
+	int16_t *data = read_gyro_data(dev);	
 	printf("x gyro = %6d | y gyro = %6d | z gyro = %6d\n", data[0], data[1], data[2]);
 	timer_delay(1);
 }

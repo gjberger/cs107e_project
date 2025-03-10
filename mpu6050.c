@@ -37,46 +37,46 @@ void config_mpu(i2c_device_t *dev) {
 	config_accel_sensit(dev);
 }
 
-uint16_t read_accel_x(i2c_device_t *dev) {
-	uint16_t data_x = (i2c_read_reg(dev, 0x3b) << 8) | i2c_read_reg(dev, 0x3c);
+int16_t read_accel_x(i2c_device_t *dev) {
+	int16_t data_x = (i2c_read_reg(dev, 0x3b) << 8) | i2c_read_reg(dev, 0x3c);
 	return data_x;
 }
 
-uint16_t read_accel_y(i2c_device_t *dev) {
-	uint16_t data_y = (i2c_read_reg(dev, 0x3d) << 8) | i2c_read_reg(dev, 0x3e);
+int16_t read_accel_y(i2c_device_t *dev) {
+	int16_t data_y = (i2c_read_reg(dev, 0x3d) << 8) | i2c_read_reg(dev, 0x3e);
 	return data_y;
 }
 
-uint16_t read_accel_z(i2c_device_t *dev) {
-	uint16_t data_z = (i2c_read_reg(dev, 0x3f) << 8) | i2c_read_reg(dev, 0x40);
+int16_t read_accel_z(i2c_device_t *dev) {
+	int16_t data_z = (i2c_read_reg(dev, 0x3f) << 8) | i2c_read_reg(dev, 0x40);
 	return data_z;
 }
 
-uint16_t *read_accel_data(i2c_device_t *dev) {
-	uint16_t *ptr = malloc(3 * sizeof(uint16_t));
+int16_t *read_accel_data(i2c_device_t *dev) {
+	int16_t *ptr = malloc(3 * sizeof(int16_t));
 	ptr[0] = read_accel_x(dev);
 	ptr[1] = read_accel_y(dev);
 	ptr[2] = read_accel_z(dev);
 	return ptr;
 }
 
-uint16_t read_gyro_x(i2c_device_t *dev) {
-	uint16_t data_x = (i2c_read_reg(dev, 0x43) << 8) | i2c_read_reg(dev, 0x44);
+int16_t read_gyro_x(i2c_device_t *dev) {
+	int16_t data_x = (i2c_read_reg(dev, 0x43) << 8) | i2c_read_reg(dev, 0x44);
 	return data_x;
 }
 
-uint16_t read_gyro_y(i2c_device_t *dev) {
-	uint16_t data_y = (i2c_read_reg(dev, 0x45) << 8) | i2c_read_reg(dev, 0x46);
+int16_t read_gyro_y(i2c_device_t *dev) {
+	int16_t data_y = (i2c_read_reg(dev, 0x45) << 8) | i2c_read_reg(dev, 0x46);
 	return data_y;
 }
 
-uint16_t read_gyro_z(i2c_device_t *dev) {
-	uint16_t data_z = (i2c_read_reg(dev, 0x47) << 8) | i2c_read_reg(dev, 0x48);
+int16_t read_gyro_z(i2c_device_t *dev) {
+	int16_t data_z = (i2c_read_reg(dev, 0x47) << 8) | i2c_read_reg(dev, 0x48);
 	return data_z;
 }
 
-uint16_t *read_gyro_data(i2c_device_t *dev) {
-	uint16_t *ptr = malloc(3 * sizeof(uint16_t));
+int16_t *read_gyro_data(i2c_device_t *dev) {
+	int16_t *ptr = malloc(3 * sizeof(int16_t));
 	ptr[0] = read_gyro_x(dev);
 	ptr[1] = read_gyro_y(dev);
 	ptr[2] = read_gyro_z(dev);
