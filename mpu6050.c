@@ -7,10 +7,15 @@
 #define GYRO_SENSIT 0x00
 #define ACCEL_SENSIT 0x00
 #define DLPF 0x00
+#define WAKE_UP 0x00
 
 i2c_device_t *mpu_init(void) {
 	i2c_init();
 	return i2c_new(0x68);
+}
+
+static void config_pwr(i2c_device_t *dev) {
+	i2c_write_reg(dev, 0x6b, WAKE_UP);	
 }
 
 static void config_rate_divide(i2c_device_t *dev) {
@@ -31,6 +36,7 @@ static void config_accel_sensit(i2c_device_t *dev) {
 
 void config_mpu(i2c_device_t *dev) {
 	assert(dev);
+	config_pwr(dev);
 	config_rate_divide(dev);
 	config_dlpf(dev);
 	config_gyro_sensit(dev);
