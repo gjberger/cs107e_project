@@ -2,12 +2,16 @@
 #include "i2c.h"
 #include "mpu6050.h"
 #include "malloc.h"
+#include "math_float.h"
 
-#define SAMPLE_RATE 0x07
+#define MPU_RATE 0x07
 #define GYRO_SENSIT 0x00
 #define ACCEL_SENSIT 0x00
 #define DLPF 0x05
 #define WAKE_UP 0x00
+
+#define SAMPLE_RATE 0.005
+#define ALPHA 0.01
 
 i2c_device_t *mpu_init(void) {
 	i2c_init();
@@ -19,7 +23,7 @@ static void config_pwr(i2c_device_t *dev) {
 }
 
 static void config_rate_divide(i2c_device_t *dev) {
-	i2c_write_reg(dev, 0x19, SAMPLE_RATE);
+	i2c_write_reg(dev, 0x19, MPU_RATE);
 }
 
 static void config_dlpf(i2c_device_t *dev) {
@@ -88,4 +92,58 @@ int16_t *read_gyro_data(i2c_device_t *dev) {
 	ptr[2] = read_gyro_z(dev);
 	return ptr;
 }
+
+// maybe need some kind of calibration function for when it starts up
+
+
+// get the angle of the chip as calc by the accelerometer
+float accel_angle(i2c_device_t *dev) {
+	int16_t ax = read_accel_x(dev);
+	int16_t az = read_accel_z(dev);
+
+	float accel_angle = atan2(ax, az) * 57.2957795;
+	return accel_angle;
+
+}
+
+//get the change in the angle of the chip as calc by the gyroscope
+float gyro_angle(i2c_device_t *dev) {
+	int16_t angle = read_gyro_y(dev);
+	float gyro_angle = angle * SAMPLE_RATE;
+	return gyro_angle;
+}
+
+// use alpha to combine the measurements, see top for ALPHA, will need to test
+float get_tilt_angle(i2c_device_t *dev) {
+	static float cur_angle = 0;
+
+	float accel_ang = accel_angle(dev);
+	float gyro_ang = gyro_angle(dev);
+
+	cur_angle = (ALPHA * accel_ang) + ((1 - ALPHA) * (cur_angle + gyro_ang));
+	return cur_angle;
+
+}
+
+position_t get_cur_position(i2c_device_t *dev) {
+	static position_t cur_pos = CENTER;
+
+	float cur_angle = get_tilt_angle(dev);
+	if ((cur_angle > 10) && (cur_pos == CENTER)) {
+		cur_pos = RIGHT;
+	} else if ((cur_angle < -10) && (cur_pos == CENTER)) {
+		cur_pos = LEFT;
+	} else if ((cur_angle > -7) && (cur_angle < 7) && (cur_pos != CENTER)) {
+		cur_pos = CENTER;
+	}
+
+	return cur_pos;
+
+}	
+
+
+
+
+
+
 
