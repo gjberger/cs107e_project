@@ -11,20 +11,32 @@ const int HEIGHT = 600;
 void draw_background(void) {
     gl_clear(GL_WHITE);
 
+    // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
     
 
-    gl_draw_line(0, HEIGHT, WIDTH / 8, 0.75 * HEIGHT, GL_BLACK);
-    gl_draw_line(WIDTH / 8, 0.75 * HEIGHT, WIDTH / 8, 0.25 * HEIGHT, GL_BLACK);
+    // left
+    gl_draw_line(0, HEIGHT, 0.125 * WIDTH, 0.75 * HEIGHT, GL_BLACK);
+    // Straight up
+    gl_draw_line(0.125 * WIDTH, 0.75 * HEIGHT, 0.125 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
     
-    gl_draw_line(WIDTH, HEIGHT, (7 * WIDTH) / 8, 0.75 * HEIGHT, GL_BLACK);
-    gl_draw_line((7 * WIDTH) / 8, 0.75 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
+    //right
+    gl_draw_line(WIDTH, HEIGHT, (0.875 * WIDTH), 0.75 * HEIGHT, GL_BLACK);
+    // Straight up
+    gl_draw_line((0.875 * WIDTH), 0.75 * HEIGHT, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
    
+    //banner
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
     gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
     gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
     
     gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+    
+
+    // Left Lane
+    gl_draw_line(0.3 * WIDTH, HEIGHT, 0.375 * WIDTH, 0.75 * HEIGHT, GL_BLACK);
+    // Right Lane
+    gl_draw_line(0.70 * WIDTH, HEIGHT, (0.625 * WIDTH), 0.75 * HEIGHT, GL_BLACK);
 }
 
 // need to be able to give x, y coordinates, draw character depending on that
