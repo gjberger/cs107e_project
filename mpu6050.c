@@ -6,7 +6,7 @@
 #define SAMPLE_RATE 0x07
 #define GYRO_SENSIT 0x00
 #define ACCEL_SENSIT 0x00
-#define DLPF 0x00
+#define DLPF 0x05
 #define WAKE_UP 0x00
 
 i2c_device_t *mpu_init(void) {
