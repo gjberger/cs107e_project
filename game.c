@@ -6,8 +6,6 @@
 const int WIDTH = 400;
 const int HEIGHT = 600;
 
-
-
 void draw_background(void) {
     gl_clear(GL_WHITE);
 
@@ -37,6 +35,10 @@ void draw_background(void) {
     gl_draw_line(0.3 * WIDTH, HEIGHT, 0.375 * WIDTH, 0.75 * HEIGHT, GL_BLACK);
     // Right Lane
     gl_draw_line(0.70 * WIDTH, HEIGHT, (0.625 * WIDTH), 0.75 * HEIGHT, GL_BLACK);
+
+
+    gl_draw_line(0, 0, 0.125 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
+    gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
 // need to be able to give x, y coordinates, draw character depending on that
