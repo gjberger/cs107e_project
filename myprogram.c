@@ -1,6 +1,7 @@
 #include "uart.h"
+#include "printf.h"
 
 void main(void) {
     uart_init();
-   // say_hello("CS107e");
+    printf("Test");
 }
