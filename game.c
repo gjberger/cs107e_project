@@ -6,6 +6,8 @@
 const int WIDTH = 400;
 const int HEIGHT = 600;
 
+void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
+
 void draw_background(void) {
     gl_clear(GL_WHITE);
 
