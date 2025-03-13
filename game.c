@@ -21,6 +21,8 @@ void main(void) {
     uart_init();
     printf("Test");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
+    character.position = 0;
+    
     draw_background();
     draw_character();
     gl_swap_buffer();
