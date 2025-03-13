@@ -37,3 +37,6 @@ and so are moving barriers
 Finley
 - interrupt handler
     - go back to 0 before being able to switch again
+- multiple buffer mode 
+- random number generator
+
