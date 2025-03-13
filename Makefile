@@ -6,7 +6,7 @@
 PROGRAM = game.bin #test_mpu.bin #game.bin   
 TEST_MPU_PROGRAM = test_mpu.bin
 
-SOURCES = $(PROGRAM:.bin=.c) mpu6050.c i2c.c math_float.c 
+SOURCES = $(PROGRAM:.bin=.c) mpu6050.c i2c.c math_float.c game_graphics.c 
 
 all: $(PROGRAM)
 
