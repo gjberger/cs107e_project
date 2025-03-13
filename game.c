@@ -2,11 +2,21 @@
 #include "printf.h"
 #include "gl.h"
 #include "timer.h"
+#include "mpu650.h"
+
 
 const int WIDTH = 400;
 const int HEIGHT = 600;
 
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
+
+struct character {
+    position_t pos;
+    int x;
+    int y;
+    int head;
+    bool zero_registed;
+}
 
 void draw_background(void) {
     gl_clear(GL_WHITE);
