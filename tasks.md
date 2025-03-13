@@ -23,8 +23,17 @@ Game Structure:
 
 
 Week 2 Tasks
+- when to have barriers come up
+- button
+- overall gameplay (start, counter, finisher)
 
 Gabe
-
-
+- Make character drawing dependent on coordinates
+- character switching lane animations
+- build barrier designs
+- double buffer permutation idea, where character is constantly redrawn in buffers,
+and so are moving barriers
+- counter in top corner dependent on time
 Finley
+- interrupt handler
+    - go back to 0 before being able to switch again
