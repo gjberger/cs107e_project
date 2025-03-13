@@ -20,18 +20,19 @@ struct character {
 void main(void) {
     uart_init();
     printf("Test");
-
-
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
     draw_background();
     draw_character();
     gl_swap_buffer();
     draw_background();
     draw_character_2();
-    
     while (1) {
-
+        // character 2 now showing
         gl_swap_buffer();
-        timer_delay_ms(250);
+        draw_character();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        draw_character_2();
+        timer_delay_ms(500);
     }
 }

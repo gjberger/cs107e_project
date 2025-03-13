@@ -44,6 +44,7 @@ void draw_background(void) {
 
 // need to be able to give x, y coordinates, draw character depending on that
 void draw_character(void) {
+    gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
     gl_draw_circle(WIDTH / 2, 0.87 * HEIGHT, 15, GL_BLACK);
     // Body
     gl_draw_line(WIDTH / 2, 0.89 * HEIGHT, WIDTH / 2, 0.95 * HEIGHT, GL_BLACK);
@@ -56,6 +57,7 @@ void draw_character(void) {
 }
 
 void draw_character_2(void) {
+    gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
     gl_draw_circle(WIDTH / 2, 0.87 * HEIGHT, 15, GL_BLACK);
     gl_draw_line(WIDTH / 2, 0.89 * HEIGHT, WIDTH / 2, 0.95 * HEIGHT, GL_BLACK);
     gl_draw_line((WIDTH / 2) - 5, 0.92 * HEIGHT, (WIDTH / 2) + 7, 0.92 * HEIGHT, GL_BLACK);

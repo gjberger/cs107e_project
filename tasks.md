@@ -21,3 +21,10 @@ Game Structure:
         - there will be a field in the character struct which will we check against 
     - MAYBE: there will be a winning sequence if the player achieves a score of x
 
+
+Week 2 Tasks
+
+Gabe
+
+
+Finley
