@@ -26,6 +26,7 @@ Week 2 Tasks
 - when to have barriers come up
 - button
 - overall gameplay (start, counter, finisher)
+- hardware floating pointers
 
 Gabe
 - Make character drawing dependent on coordinates
