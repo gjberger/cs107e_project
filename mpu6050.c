@@ -7,11 +7,13 @@
 #define MPU_RATE 0x07
 #define GYRO_SENSIT 0x00
 #define ACCEL_SENSIT 0x00
-#define DLPF 0x05
+#define DLPF 0x00
 #define WAKE_UP 0x00
 
-#define SAMPLE_RATE 0.005
-#define ALPHA 0.01
+#define SAMPLE_RATE 0.001
+#define ALPHA 0.02
+#define GYRO_LSB 131.0
+#define THRESHOLD_ANGLE 9
 
 i2c_device_t *mpu_init(void) {
 	i2c_init();
@@ -108,8 +110,9 @@ float accel_angle(i2c_device_t *dev) {
 
 //get the change in the angle of the chip as calc by the gyroscope
 float gyro_angle(i2c_device_t *dev) {
-	int16_t angle = read_gyro_y(dev);
-	float gyro_angle = angle * SAMPLE_RATE;
+	int16_t raw_angle = read_gyro_y(dev);
+	float real_angle = raw_angle / GYRO_LSB;
+	float gyro_angle = real_angle * SAMPLE_RATE;
 	return gyro_angle;
 }
 
@@ -125,25 +128,21 @@ float get_tilt_angle(i2c_device_t *dev) {
 
 }
 
+// when upside down, do THRESHOLD_ANGLE + 180
 position_t get_cur_position(i2c_device_t *dev) {
 	static position_t cur_pos = CENTER;
 
 	float cur_angle = get_tilt_angle(dev);
-	if ((cur_angle > 10) && (cur_pos == CENTER)) {
-		cur_pos = RIGHT;
-	} else if ((cur_angle < -10) && (cur_pos == CENTER)) {
+
+	if ((cur_angle > (THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
 		cur_pos = LEFT;
-	} else if ((cur_angle > -7) && (cur_angle < 7) && (cur_pos != CENTER)) {
+	} else if ((cur_angle < (-THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
+		cur_pos = RIGHT;
+	} else if ((cur_angle > (-THRESHOLD_ANGLE)) && (cur_angle < (THRESHOLD_ANGLE)) && (cur_pos != CENTER)) {
 		cur_pos = CENTER;
 	}
 
 	return cur_pos;
 
 }	
-
-
-
-
-
-
 

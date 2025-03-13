@@ -17,14 +17,20 @@ static void print_gyro_data(i2c_device_t *dev) {
 	//timer_delay(1);
 }
 
+static void test_position(i2c_device_t *dev) {
+	position_t current = get_cur_position(dev);
+	printf("%d\n", current);
+}
+
 void main(void) {
 	uart_init();
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	while(1) {
-		print_accel_data(dev);	
+		//print_accel_data(dev);	
 		//print_gyro_data(dev);
-		timer_delay_ms(200);
+		test_position(dev);
+		timer_delay_ms(1);
 	}
 
 }
