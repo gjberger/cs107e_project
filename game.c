@@ -1,6 +1,6 @@
 #include "uart.h"
 #include "printf.h"
-#include "gl.c"
+#include "gl.h"
 #include "timer.h"
 
 const int WIDTH = 400;
