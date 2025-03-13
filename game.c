@@ -9,10 +9,6 @@
 #define WIDTH 400
 #define HEIGHT 600
 
-void draw_background(void);
-void draw_character(void);
-void draw_character_2(void);
-
 struct character {
     position_t pos;
     int x;
