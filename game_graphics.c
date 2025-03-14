@@ -42,26 +42,27 @@ void draw_background(void) {
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
+#define RECT_OFFSET 19
+#define LEG_OFFSET 7
+#define ARM_OFFSET 5
 // need to be able to give x, y coordinates, draw character depending on that
-void draw_character(void) {
-    gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
-    gl_draw_circle(WIDTH / 2, 0.87 * HEIGHT, 15, GL_BLACK);
+void draw_character(int x) {
+    //gl_draw_rect(((x * WIDTH) / WIDTH) - RECT_OFFSET, 0.8 * HEIGHT, 40, 200, GL_WHITE);
+    gl_draw_circle(((x * WIDTH) / WIDTH), 0.87 * HEIGHT, 15, GL_BLACK);
     // Body
-    gl_draw_line(WIDTH / 2, 0.89 * HEIGHT, WIDTH / 2, 0.95 * HEIGHT, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.89 * HEIGHT, ((x * WIDTH) / WIDTH), 0.95 * HEIGHT, GL_BLACK);
     // Arms
-    gl_draw_line((WIDTH / 2) - 5, 0.92 * HEIGHT, (WIDTH / 2) + 7, 0.92 * HEIGHT, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH) - ARM_OFFSET, 0.92 * HEIGHT, ((x * WIDTH) / WIDTH) + 7, 0.92 * HEIGHT, GL_BLACK);
     // Legs
-    gl_draw_line(WIDTH / 2, 0.95 * HEIGHT, (WIDTH / 2) - 7, 0.98 * HEIGHT, GL_BLACK);
-    gl_draw_line(WIDTH / 2, 0.95 * HEIGHT, (WIDTH / 2) + 7, (0.98 * HEIGHT) - 7, GL_BLACK);
-    
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) - LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, (0.98 * HEIGHT) - LEG_OFFSET, GL_BLACK);
 }
 
-void draw_character_2(void) {
-    gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
-    gl_draw_circle(WIDTH / 2, 0.87 * HEIGHT, 15, GL_BLACK);
-    gl_draw_line(WIDTH / 2, 0.89 * HEIGHT, WIDTH / 2, 0.95 * HEIGHT, GL_BLACK);
-    gl_draw_line((WIDTH / 2) - 5, 0.92 * HEIGHT, (WIDTH / 2) + 7, 0.92 * HEIGHT, GL_BLACK);
-    gl_draw_line(WIDTH / 2, 0.95 * HEIGHT, (WIDTH / 2) - 7, (0.98 * HEIGHT) - 7, GL_BLACK);
-    gl_draw_line(WIDTH / 2, 0.95 * HEIGHT, (WIDTH / 2) + 7, 0.98 * HEIGHT, GL_BLACK);
-    
+void draw_character_2(int x) {
+    //gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
+    gl_draw_circle(((x * WIDTH) / WIDTH), 0.87 * HEIGHT, 15, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.89 * HEIGHT, ((x * WIDTH) / WIDTH), 0.95 * HEIGHT, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH) - ARM_OFFSET, 0.92 * HEIGHT, ((x * WIDTH) / WIDTH) + 7, 0.92 * HEIGHT, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) - LEG_OFFSET, (0.98 * HEIGHT) - LEG_OFFSET, GL_BLACK);
+    gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }

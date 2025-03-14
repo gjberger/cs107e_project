@@ -8,6 +8,9 @@
 
 #define WIDTH 400
 #define HEIGHT 600
+#define LANE1 (WIDTH / 6)
+#define LANE2 (WIDTH / 2)
+#define LANE3 (5 * WIDTH / 6)
 
 struct character {
     position_t pos;
@@ -21,20 +24,28 @@ void main(void) {
     uart_init();
     printf("Test");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
-    character.position = 0;
-    
+    struct character surfer;
+    surfer.pos = 0;
+   
+    if (surfer.pos == 0) {
+        printf("Yes");
+    }
     draw_background();
-    draw_character();
+    draw_character(WIDTH / 6);
     gl_swap_buffer();
     draw_background();
-    draw_character_2();
+    draw_character_2(WIDTH / 6);
     while (1) {
         // character 2 now showing
-        gl_swap_buffer();
-        draw_character();
-        timer_delay_ms(500);
-        gl_swap_buffer();
-        draw_character_2();
-        timer_delay_ms(500);
+        for (int i = LANE1; i < LANE3; i += 30) {
+            gl_swap_buffer();
+            draw_background();
+            draw_character(i);
+            timer_delay_ms(500);
+            gl_swap_buffer();
+            draw_background();
+            draw_character_2(i);
+            timer_delay_ms(500);
+        }
     }
 }
