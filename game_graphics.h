@@ -2,6 +2,8 @@
 #include "printf.h"
 #include "gl.h"
 #include "timer.h"
+#include "i2c.h"
+#include "mpu6050.h"
 
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 
@@ -13,3 +15,5 @@ void mid_to_right(int secs);
 void left_to_mid(int secs);
 void right_to_mid(int secs);
 int get_secs(void);
+void draw_barrier(int x, int y);
+void barrier_animation(position_t pos);

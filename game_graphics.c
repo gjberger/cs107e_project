@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "game_graphics.h"
 #include "strings.h"
+#include "mpu6050.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -83,6 +84,7 @@ void draw_background(int secs) {
     gl_clear(GL_WHITE);
     char buf[10];
     num_to_string(get_secs() - secs, 10, buf);
+    gl_draw_string(0.59 * WIDTH, 0.05 * WIDTH, "Score: ", GL_BLACK);
     gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
     // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
@@ -138,6 +140,23 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
+void draw_barrier(int x, int y) {
+    gl_draw_rect(x, y, 40, 40, GL_BLACK);
+}
+
+void barrier_animation(position_t pos) {
+    if (pos == LEFT) {
+        int y = 0.75 * HEIGHT;
+        for (int i = LANE1 + 30; i > LANE1 - 30; i -= 5) {
+            draw_barrier(i, y);
+            gl_swap_buffer();
+            timer_delay(2);
+            y += 5;
+        }
+    }
+}
+
+// to make barriers also draw, will have boolean for each animation scene that checks whether a barrier is on or off
 void mid_to_left(int secs) {
     for (int i = LANE2; i > LANE1; i -= 5) {
         gl_swap_buffer();
