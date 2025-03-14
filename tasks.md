@@ -29,12 +29,8 @@ Week 2 Tasks
 - hardware floating pointers
 
 Gabe
-- Make character drawing dependent on coordinates
-- character switching lane animations
 - build barrier designs
-- double buffer permutation idea, where character is constantly redrawn in buffers,
-and so are moving barriers
-- counter in top corner dependent on time
+- barrier movement, and while character is moving
 Finley
 - interrupt handler
     - go back to 0 before being able to switch again

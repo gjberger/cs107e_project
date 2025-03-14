@@ -63,11 +63,5 @@ void main(void) {
                 mid_to_left(time_init);
             }
         }
-        /*
-        mid_to_left(time_init);
-        left_to_mid(time_init);
-        mid_to_right(time_init);
-        right_to_mid(time_init);
-        */
     }
 }
