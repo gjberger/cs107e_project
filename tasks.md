@@ -26,6 +26,7 @@ Week 2 Tasks
 - when to have barriers come up
 - button
 - overall gameplay (start, counter, finisher)
+- hardware floating pointers
 
 Gabe
 - Make character drawing dependent on coordinates
@@ -37,3 +38,6 @@ and so are moving barriers
 Finley
 - interrupt handler
     - go back to 0 before being able to switch again
+- multiple buffer mode 
+- random number generator
+
