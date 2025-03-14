@@ -79,13 +79,16 @@ static void num_to_string(unsigned long num, int base, char *outstr) {
     }
 }
 
-
-void draw_background(int secs) {
-    gl_clear(GL_WHITE);
+void draw_score(int secs) {
     char buf[10];
     num_to_string(get_secs() - secs, 10, buf);
     gl_draw_string(0.59 * WIDTH, 0.05 * WIDTH, "Score: ", GL_BLACK);
     gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
+}
+
+void draw_background(int secs) {
+    gl_clear(GL_WHITE);
+    draw_score(secs);
     // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
     
@@ -173,6 +176,16 @@ void character_animation(int secs, position_t pos) {
 
 void draw_barrier(int x, int y) {
     gl_draw_rect(x, y, 40, 40, GL_BLACK);
+}
+
+void left_barrier_animate(void) {
+    int y = 0.68 * HEIGHT;
+    for (int i = LANE1 + 15; i > (LANE1 - 50); i--) {
+        draw_background(0);
+        draw_barrier(i, y);
+        gl_swap_buffer();
+        y += 3;
+    }
 }
 
 // to make barriers also draw, will have boolean for each animation scene that checks whether a barrier is on or off

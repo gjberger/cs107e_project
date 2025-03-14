@@ -18,4 +18,5 @@ void right_to_mid(int secs);
 int get_secs(void);
 void draw_barrier(int x, int y);
 void barrier_animation(position_t pos);
-void left_barrier(void);
+void left_barrier_animate(void);
+void draw_score(int secs);
