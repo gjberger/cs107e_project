@@ -140,20 +140,39 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
-void draw_barrier(int x, int y) {
-    gl_draw_rect(x, y, 40, 40, GL_BLACK);
+void character_animation(int secs, position_t pos) {
+    if (pos == LEFT) {
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character(LANE1);
+        timer_delay_ms(20);
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character_2(LANE1);
+    }
+    if (pos == CENTER) {
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character(LANE2);
+        timer_delay_ms(20);
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character_2(LANE2);
+    }
+    if (pos == RIGHT) {
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character(LANE3);
+        timer_delay_ms(20);
+        gl_swap_buffer();
+        draw_background(secs);
+        draw_character_2(LANE3);
+    }
 }
 
-void barrier_animation(position_t pos) {
-    if (pos == LEFT) {
-        int y = 0.75 * HEIGHT;
-        for (int i = LANE1 + 30; i > LANE1 - 30; i -= 5) {
-            draw_barrier(i, y);
-            gl_swap_buffer();
-            timer_delay(2);
-            y += 5;
-        }
-    }
+
+void draw_barrier(int x, int y) {
+    gl_draw_rect(x, y, 40, 40, GL_BLACK);
 }
 
 // to make barriers also draw, will have boolean for each animation scene that checks whether a barrier is on or off

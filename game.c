@@ -42,35 +42,27 @@ void main(void) {
     int time_init = get_secs();
     while (1) {
         // character 2 now showing
-        
-        if (surfer.pos == LEFT) {
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character(LANE1);
-            timer_delay_ms(20);
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character_2(LANE1);
+      
+        for (int i = -1; i <= 1; i++) {
+            for (int j = 0; j < 5; j++) {
+                character_animation(time_init, i);
+            }
+            if (i == -1) {
+                left_to_mid(time_init);
+            } else if (i == 0) {
+                mid_to_right(time_init);
+            }
         }
-        if (surfer.pos == CENTER) {
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character(LANE2);
-            timer_delay_ms(20);
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character_2(LANE2);
+        for (int i = 1; i >= -1; i--) {
+            for (int j = 0; j < 5; j++) {
+                character_animation(time_init, i);
+            }
+            if (i == 1) {
+                right_to_mid(time_init);
+            } else if (i == 0) {
+                mid_to_left(time_init);
+            }
         }
-        if (surfer.pos == RIGHT) {
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character(LANE3);
-            timer_delay_ms(20);
-            gl_swap_buffer();
-            draw_background(0);
-            draw_character_2(LANE3);
-        }
-
         /*
         mid_to_left(time_init);
         left_to_mid(time_init);
