@@ -3,6 +3,7 @@
 #include "gl.h"
 #include "timer.h"
 #include "game_graphics.h"
+#include "strings.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -12,10 +13,77 @@
 #define LANE1 (WIDTH / 6)
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
+// This helper function allows you convert from a number to
+// it's char value on the ASCII table.
 
-void draw_background(void) {
+int get_secs(void) {
+    return (timer_get_ticks() / (24 * 1000000));
+}
+
+static char num_to_char(int num) {
+    char c = (char)num;
+    if (num < 10) {
+        num += 48;
+        c = (char)num;
+    } else {
+        num += 87;
+        c = (char)num;
+    }
+    return c;
+}
+
+// This function takes a number and a base, and converts it into a string.
+static void num_to_string(unsigned long num, int base, char *outstr) {
+
+    // Temporary buffer to store digits as we convert into a string
+    // in a specific base.
+    char intbuffer[32]; // Must be adequate size to store unsigned long in dec/hex form. 32 works.
+    
+    // Mod by 10 to extract last digit, divide by 10
+    // to shift over.
+    
+    // Special case, if number is 0, just add '0'.
+    if (num == 0) {
+        outstr[0] = '0';
+        outstr[1] = '\0';
+    }
+    // If any other number, continually extract the least significant digit
+    // until num = 0. Store these to intbuffer, will be in reverse order
+    // since we are extracting least significant digit.
+    else {
+        int i = 0;
+        while (num != 0) {
+            // num % base gives value in least significant digit, in the base of interest.
+            intbuffer[i] = num_to_char((num % base));
+            // Shifts number.
+            num /= base;
+            i++;
+        }
+
+        // Null-terminate.
+        intbuffer[i] = '\0';
+       
+        i--;
+        // Copy the converted string to `outstr`, but reverse the order to
+        // get back to the original order of the number.
+        // To do this, increment j and decrement i, and proceed until i = 0.
+        int j = 0;
+        while (i >= 0) {
+            outstr[j] = intbuffer[i];
+            i--;
+            j++;
+        }
+        // Null terminate final string.
+        outstr[j] = '\0';
+    }
+}
+
+
+void draw_background(int secs) {
     gl_clear(GL_WHITE);
-
+    char buf[10];
+    num_to_string(get_secs() - secs, 10, buf);
+    gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
     // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
     
@@ -70,53 +138,53 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
-void mid_to_left(void) {
+void mid_to_left(int secs) {
     for (int i = LANE2; i > LANE1; i -= 5) {
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character(i);
         timer_delay_ms(0);
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character_2(i);
         timer_delay_ms(0);
     }
 }
 
-void mid_to_right(void) {
+void mid_to_right(int secs) {
     for (int i = LANE2; i < LANE3; i += 5) {
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character(i);
         timer_delay_ms(0);
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character_2(i);
         timer_delay_ms(0);
     }
 }
 
-void left_to_mid(void) {
+void left_to_mid(int secs) {
     for (int i = LANE1; i < LANE2; i += 5) {
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character(i);
         timer_delay_ms(0);
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character_2(i);
         timer_delay_ms(0);
     }
 }
 
-void right_to_mid(void) {
+void right_to_mid(int secs) {
     for (int i = LANE3; i > LANE2; i -= 5) {
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character(i);
         timer_delay_ms(0);
         gl_swap_buffer();
-        draw_background();
+        draw_background(secs);
         draw_character_2(i);
         timer_delay_ms(0);
     }

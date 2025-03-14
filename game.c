@@ -30,14 +30,15 @@ void main(void) {
     if (surfer.pos == 0) {
         printf("Yes");
     }
-    draw_background();
+    draw_background(0);
     gl_swap_buffer();
-    draw_background();
+    draw_background(0);
+    int time_init = get_secs();
     while (1) {
         // character 2 now showing
-        mid_to_left();
-        left_to_mid();
-        mid_to_right();
-        right_to_mid();
+        mid_to_left(time_init);
+        left_to_mid(time_init);
+        mid_to_right(time_init);
+        right_to_mid(time_init);
     }
 }
