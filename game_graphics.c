@@ -6,6 +6,12 @@
 
 #define WIDTH 400
 #define HEIGHT 600
+#define RECT_OFFSET 19
+#define LEG_OFFSET 7
+#define ARM_OFFSET 5
+#define LANE1 (WIDTH / 6)
+#define LANE2 (WIDTH / 2)
+#define LANE3 (5 * WIDTH / 6)
 
 void draw_background(void) {
     gl_clear(GL_WHITE);
@@ -42,9 +48,6 @@ void draw_background(void) {
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
-#define RECT_OFFSET 19
-#define LEG_OFFSET 7
-#define ARM_OFFSET 5
 // need to be able to give x, y coordinates, draw character depending on that
 void draw_character(int x) {
     //gl_draw_rect(((x * WIDTH) / WIDTH) - RECT_OFFSET, 0.8 * HEIGHT, 40, 200, GL_WHITE);
@@ -65,4 +68,57 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH) - ARM_OFFSET, 0.92 * HEIGHT, ((x * WIDTH) / WIDTH) + 7, 0.92 * HEIGHT, GL_BLACK);
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) - LEG_OFFSET, (0.98 * HEIGHT) - LEG_OFFSET, GL_BLACK);
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
+}
+
+void mid_to_left(void) {
+    for (int i = LANE2; i > LANE1; i -= 5) {
+        gl_swap_buffer();
+        draw_background();
+        draw_character(i);
+        timer_delay_ms(0);
+        gl_swap_buffer();
+        draw_background();
+        draw_character_2(i);
+        timer_delay_ms(0);
+    }
+}
+
+void mid_to_right(void) {
+    for (int i = LANE2; i < LANE3; i += 5) {
+        gl_swap_buffer();
+        draw_background();
+        draw_character(i);
+        timer_delay_ms(0);
+        gl_swap_buffer();
+        draw_background();
+        draw_character_2(i);
+        timer_delay_ms(0);
+    }
+}
+
+void left_to_mid(void) {
+    for (int i = LANE1; i < LANE2; i += 5) {
+        gl_swap_buffer();
+        draw_background();
+        draw_character(i);
+        timer_delay_ms(0);
+        gl_swap_buffer();
+        draw_background();
+        draw_character_2(i);
+        timer_delay_ms(0);
+    }
+}
+
+void right_to_mid(void) {
+    for (int i = LANE3; i > LANE2; i -= 5) {
+        gl_swap_buffer();
+        draw_background();
+        draw_character(i);
+        timer_delay_ms(0);
+        gl_swap_buffer();
+        draw_background();
+        draw_character_2(i);
+        timer_delay_ms(0);
+    }
+
 }

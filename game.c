@@ -31,21 +31,13 @@ void main(void) {
         printf("Yes");
     }
     draw_background();
-    draw_character(WIDTH / 6);
     gl_swap_buffer();
     draw_background();
-    draw_character_2(WIDTH / 6);
     while (1) {
         // character 2 now showing
-        for (int i = LANE1; i < LANE3; i += 30) {
-            gl_swap_buffer();
-            draw_background();
-            draw_character(i);
-            timer_delay_ms(500);
-            gl_swap_buffer();
-            draw_background();
-            draw_character_2(i);
-            timer_delay_ms(500);
-        }
+        mid_to_left();
+        left_to_mid();
+        mid_to_right();
+        right_to_mid();
     }
 }
