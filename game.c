@@ -36,6 +36,7 @@ void handle_board(void *dev) {
 
 	if (pos == CENTER) {
 		surfer.seen_zero = true;
+		return;
 	}
 	if (!surfer.seen_zero) {
 		return;
@@ -46,6 +47,7 @@ void handle_board(void *dev) {
 	} else {
 		surfer.pos = new_pos;
 	}
+	surfer.seen_zero = false;
 }
 
 void set_up_timer_interrupts(void) {
