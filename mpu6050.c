@@ -10,7 +10,7 @@
 #define DLPF 0x00
 #define WAKE_UP 0x00
 
-#define SAMPLE_RATE 0.001
+//#define SAMPLE_RATE 0.005
 #define ALPHA 0.02
 #define GYRO_LSB 131.0
 #define THRESHOLD_ANGLE 9

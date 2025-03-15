@@ -1,6 +1,8 @@
 #ifndef _MPU_6050_H
 #define _MPU_6050_H
 
+#define SAMPLE_RATE 0.005
+
 typedef enum {
 	LEFT = -1,
 	CENTER = 0,

@@ -1,5 +1,6 @@
 # no track build products
 *.a
+!libmymango.a
 *.bin
 *.d
 *.elf

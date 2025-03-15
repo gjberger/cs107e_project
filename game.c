@@ -5,6 +5,8 @@
 #include "i2c.h"
 #include "mpu6050.h"
 #include "game_graphics.h"
+#include "interrupts.h"
+#include "hstimer.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -12,31 +14,66 @@
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
 
-struct character {
+static struct {
     position_t pos;
     int x;
     int y;
     int head;
-    bool zero_registed;
+    bool seen_zero;
     bool alive;
-};
+} surfer;
 
 struct block {
     bool on;
 
 };
 
+void handle_board(void *dev) {
+	hstimer_interrupt_clear(HSTIMER0);
+
+	i2c_device_t *dev1 = (i2c_device_t *)dev;
+	position_t pos = get_cur_position(dev1);
+
+	if (pos == CENTER) {
+		surfer.seen_zero = true;
+	}
+	if (!surfer.seen_zero) {
+		return;
+	}	
+	int new_pos = pos + surfer.pos;
+	if ((new_pos > 1) || (new_pos < -1)) {
+		return;
+	} else {
+		surfer.pos = new_pos;
+	}
+}
+
+void set_up_timer_interrupts(void) {
+	i2c_device_t *dev = mpu_init();
+	config_mpu(dev);
+	// sampling at 200 Hz, or every 5ms
+	// SAMPLE_RATE defined in mpu6050.h
+	hstimer_init(HSTIMER0, SAMPLE_RATE * 1000000);
+	interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER0, handle_board, dev);
+	interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER0);
+}
+
 void main(void) {
     uart_init();
     printf("Test");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
+
+	interrupts_init();
+	set_up_timer_interrupts();
+	interrupts_global_enable();
+
     bool left_barrier = false;
     bool middle_barrier = false;
     bool right_barrier = false;
 
-    struct character surfer;
     surfer.pos = RIGHT;
     surfer.alive = true;
+	surfer.seen_zero = true;
 
     struct block block1;
     struct block block2;

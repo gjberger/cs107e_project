@@ -30,7 +30,7 @@ void main(void) {
 		//print_accel_data(dev);	
 		//print_gyro_data(dev);
 		test_position(dev);
-		timer_delay_ms(1);
+		timer_delay_ms(SAMPLE_RATE * 1000);
 	}
 
 }
