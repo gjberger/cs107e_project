@@ -52,6 +52,11 @@ static void test_position(i2c_device_t *dev) {
 	printf("%d\n", current);
 }
 
+static void test_angle_measure(i2c_device_t *dev) {
+	float angle = get_tilt_angle(dev);
+	printf("%d\n", (int)angle);
+}
+
 void main(void) {
 	uart_init();
 	i2c_device_t *dev = mpu_init();
@@ -61,8 +66,9 @@ void main(void) {
 	while(1) {
 		//print_accel_data(dev);	
 		//print_gyro_data(dev);
-		//test_position(dev);
-		test_handle_board(dev);
+		test_position(dev);
+		//test_handle_board(dev);
+		//test_angle_measure(dev);
 		timer_delay_ms(SAMPLE_RATE * 1000);
 	}
 

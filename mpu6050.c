@@ -11,7 +11,7 @@
 #define WAKE_UP 0x00
 
 //#define SAMPLE_RATE 0.005
-#define ALPHA 0.02
+#define ALPHA 0.04
 #define GYRO_LSB 131.0
 #define THRESHOLD_ANGLE 9
 
@@ -128,16 +128,33 @@ float get_tilt_angle(i2c_device_t *dev) {
 
 }
 
-// when upside down, do THRESHOLD_ANGLE + 180
+// when upside down, angle sometimes wraps around so need to accound for small negatives and big positives
 position_t get_cur_position(i2c_device_t *dev) {
 	static position_t cur_pos = CENTER;
 
 	float cur_angle = get_tilt_angle(dev);
 
-	if ((cur_angle > (THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
+	// for when mounted upside down
+	/*
+	if ((cur_angle < -(180 - THRESHOLD_ANGLE)) || (cur_angle > (180 - THRESHOLD_ANGLE))) {
+		if (cur_pos != CENTER) {
+			cur_pos = CENTER;
+		}
+	}else if ((cur_angle > -(180 - THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
 		cur_pos = LEFT;
-	} else if ((cur_angle < (-THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
+	}else if ((cur_angle < (180 - THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
 		cur_pos = RIGHT;
+	}
+
+	*/
+
+	// this code is for when mpu is face up
+	if ((cur_angle > (THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
+		cur_pos = RIGHT;
+		//cur_pos = LEFT;
+	} else if ((cur_angle < (-THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
+		cur_pos = LEFT;
+		//cur_pos = RIGHT;
 	} else if ((cur_angle > (-THRESHOLD_ANGLE)) && (cur_angle < (THRESHOLD_ANGLE)) && (cur_pos != CENTER)) {
 		cur_pos = CENTER;
 	}
