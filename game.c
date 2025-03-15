@@ -12,15 +12,6 @@
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
 
-typedef enum {
-    ONE = 1;
-    TWO = 2;
-    THREE = 3;
-    FOUR = 4;
-    FIVE = 5;
-    SIX = 6;
-} block_position;
-
 struct character {
     position_t pos;
     int x;
