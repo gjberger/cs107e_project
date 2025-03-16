@@ -7,6 +7,7 @@
 #include "game_graphics.h"
 #include "interrupts.h"
 #include "hstimer.h"
+#include <stdlib.h>
 
 #define WIDTH 400
 #define HEIGHT 600

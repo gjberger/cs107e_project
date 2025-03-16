@@ -66,9 +66,9 @@ void main(void) {
 	while(1) {
 		//print_accel_data(dev);	
 		//print_gyro_data(dev);
-		test_position(dev);
+		//test_position(dev);
 		//test_handle_board(dev);
-		//test_angle_measure(dev);
+		test_angle_measure(dev);
 		timer_delay_ms(SAMPLE_RATE * 1000);
 	}
 
