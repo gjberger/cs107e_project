@@ -7,7 +7,8 @@
 #include "game_graphics.h"
 #include "interrupts.h"
 #include "hstimer.h"
-#include <stdlib.h>
+// Theres code to generate a random number for a specific range in random.c
+#include "random.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -28,6 +29,7 @@ struct block {
     bool on;
 
 };
+
 
 void handle_board(void *dev) {
 	hstimer_interrupt_clear(HSTIMER0);
