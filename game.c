@@ -129,6 +129,9 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
+	hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
+
     bool left_barrier = false;
     bool middle_barrier = false;
     bool right_barrier = false;
