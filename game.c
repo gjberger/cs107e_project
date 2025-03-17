@@ -97,7 +97,7 @@ void handle_barriers(void *dev) {
 }
 
 void set_up_timer_interrupts(void) {
-    printf("\nset up timer 1 interrupts");
+    uart_putstring("\nset up timer 1 interrupts");
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	// sampling at 200 Hz, or every 5ms
@@ -105,13 +105,15 @@ void set_up_timer_interrupts(void) {
 	hstimer_init(HSTIMER0, SAMPLE_RATE * 1000000);
 	interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER0, handle_board, dev);
 	interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER0);
+    uart_putstring("\ndone with timer 1 interrupts");
 }
 
 void set_up_timer2_interrupts(void) {
-    printf("\nset up timer 2 interrupts");
+    uart_putstring("\nset up timer 2 interrupts");
     hstimer_init(HSTIMER1, 3000000);
     interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_barriers, NULL);
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
+    uart_putstring("\ndone with timer 2 interrupts");
 }
 
 void main(void) {
