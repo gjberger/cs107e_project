@@ -27,7 +27,8 @@ static struct {
 
 struct block {
     bool on;
-
+    int x;
+    int y;
 };
 
 
@@ -53,6 +54,10 @@ void handle_board(void *dev) {
 	surfer.seen_zero = false;
 }
 
+void handle_barriers(void) {
+
+}
+
 void set_up_timer_interrupts(void) {
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
@@ -63,6 +68,12 @@ void set_up_timer_interrupts(void) {
 	interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER0);
 }
 
+void set_up_timer2_interrupts(void) {
+    hstimer_init(HSTIMER1, 3000000);
+    interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_board, NULL);
+    interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
+}
+
 void main(void) {
     uart_init();
     printf("Test");
@@ -70,6 +81,7 @@ void main(void) {
 
 	interrupts_init();
 	set_up_timer_interrupts();
+	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
     bool left_barrier = false;
@@ -102,26 +114,7 @@ void main(void) {
         // person
         // blocks
         // score?
-        left_barrier_animate();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = 0; j < 5; j++) {
-                character_animation(time_init, i);
-            }
-            if (i == -1) {
-                left_to_mid(time_init);
-            } else if (i == 0) {
-                mid_to_right(time_init);
-            }
-        }
-        for (int i = 1; i >= -1; i--) {
-            for (int j = 0; j < 5; j++) {
-                character_animation(time_init, i);
-            }
-            if (i == 1) {
-                right_to_mid(time_init);
-            } else if (i == 0) {
-                mid_to_left(time_init);
-            }
-        }
+        character_animation(time_init, i);
+        character_animation(time_init, i);
     }
 }
