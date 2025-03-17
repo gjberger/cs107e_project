@@ -7,7 +7,6 @@
 #include "game_graphics.h"
 #include "interrupts.h"
 #include "hstimer.h"
-// Theres code to generate a random number for a specific range in random.c
 #include "random.h"
 
 #define WIDTH 400
@@ -25,14 +24,26 @@ static struct {
     bool alive;
 } surfer;
 
-struct block {
+static struct {
     bool on;
     int x;
     int y;
-};
+} left_block;
 
+static struct {
+    bool on;
+    int x;
+    int y;
+} middle_block;
+
+static struct {
+    bool on;
+    int x;
+    int y;
+} right_block;
 
 void handle_board(void *dev) {
+    uart_putstring("board\n");
 	hstimer_interrupt_clear(HSTIMER0);
 
 	i2c_device_t *dev1 = (i2c_device_t *)dev;
@@ -54,11 +65,39 @@ void handle_board(void *dev) {
 	surfer.seen_zero = false;
 }
 
-void handle_barriers(void) {
-
+void handle_barriers(void *dev) {
+	hstimer_interrupt_clear(HSTIMER1);
+    uart_putstring("barrier\n");
+    int random = rand(6) + 1;
+    if (random == 1) {
+        left_block.on = false;
+        middle_block.on = false;
+        right_block.on = true;
+    } else if (random == 2) {
+        left_block.on = false;
+        middle_block.on = true;
+        right_block.on = false;
+    } else if (random == 3) {
+        left_block.on = false;
+        middle_block.on = true;
+        right_block.on = true;
+    } else if (random == 4) {
+        left_block.on = true;
+        middle_block.on = false;
+        right_block.on = false;
+    } else if (random == 5) {
+        left_block.on = true;
+        middle_block.on = false;
+        right_block.on = true;
+    } else if (random == 6) {
+        left_block.on = true;
+        middle_block.on = true;
+        right_block.on = false;
+    }
 }
 
 void set_up_timer_interrupts(void) {
+    printf("\nset up timer 1 interrupts");
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	// sampling at 200 Hz, or every 5ms
@@ -69,17 +108,15 @@ void set_up_timer_interrupts(void) {
 }
 
 void set_up_timer2_interrupts(void) {
+    printf("\nset up timer 2 interrupts");
     hstimer_init(HSTIMER1, 3000000);
-    interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_board, NULL);
+    interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_barriers, NULL);
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
 void main(void) {
     uart_init();
-    printf("Test");
-    for (int i = 0; i < 10; i++) {
-        printf("\nRandom number: %d", rand(7));
-    }
+    printf("\nTest");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
 
 	interrupts_init();
@@ -95,11 +132,6 @@ void main(void) {
     surfer.alive = true;
 	surfer.seen_zero = true;
 
-    struct block block1;
-    struct block block2;
-    struct block block3;
-
-   
     if (surfer.pos == 0) {
         printf("Yes");
     }
@@ -110,7 +142,12 @@ void main(void) {
     while (1) {
         // character 2 now showing
         character_animation(time_init, 0);
-     
+    
+        /*
+        printf("block 1 on: %d\n", (int)left_block.on);
+        printf("block 2 on: %d\n", (int)middle_block.on);
+        printf("block 3 on: %d\n", (int)right_block.on);
+        */
         // will plan to implement model view controller
         // will update player position, 3 block position, etc
         // then will redraw all to screen in order
