@@ -116,10 +116,13 @@ void set_up_timer2_interrupts(void) {
 
 void main(void) {
     uart_init();
+	interrupts_init();
+	timer_init();
+	gpio_init();
+
     printf("\nTest");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
 
-	interrupts_init();
 	set_up_timer_interrupts();
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
