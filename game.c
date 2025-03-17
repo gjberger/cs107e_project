@@ -77,6 +77,9 @@ void set_up_timer2_interrupts(void) {
 void main(void) {
     uart_init();
     printf("Test");
+    for (int i = 0; i < 10; i++) {
+        printf("\nRandom number: %d", rand(7));
+    }
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
 
 	interrupts_init();
@@ -106,6 +109,7 @@ void main(void) {
     int time_init = get_secs();
     while (1) {
         // character 2 now showing
+        character_animation(time_init, 0);
      
         // will plan to implement model view controller
         // will update player position, 3 block position, etc
@@ -114,7 +118,5 @@ void main(void) {
         // person
         // blocks
         // score?
-        character_animation(time_init, i);
-        character_animation(time_init, i);
     }
 }
