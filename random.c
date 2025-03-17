@@ -4,7 +4,7 @@
 
 // middle-square Weyl Sequence randon number generator
 uint32_t randGen(void) {
-	static uint64_t x = timer_get_ticks();
+	static uint64_t x = 0;
 	static uint64_t w = 0;
 	static uint64_t s = 0xb5ad4eceda1ce2a9;
 
