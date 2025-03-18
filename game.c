@@ -154,7 +154,29 @@ void update_screen(int time_init) {
         middle_block.y = middle_block.y + 6;
         right_block.x = right_block.x + 2;
         right_block.y = right_block.y + 6;
+}
 
+void check_if_dead(void) {
+    if (surfer.pos == LEFT) {
+        if (left_block.on) {
+            if (left_block.y == (0.79 * HEIGHT)) {
+                surfer.alive = false;
+            }
+        }
+    } else if (surfer.pos == CENTER) {
+        if (middle_block.on) {
+            if (middle_block.y == (0.79 * HEIGHT)) {
+                surfer.alive = false;
+            }
+        }
+    }
+    else if (surfer.pos == RIGHT) {
+        if (right_block.on) {
+            if (right_block.y == (0.79 * HEIGHT)) {
+                surfer.alive = false;
+            }
+        }
+    }
 }
 
 void main(void) {
@@ -193,5 +215,10 @@ void main(void) {
     int time_init = get_secs();
     while (surfer.alive) {
         update_screen(time_init);
+        check_if_dead();
     }
+    
+    draw_endscreen();
+    gl_swap_buffer();
+    while(1) {}
 }

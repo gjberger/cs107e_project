@@ -10,6 +10,7 @@ void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 void draw_background(void);
 void draw_startscreen(void);
 void draw_startscreen_2(void);
+void draw_endscreen(void);
 void draw_character(int x);
 void draw_character_2(int x);
 void character_animation(int secs, position_t pos);
