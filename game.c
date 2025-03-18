@@ -43,7 +43,6 @@ static struct {
 } right_block;
 
 void handle_board(void *dev) {
-    uart_putstring("board\n");
 	hstimer_interrupt_clear(HSTIMER0);
 
 	i2c_device_t *dev1 = (i2c_device_t *)dev;
@@ -94,10 +93,16 @@ void handle_barriers(void *dev) {
         middle_block.on = true;
         right_block.on = false;
     }
+
+    left_block.x = LANE1 + 15;
+    left_block.y = 0.68 * HEIGHT;
+    middle_block.x = LANE2 - 20;
+    middle_block.y = 0.68 * HEIGHT;
+    right_block.x = LANE3 - 50;
+    right_block.y = 0.68 * HEIGHT;
 }
 
 void set_up_timer_interrupts(void) {
-    uart_putstring("\nset up timer 1 interrupts");
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	// sampling at 200 Hz, or every 5ms
@@ -105,15 +110,12 @@ void set_up_timer_interrupts(void) {
 	hstimer_init(HSTIMER0, SAMPLE_RATE * 1000000);
 	interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER0, handle_board, dev);
 	interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER0);
-    uart_putstring("\ndone with timer 1 interrupts");
 }
 
 void set_up_timer2_interrupts(void) {
-    uart_putstring("\nset up timer 2 interrupts");
-    hstimer_init(HSTIMER1, 3000000);
+    hstimer_init(HSTIMER1, 10000000);
     interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_barriers, NULL);
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
-    uart_putstring("\ndone with timer 2 interrupts");
 }
 
 void main(void) {
@@ -143,19 +145,41 @@ void main(void) {
     if (surfer.pos == 0) {
         printf("Yes");
     }
-    draw_background(0);
-    gl_swap_buffer();
-    draw_background(0);
     int time_init = get_secs();
     while (1) {
         // character 2 now showing
-        character_animation(time_init, 0);
-    
-        /*
+        draw_background();
+        draw_score(time_init);
+        if (left_block.on) {
+            draw_barrier(left_block.x, left_block.y);
+        }
+        if (middle_block.on) {
+            draw_barrier(middle_block.x, middle_block.y);
+        }
+        if (right_block.on) {
+            draw_barrier(right_block.x, right_block.y);
+        }
+        character_pose_1(surfer.pos);
+        gl_swap_buffer();
+        
+        draw_background();
+        draw_score(time_init);
+        if (left_block.on) {
+            draw_barrier(left_block.x, left_block.y);
+        }
+        if (middle_block.on) {
+            draw_barrier(middle_block.x, middle_block.y);
+        }
+        if (right_block.on) {
+            draw_barrier(right_block.x, right_block.y);
+        }
+        character_pose_2(surfer.pos);
+        gl_swap_buffer();
+
         printf("block 1 on: %d\n", (int)left_block.on);
         printf("block 2 on: %d\n", (int)middle_block.on);
         printf("block 3 on: %d\n", (int)right_block.on);
-        */
+        
         // will plan to implement model view controller
         // will update player position, 3 block position, etc
         // then will redraw all to screen in order

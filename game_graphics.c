@@ -86,9 +86,8 @@ void draw_score(int secs) {
     gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
 }
 
-void draw_background(int secs) {
+void draw_background(void) {
     gl_clear(GL_WHITE);
-    draw_score(secs);
     // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
     
@@ -143,101 +142,30 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
-void character_animation(int secs, position_t pos) {
+void character_pose_1(position_t pos) {
     if (pos == LEFT) {
-        gl_swap_buffer();
-        draw_background(secs);
         draw_character(LANE1);
-        timer_delay_ms(20);
-        gl_swap_buffer();
-        draw_background(secs);
+    }
+    if (pos == CENTER) {
+        draw_character(LANE2);
+    }
+    if (pos == RIGHT) {
+        draw_character(LANE3);
+    }
+}
+
+void character_pose_2(position_t pos) {
+    if (pos == LEFT) {
         draw_character_2(LANE1);
     }
     if (pos == CENTER) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(LANE2);
-        timer_delay_ms(20);
-        gl_swap_buffer();
-        draw_background(secs);
         draw_character_2(LANE2);
     }
     if (pos == RIGHT) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(LANE3);
-        timer_delay_ms(20);
-        gl_swap_buffer();
-        draw_background(secs);
         draw_character_2(LANE3);
     }
 }
 
-
 void draw_barrier(int x, int y) {
     gl_draw_rect(x, y, 40, 40, GL_BLACK);
-}
-
-void left_barrier_animate(void) {
-    int y = 0.68 * HEIGHT;
-    for (int i = LANE1 + 15; i > (LANE1 - 50); i--) {
-        draw_background(0);
-        draw_barrier(i, y);
-        gl_swap_buffer();
-        y += 3;
-    }
-}
-
-// to make barriers also draw, will have boolean for each animation scene that checks whether a barrier is on or off
-void mid_to_left(int secs) {
-    for (int i = LANE2; i > LANE1; i -= 5) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(i);
-        timer_delay_ms(0);
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character_2(i);
-        timer_delay_ms(0);
-    }
-}
-
-void mid_to_right(int secs) {
-    for (int i = LANE2; i < LANE3; i += 5) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(i);
-        timer_delay_ms(0);
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character_2(i);
-        timer_delay_ms(0);
-    }
-}
-
-void left_to_mid(int secs) {
-    for (int i = LANE1; i < LANE2; i += 5) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(i);
-        timer_delay_ms(0);
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character_2(i);
-        timer_delay_ms(0);
-    }
-}
-
-void right_to_mid(int secs) {
-    for (int i = LANE3; i > LANE2; i -= 5) {
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character(i);
-        timer_delay_ms(0);
-        gl_swap_buffer();
-        draw_background(secs);
-        draw_character_2(i);
-        timer_delay_ms(0);
-    }
-
 }
