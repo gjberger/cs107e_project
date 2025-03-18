@@ -23,5 +23,6 @@ void draw_barrier(int x, int y);
 void barrier_animation(position_t pos);
 void left_barrier_animate(void);
 void draw_score(int secs);
+void draw_num(int num, int x, int y);
 void character_pose_1(position_t pos);
 void character_pose_2(position_t pos);

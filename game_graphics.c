@@ -86,6 +86,12 @@ void draw_score(int secs) {
     gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
 }
 
+void draw_num(int num, int x, int y) {
+    char buf[10];
+    num_to_string(num, 10, buf);
+    gl_draw_string(x, y, buf, GL_WHITE);
+}
+
 void draw_background(void) {
     gl_clear(GL_WHITE);
     // overarch line

@@ -149,11 +149,15 @@ void update_screen(int time_init) {
         character_pose_2(surfer.pos);
         gl_swap_buffer();
 
-        left_block.x = left_block.x - 2;
-        left_block.y = left_block.y + 6;
-        middle_block.y = middle_block.y + 6;
-        right_block.x = right_block.x + 2;
-        right_block.y = right_block.y + 6;
+        static int x_start = 1;
+        static int y_start = 3;
+        left_block.x = left_block.x - x_start;
+        left_block.y = left_block.y + y_start;
+        middle_block.y = middle_block.y + y_start;
+        right_block.x = right_block.x + x_start;
+        right_block.y = right_block.y + y_start;
+        x_start += 1;
+        y_start += 3;
 }
 
 void check_if_dead(void) {
@@ -212,6 +216,18 @@ void main(void) {
         gl_swap_buffer();
         num++;
     }
+    draw_startscreen_2();
+    draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(2, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(1, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
     int time_init = get_secs();
     while (surfer.alive) {
         update_screen(time_init);
