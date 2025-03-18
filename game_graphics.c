@@ -120,6 +120,22 @@ void draw_background(void) {
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
+void draw_startscreen(void) {
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+    gl_draw_string(0.4 * WIDTH, (0.7 * HEIGHT) + 2, "Start", GL_WHITE);
+}
+
+void draw_startscreen_2(void) {
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+}
 // need to be able to give x, y coordinates, draw character depending on that
 void draw_character(int x) {
     //gl_draw_rect(((x * WIDTH) / WIDTH) - RECT_OFFSET, 0.8 * HEIGHT, 40, 200, GL_WHITE);

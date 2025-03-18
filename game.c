@@ -119,31 +119,8 @@ void set_up_timer2_interrupts(void) {
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
-void main(void) {
-    uart_init();
-	interrupts_init();
-	timer_init();
 
-    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
-
-	set_up_timer_interrupts();
-	set_up_timer2_interrupts();
-	interrupts_global_enable();
-
-	hstimer_enable(HSTIMER0);
-	hstimer_enable(HSTIMER1);
-
-    surfer.pos = CENTER;
-    surfer.alive = true;
-	surfer.seen_zero = true;
-    left_block.on = false;
-    middle_block.on = false;
-    right_block.on = false;
-
-    
-    int time_init = get_secs();
-    while (1) {
-        // character 2 now showing
+void update_screen(int time_init) {
         draw_background();
         draw_score(time_init);
         if (left_block.on) {
@@ -178,18 +155,43 @@ void main(void) {
         right_block.x = right_block.x + 2;
         right_block.y = right_block.y + 6;
 
+}
 
-        /*
-        printf("block 1 on: %d\n", (int)left_block.on);
-        printf("block 2 on: %d\n", (int)middle_block.on);
-        printf("block 3 on: %d\n", (int)right_block.on);
-        */
-        // will plan to implement model view controller
-        // will update player position, 3 block position, etc
-        // then will redraw all to screen in order
-        // background
-        // person
-        // blocks
-        // score?
+void main(void) {
+    uart_init();
+	interrupts_init();
+	timer_init();
+
+    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
+
+	set_up_timer_interrupts();
+	set_up_timer2_interrupts();
+	interrupts_global_enable();
+
+	hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
+
+    surfer.pos = CENTER;
+    surfer.alive = true;
+	surfer.seen_zero = true;
+    left_block.on = false;
+    middle_block.on = false;
+    right_block.on = false;
+
+  
+
+    long num = 0;
+    while (num < 5) {
+        draw_startscreen();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        draw_startscreen_2();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        num++;
+    }
+    int time_init = get_secs();
+    while (surfer.alive) {
+        update_screen(time_init);
     }
 }
