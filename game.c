@@ -55,11 +55,12 @@ void handle_board(void *dev) {
 	if (!surfer.seen_zero) {
 		return;
 	}	
-	int new_pos = pos + surfer.pos;
+    
+    int new_pos = pos + surfer.pos;
 	if ((new_pos > 1) || (new_pos < -1)) {
 		return;
 	} else {
-		surfer.pos = new_pos;
+        surfer.pos = new_pos;
 	}
 	surfer.seen_zero = false;
 }
@@ -113,7 +114,7 @@ void set_up_timer_interrupts(void) {
 }
 
 void set_up_timer2_interrupts(void) {
-    hstimer_init(HSTIMER1, 10000000);
+    hstimer_init(HSTIMER1, 15000000);
     interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_barriers, NULL);
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
@@ -122,9 +123,7 @@ void main(void) {
     uart_init();
 	interrupts_init();
 	timer_init();
-	gpio_init();
 
-    printf("\nTest");
     gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
 
 	set_up_timer_interrupts();
@@ -134,17 +133,14 @@ void main(void) {
 	hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
 
-    bool left_barrier = false;
-    bool middle_barrier = false;
-    bool right_barrier = false;
-
-    surfer.pos = RIGHT;
+    surfer.pos = CENTER;
     surfer.alive = true;
 	surfer.seen_zero = true;
+    left_block.on = false;
+    middle_block.on = false;
+    right_block.on = false;
 
-    if (surfer.pos == 0) {
-        printf("Yes");
-    }
+    
     int time_init = get_secs();
     while (1) {
         // character 2 now showing
@@ -176,10 +172,18 @@ void main(void) {
         character_pose_2(surfer.pos);
         gl_swap_buffer();
 
+        left_block.x = left_block.x - 2;
+        left_block.y = left_block.y + 6;
+        middle_block.y = middle_block.y + 6;
+        right_block.x = right_block.x + 2;
+        right_block.y = right_block.y + 6;
+
+
+        /*
         printf("block 1 on: %d\n", (int)left_block.on);
         printf("block 2 on: %d\n", (int)middle_block.on);
         printf("block 3 on: %d\n", (int)right_block.on);
-        
+        */
         // will plan to implement model view controller
         // will update player position, 3 block position, etc
         // then will redraw all to screen in order

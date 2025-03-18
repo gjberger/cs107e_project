@@ -169,3 +169,4 @@ void character_pose_2(position_t pos) {
 void draw_barrier(int x, int y) {
     gl_draw_rect(x, y, 40, 40, GL_BLACK);
 }
+
