@@ -159,20 +159,20 @@ void update_screen(int time_init) {
 void check_if_dead(void) {
     if (surfer.pos == LEFT) {
         if (left_block.on) {
-            if (left_block.y == (0.79 * HEIGHT)) {
+            if ((left_block.y >= (0.79 * HEIGHT)) && (left_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
     } else if (surfer.pos == CENTER) {
         if (middle_block.on) {
-            if (middle_block.y == (0.79 * HEIGHT)) {
+            if ((middle_block.y >= (0.79 * HEIGHT)) && (middle_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
     }
     else if (surfer.pos == RIGHT) {
         if (right_block.on) {
-            if (right_block.y == (0.79 * HEIGHT)) {
+            if ((right_block.y >= (0.79 * HEIGHT)) && (right_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
