@@ -14,6 +14,12 @@
 #define LANE1 (WIDTH / 6)
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
+#define SELECTOR GPIO_PB1
+#define CONFIRM GPIO_PB2
+
+static int cur_menu_item = 0;
+static unsigned long button_debounce_confirm = 0;
+static unsigned long button_debounce_selector = 0;
 
 static struct {
     position_t pos;
@@ -257,6 +263,7 @@ void draw_mario(void) {
     gl_draw_rect(LANE2 - 1, 0.87 * HEIGHT + 31, 4, 4, 0xe2ab7d);
 
 }
+
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -275,6 +282,38 @@ void main(void) {
 
 
     init_game_data();
+/*
+	draw_menu(cur_menu_item);
+	while(1) {
+		// not going to use interrupts for this, cause I think will need different functionality in different
+		// places
+		// also will prob put this in function later
+		if ((timer_get_ticks() - button_debounce_confirm) > 2000) {
+			button_debounce_confirm = timer_get_ticks();
+			if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 0)) {
+					// play the game
+					break;
+			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
+					// character selec screen	
+
+			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
+					// Top Scores Screen
+			}
+		}
+
+		if ((timer_get_ticks() - button_debounce_selector) > 2000) {
+			button_debounce_selector = timer_get_ticks();
+			if (gpio_read(SELECTOR) == 0) {
+				cur_menu_item++;
+				if (cur_menu_item > 2) {
+					cur_menu_item = 0;
+				}
+				draw_menu(cur_menu_item);
+			}
+		}
+	}
+	*/
+	
     /*
     draw_acknowledgements();
     gl_swap_buffer();
