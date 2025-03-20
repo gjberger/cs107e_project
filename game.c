@@ -218,6 +218,45 @@ void init_game_data(void) {
     right_block.on = false;
 }
 
+void draw_mario(void) {
+    // hat
+    gl_draw_rect(LANE2 - 21, 0.87 * HEIGHT - 5, 22, 5, 0xc81a27);
+
+    // head and hair
+    gl_draw_rect(LANE2 - 20, 0.87 * HEIGHT, 20, 20, 0xe2ab7d);
+    gl_draw_rect(LANE2 - 20, 0.87 * HEIGHT, 20, 16, 0x7e3f14);
+    // ears
+    gl_draw_rect(LANE2 - 22, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(LANE2, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
+
+    // body
+    gl_draw_rect(LANE2 - 18, 0.87 * HEIGHT + 20, 16, 25, 0x1f22b4);
+    gl_draw_rect(LANE2 - 13, 0.87 * HEIGHT + 20, 6, 6, 0xc81a27);
+    
+    gl_draw_rect(LANE2 - 18, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
+    gl_draw_rect(LANE2 - 5, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
+
+    // shoes
+    gl_draw_rect(LANE2 - 18, 0.87 * HEIGHT + 45, 6, 4, GL_BLACK);
+    gl_draw_rect(LANE2 - 8, 0.87 * HEIGHT + 45, 6, 4, GL_BLACK);
+
+
+    // arms
+    // left
+    gl_draw_rect(LANE2 - 21, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
+    gl_draw_rect(LANE2 - 22, 0.87 * HEIGHT + 25, 4, 4, 0xc81a27);
+    gl_draw_rect(LANE2 - 23, 0.87 * HEIGHT + 28, 4, 4, 0xc81a27);
+
+    // right
+    gl_draw_rect(LANE2 - 3, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
+    gl_draw_rect(LANE2 - 2, 0.87 * HEIGHT + 25, 4, 4, 0xc81a27);
+    gl_draw_rect(LANE2 - 1, 0.87 * HEIGHT + 28, 4, 4, 0xc81a27);
+    
+    // hands
+    gl_draw_rect(LANE2 - 23, 0.87 * HEIGHT + 31, 4, 4, 0xe2ab7d);
+    gl_draw_rect(LANE2 - 1, 0.87 * HEIGHT + 31, 4, 4, 0xe2ab7d);
+
+}
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -228,6 +267,12 @@ void main(void) {
 	set_up_timer_interrupts();
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
+
+    gl_clear(GL_WHITE);
+    draw_mario();
+    gl_swap_buffer();
+    while (1) {}
+
 
     init_game_data();
     /*
