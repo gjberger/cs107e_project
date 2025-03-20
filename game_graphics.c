@@ -384,6 +384,8 @@ void draw_barrier(int x, int y, barrier_t type) {
         gl_draw_rect(x, 0.68 * HEIGHT + y, 40, 40, GL_BLACK);
     } else if (type == BEE) {
         draw_barrier_bee(x, y);
+    } else if (type == FLY) {
+        draw_barrier_fly(x, y);
     }
 }
 

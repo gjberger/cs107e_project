@@ -99,14 +99,16 @@ void handle_barriers(void *dev) {
         right_block.on = false;
     }
 
-    int random_barrier_l = rand(2) + 1;
-    int random_barrier_m = rand(2) + 1;
-    int random_barrier_r = rand(2) + 1;
+    int random_barrier_l = rand(3) + 1;
+    int random_barrier_m = rand(3) + 1;
+    int random_barrier_r = rand(3) + 1;
 
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
         left_block.x = LANE1 + 15;
     } else if (left_block.barrier == BEE) {
+        left_block.x = LANE1 + 35;
+    } else if (left_block.barrier == FLY) {
         left_block.x = LANE1 + 35;
     }
     left_block.y = 0;
@@ -115,7 +117,8 @@ void handle_barriers(void *dev) {
         middle_block.x = LANE2 - 20;
     } else if (middle_block.barrier == BEE) {
         middle_block.x = LANE2;
-
+    } else if (middle_block.barrier == FLY) {
+        middle_block.x = LANE2 - 2;
     }
     middle_block.y = 0;
     right_block.barrier = random_barrier_r;
@@ -123,6 +126,8 @@ void handle_barriers(void *dev) {
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
     } else if (right_block.barrier == BEE) {
+        right_block.x = LANE3 - 45;
+    } else if (right_block.barrier == FLY) {
         right_block.x = LANE3 - 45;
     }
     right_block.y = 0;
@@ -224,19 +229,15 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
-    draw_background();
-    draw_barrier_fly(LANE3, 0);
-    gl_swap_buffer();
-    while (1) {}
-
     init_game_data();
+    /*
     draw_acknowledgements();
     gl_swap_buffer();
     draw_loading_screen();
     gl_swap_buffer();
     blinking_start_screen();
     game_countdown();
-	
+	*/
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
     
