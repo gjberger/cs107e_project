@@ -119,32 +119,40 @@ void handle_barriers(void *dev) {
 
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
+        left_block.y = 0;
         left_block.x = LANE1 + 15;
     } else if (left_block.barrier == BEE) {
+        left_block.y = 0;
         left_block.x = LANE1 + 35;
     } else if (left_block.barrier == FLY) {
         left_block.x = LANE1 + 35;
+        left_block.y = 0;
     }
-    left_block.y = 0;
+
+
     middle_block.barrier = random_barrier_m;
     if (middle_block.barrier == BLOCK) {
         middle_block.x = LANE2 - 20;
+        middle_block.y = 0;
     } else if (middle_block.barrier == BEE) {
         middle_block.x = LANE2;
+        middle_block.y = 0;
     } else if (middle_block.barrier == FLY) {
         middle_block.x = LANE2 - 2;
+        middle_block.y = 0;
     }
-    middle_block.y = 0;
     right_block.barrier = random_barrier_r;
     
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
+        right_block.y = 0;
     } else if (right_block.barrier == BEE) {
         right_block.x = LANE3 - 45;
+        right_block.y = 0;
     } else if (right_block.barrier == FLY) {
         right_block.x = LANE3 - 45;
+        right_block.y = 0;
     }
-    right_block.y = 0;
 }
 
 void set_up_timer_interrupts(void) {
@@ -163,73 +171,6 @@ void set_up_timer2_interrupts(void) {
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
-void draw_train_slats(void) {
-   
-    // left
-    gl_draw_line(LANE1 - 15, 0.75 * HEIGHT + 1, LANE1 + 83, 0.75 * HEIGHT + 1, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 23, 0.75 * HEIGHT + 20, LANE1 + 79, 0.75 * HEIGHT + 20, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 29, 0.75 * HEIGHT + 40, LANE1 + 77, 0.75 * HEIGHT + 40, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 35, 0.75 * HEIGHT + 60, LANE1 + 72, 0.75 * HEIGHT + 60, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 41, 0.75 * HEIGHT + 80, LANE1 + 68, 0.75 * HEIGHT + 80, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 49, 0.75 * HEIGHT + 100, LANE1 + 65, 0.75 * HEIGHT + 100, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 55, 0.75 * HEIGHT + 120, LANE1 + 63, 0.75 * HEIGHT + 120, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 61, 0.75 * HEIGHT + 140, LANE1 + 56, 0.75 * HEIGHT + 140, TRAIN_SLATS);
-    
-
-    // middle
-    gl_draw_line(LANE2 - 50, 0.75 * HEIGHT + 1, LANE2 + 50, 0.75 * HEIGHT + 1, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 55, 0.75 * HEIGHT + 20, LANE2 + 55, 0.75 * HEIGHT + 20, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 58, 0.75 * HEIGHT + 40, LANE2 + 58, 0.75 * HEIGHT + 40, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 62, 0.75 * HEIGHT + 60, LANE2 + 62, 0.75 * HEIGHT + 60, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 66, 0.75 * HEIGHT + 80, LANE2 + 66, 0.75 * HEIGHT + 80, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 70, 0.75 * HEIGHT + 100, LANE2 + 70, 0.75 * HEIGHT + 100, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 74, 0.75 * HEIGHT + 120, LANE2 + 74, 0.75 * HEIGHT + 120, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 78, 0.75 * HEIGHT + 140, LANE2 + 78, 0.75 * HEIGHT + 140, TRAIN_SLATS);
-
-    // right
-    gl_draw_line(LANE3 - 84, 0.75 * HEIGHT + 1, LANE3 + 18, 0.75 * HEIGHT + 1, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 80, 0.75 * HEIGHT + 20, LANE3 + 24, 0.75 * HEIGHT + 20, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 76, 0.75 * HEIGHT + 40, LANE3 + 31, 0.75 * HEIGHT + 40, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 72, 0.75 * HEIGHT + 60, LANE3 + 37, 0.75 * HEIGHT + 60, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 68, 0.75 * HEIGHT + 80, LANE3 + 44, 0.75 * HEIGHT + 80, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 64, 0.75 * HEIGHT + 100, LANE3 + 51, 0.75 * HEIGHT + 100, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 60, 0.75 * HEIGHT + 120, LANE3 + 58, 0.75 * HEIGHT + 120, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 56, 0.75 * HEIGHT + 140, LANE3 + 66, 0.75 * HEIGHT + 140, TRAIN_SLATS);
-}
-
-void draw_train_slats_2(void) {
-   
-    // left
-    gl_draw_line(LANE1 - 18, 0.75 * HEIGHT + 10, LANE1 + 82, 0.75 * HEIGHT + 10, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 26, 0.75 * HEIGHT + 30, LANE1 + 78, 0.75 * HEIGHT + 30, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 32, 0.75 * HEIGHT + 50, LANE1 + 76, 0.75 * HEIGHT + 50, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 38, 0.75 * HEIGHT + 70, LANE1 + 71, 0.75 * HEIGHT + 70, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 44, 0.75 * HEIGHT + 90, LANE1 + 67, 0.75 * HEIGHT + 90, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 53, 0.75 * HEIGHT + 110, LANE1 + 62, 0.75 * HEIGHT + 110, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 58, 0.75 * HEIGHT + 130, LANE1 + 60, 0.75 * HEIGHT + 130, TRAIN_SLATS);
-    gl_draw_line(LANE1 - 64, 0.75 * HEIGHT + 150, LANE1 + 53, 0.75 * HEIGHT + 150, TRAIN_SLATS);
-
-    // middle
-    gl_draw_line(LANE2 - 52, 0.75 * HEIGHT + 10, LANE2 + 52, 0.75 * HEIGHT + 10, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 57, 0.75 * HEIGHT + 30, LANE2 + 57, 0.75 * HEIGHT + 30, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 60, 0.75 * HEIGHT + 50, LANE2 + 60, 0.75 * HEIGHT + 50, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 64, 0.75 * HEIGHT + 70, LANE2 + 64, 0.75 * HEIGHT + 70, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 68, 0.75 * HEIGHT + 90, LANE2 + 68, 0.75 * HEIGHT + 90, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 72, 0.75 * HEIGHT + 110, LANE2 + 72, 0.75 * HEIGHT + 110, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 76, 0.75 * HEIGHT + 130, LANE2 + 76, 0.75 * HEIGHT + 130, TRAIN_SLATS);
-    gl_draw_line(LANE2 - 80, 0.75 * HEIGHT + 150, LANE2 + 80, 0.75 * HEIGHT + 150, TRAIN_SLATS);
-    
-    // right
-    gl_draw_line(LANE3 - 80, 0.75 * HEIGHT + 10, LANE3 + 22, 0.75 * HEIGHT + 10, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 76, 0.75 * HEIGHT + 30, LANE3 + 28, 0.75 * HEIGHT + 30, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 72, 0.75 * HEIGHT + 50, LANE3 + 35, 0.75 * HEIGHT + 50, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 68, 0.75 * HEIGHT + 70, LANE3 + 41, 0.75 * HEIGHT + 70, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 64, 0.75 * HEIGHT + 90, LANE3 + 48, 0.75 * HEIGHT + 90, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 60, 0.75 * HEIGHT + 110, LANE3 + 55, 0.75 * HEIGHT + 110, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 56, 0.75 * HEIGHT + 130, LANE3 + 62, 0.75 * HEIGHT + 130, TRAIN_SLATS);
-    gl_draw_line(LANE3 - 52, 0.75 * HEIGHT + 150, LANE3 + 70, 0.75 * HEIGHT + 150, TRAIN_SLATS);
-}
-
 void update_screen(int time_init) {
         draw_background();
         draw_train_slats();
@@ -246,7 +187,6 @@ void update_screen(int time_init) {
         character_pose_1(surfer.pos, surfer.skin);
         gl_swap_buffer();
       
-        timer_delay_ms(100);
         draw_background();
         draw_train_slats_2();
         draw_score(time_init);
@@ -262,7 +202,6 @@ void update_screen(int time_init) {
         character_pose_2(surfer.pos, surfer.skin);
         gl_swap_buffer();
 
-        timer_delay_ms(100);
         left_block.x = left_block.x - 2;
         left_block.y = left_block.y + 6;
         middle_block.y = middle_block.y + 6;
@@ -371,6 +310,7 @@ void main(void) {
     init_game_data();
     surfer.skin = LUIGI;
 
+   
     /*
     draw_acknowledgements();
     gl_swap_buffer();
@@ -383,8 +323,8 @@ void main(void) {
 
 
 
-    //hstimer_enable(HSTIMER0);
-	//hstimer_enable(HSTIMER1);
+    hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
     
     int time_init = get_secs();
     while (surfer.alive) {
