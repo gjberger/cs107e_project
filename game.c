@@ -8,6 +8,7 @@
 #include "interrupts.h"
 #include "hstimer.h"
 #include "random.h"
+#include "malloc.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -25,6 +26,7 @@ static struct {
 	int *list;
 	int num_filled;
 	int min_score;
+	int min_index;
 } top_scores;
 
 static struct {
@@ -229,12 +231,13 @@ void init_game_data(void) {
     middle_block.on = false;
     right_block.on = false;
 
-	top_scores.list = malloc(10 * sizeof(int));
+	top_scores.list = (int *)malloc(10 * sizeof(int));
 	for (int i = 0; i < 10; i++) {
 		top_scores.list[i] = -1;
 	}
-	top_socres.min_score = 0;
+	top_scores.min_score = 0;
 	top_scores.num_filled = 0;
+	top_scores.min_index = 0;
 }
 
 void character_select(void) {
@@ -243,7 +246,7 @@ void character_select(void) {
 
 }
 
-void top_scores(void) {
+void top_scores_screen(void) {
 
 
 
@@ -316,9 +319,13 @@ void main(void) {
     
     draw_endscreen();
     gl_swap_buffer();
-	if (top_scores.list[top_scores.num_filled] == NULL) {
-		
-
+	if (top_scores.list[top_scores.num_filled] == -1) {
+		if (time_init > top_scores.min_score) {
+			top_scores.list[top_scores.num_filled] = time_init;
+			top_scores.num_filled++;
+		}		
+	} else {
+				
 
 
 	}
