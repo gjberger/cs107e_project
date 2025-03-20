@@ -188,6 +188,33 @@ void init_game_data(void) {
     right_block.on = false;
 }
 
+void draw_bug(void) {
+    gl_draw_rect(LANE2 - 1, 0.8 * HEIGHT - 7, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 6, 0.8 * HEIGHT - 7, 3, 3, GL_BLACK);
+    
+    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT - 9, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 8, 0.8 * HEIGHT - 9, 3, 3, GL_BLACK);
+    
+    gl_draw_rect(LANE2 - 5, 0.8 * HEIGHT - 11, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 10, 0.8 * HEIGHT - 11, 3, 3, GL_BLACK);
+
+    gl_draw_rect(LANE2 + 1, 0.8 * HEIGHT - 5, 6, 5, GL_BLACK);
+    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT, 14, 5, GL_BLACK);
+    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT + 5, 14, 5, 0xffc40c);
+    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 10, 20, 5, GL_BLACK);
+    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 15, 20, 5, 0xffc40c);
+    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 20, 20, 5, GL_BLACK);
+    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 25, 20, 5, 0xffc40c);
+    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT + 30, 14, 5, GL_BLACK);
+    gl_draw_rect(LANE2 + 1, 0.8 * HEIGHT + 35, 6, 5, GL_BLACK);
+
+    gl_draw_rect(LANE2 - 16, 0.8 * HEIGHT + 6, 10, 10, 0xbbeffd);
+    gl_draw_rect(LANE2 - 16, 0.8 * HEIGHT + 22, 10, 10, 0xbbeffd);
+    
+    gl_draw_rect(LANE2 + 14, 0.8 * HEIGHT + 6, 10, 10, 0xbbeffd);
+    gl_draw_rect(LANE2 + 14, 0.8 * HEIGHT + 22, 10, 10, 0xbbeffd);
+}
+
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -200,6 +227,11 @@ void main(void) {
 	interrupts_global_enable();
 
     draw_background();
+    draw_bug();
+    gl_swap_buffer();
+    while (1) {}
+    /*
+    draw_background();
     draw_steve(LANE2);
     gl_swap_buffer();
     draw_background();
@@ -207,7 +239,7 @@ void main(void) {
     while (1) {
         gl_swap_buffer();
         timer_delay_ms(500);
-    }
+    }*/
 
     init_game_data();
     draw_acknowledgements();
