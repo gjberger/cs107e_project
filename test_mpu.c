@@ -4,7 +4,11 @@
 #include "printf.h"
 #include <stdint.h>
 #include "uart.h"
+#include "gpio.h"
+#include "gpio_extra.h"
 
+#define CONFIRM GPIO_PB3
+#define SELECTOR GPIO_PB4
 static struct {
     position_t pos;
     int x;
@@ -13,6 +17,16 @@ static struct {
     bool seen_zero;
     bool alive;
 } surfer;
+
+static void test_buttons(void) {
+	gpio_set_input(CONFIRM);
+	gpio_set_input(SELECTOR);
+	gpio_set_pullup(CONFIRM);
+	gpio_set_pullup(SELECTOR);
+	printf("Confirm Button: %d\n", gpio_read(CONFIRM));
+	printf("Select Button: %d\n", gpio_read(SELECTOR));
+	timer_delay_ms(20);
+}
 
 static void test_handle_board(i2c_device_t *dev) {
 	position_t pos = get_cur_position(dev);
@@ -59,17 +73,21 @@ static void test_angle_measure(i2c_device_t *dev) {
 
 void main(void) {
 	uart_init();
+	gpio_init();
+	/*
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	surfer.seen_zero = true;
 	surfer.pos = CENTER;
+	*/
 	while(1) {
 		//print_accel_data(dev);	
 		//print_gyro_data(dev);
-		test_position(dev);
+		//test_position(dev);
 		//test_handle_board(dev);
 		//test_angle_measure(dev);
-		timer_delay_ms(SAMPLE_RATE * 1000);
+		//timer_delay_ms(SAMPLE_RATE * 1000);
+		test_buttons();
 	}
 
 }

@@ -5,6 +5,7 @@
 #include "game_graphics.h"
 #include "strings.h"
 #include "mpu6050.h"
+#include "malloc.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -644,6 +645,43 @@ void draw_menu(int cur_select) {
 	}
 	
     gl_swap_buffer();
+}
+
+static void sort_top_scores(int *scores) {
+	for (int i = 0; i < 9; i++) {
+		int min_index = i;
+	
+		for (int j = i + 1; j < 10; j++) {
+			if (scores[j] < scores[min_index]) {
+				min_index = j;
+			}
+		}
+		int temp = scores[i];
+		scores[i] = scores[min_index];
+		scores[min_index] = temp;
+	}
+}
+
+void draw_top_scores(int *scores) {
+	int *scores_copy = malloc(10 * sizeof(int));
+	memcpy(scores_copy, scores, 10 * sizeof(int));
+	sort_top_scores(scores_copy);
+
+	//header
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 50, "TOP SCORES", GL_WHITE);
+	//gl_draw_line(0.2 * WIDTH - 5, ((0.14 * HEIGHT) + 50) + gl_get_char_height() + 2, (0.2 * WIDTH) + (gl_get_char_width() * 10) + 5, GL_WHITE);
+	
+	for (int i = 9; i >= 0; i--) {
+		if (scores[i] == -1) {
+			continue;
+		}		
+
+		char buf[32];
+	//	num_to_str(scores[i], 10, buf);
+//		gl_draw
+
+
+	}
 }
 
 void draw_barrier_fly(int x, int y) {
