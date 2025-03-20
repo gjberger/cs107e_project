@@ -11,6 +11,7 @@ void draw_background(void);
 void draw_loading_screen(void);
 void draw_startscreen(void);
 void draw_startscreen_2(void);
+void blinking_start_screen(void);
 void draw_endscreen(void);
 void draw_character(int x);
 void draw_character_2(int x);

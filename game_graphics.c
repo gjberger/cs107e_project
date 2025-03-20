@@ -164,6 +164,19 @@ void draw_startscreen_2(void) {
     gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
 }
 
+void blinking_start_screen(void) {
+    long num = 0;
+    while (num < 5) {
+        draw_startscreen();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        draw_startscreen_2();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        num++;
+    }
+}
+
 void draw_endscreen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);

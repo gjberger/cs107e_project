@@ -179,20 +179,6 @@ void check_if_dead(void) {
     }
 }
 
-void blinking_start_screen(void) {
-    long num = 0;
-    while (num < 5) {
-        draw_startscreen();
-        timer_delay_ms(500);
-        gl_swap_buffer();
-        draw_startscreen_2();
-        timer_delay_ms(500);
-        gl_swap_buffer();
-        num++;
-    }
-
-}
-
 void game_countdown(void) {
     draw_startscreen_2();
     draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
