@@ -15,7 +15,11 @@ typedef enum {
     STICK = 1,
     STEVE = 2,
     MARIO = 3,
+    LUIGI = 4,
 } skin_t;
+#define LUIGI_GREEN 0x1fa94a
+#define TRAIN_SLATS 0xc048c0 
+#define TRAIN_RAIL 0xc0d5d4
 
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 
@@ -33,6 +37,8 @@ void draw_steve(int x);
 void draw_steve_2(int x);
 void draw_mario(int x);
 void draw_mario_2(int x);
+void draw_luigi(int x);
+void draw_luigi_2(int x);
 void character_animation(int secs, position_t pos);
 void mid_to_left(int secs);
 void mid_to_right(int secs);
@@ -50,3 +56,5 @@ void character_pose_1(position_t pos, skin_t skin);
 void character_pose_2(position_t pos, skin_t skin);
 void draw_menu(int cur_select);
 void draw_top_scores(int *scores);
+void draw_train_slats(void);
+void draw_train_slats_2(void);

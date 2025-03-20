@@ -118,32 +118,40 @@ void handle_barriers(void *dev) {
 
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
+        left_block.y = 0;
         left_block.x = LANE1 + 15;
     } else if (left_block.barrier == BEE) {
+        left_block.y = 0;
         left_block.x = LANE1 + 35;
     } else if (left_block.barrier == FLY) {
         left_block.x = LANE1 + 35;
+        left_block.y = 0;
     }
-    left_block.y = 0;
+
+
     middle_block.barrier = random_barrier_m;
     if (middle_block.barrier == BLOCK) {
         middle_block.x = LANE2 - 20;
+        middle_block.y = 0;
     } else if (middle_block.barrier == BEE) {
         middle_block.x = LANE2;
+        middle_block.y = 0;
     } else if (middle_block.barrier == FLY) {
         middle_block.x = LANE2 - 2;
+        middle_block.y = 0;
     }
-    middle_block.y = 0;
     right_block.barrier = random_barrier_r;
     
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
+        right_block.y = 0;
     } else if (right_block.barrier == BEE) {
         right_block.x = LANE3 - 45;
+        right_block.y = 0;
     } else if (right_block.barrier == FLY) {
         right_block.x = LANE3 - 45;
+        right_block.y = 0;
     }
-    right_block.y = 0;
 }
 
 void set_up_timer_interrupts(void) {
@@ -162,9 +170,9 @@ void set_up_timer2_interrupts(void) {
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
-
 void update_screen(int time_init) {
         draw_background();
+        draw_train_slats();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
@@ -177,8 +185,9 @@ void update_screen(int time_init) {
         }
         character_pose_1(surfer.pos, surfer.skin);
         gl_swap_buffer();
-       
+      
         draw_background();
+        draw_train_slats_2();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
@@ -305,8 +314,10 @@ void main(void) {
 	interrupts_global_enable();
 
     init_game_data();
-    surfer.skin = MARIO;
-	
+    surfer.skin = LUIGI;
+
+   
+    /*
     draw_acknowledgements();
     gl_swap_buffer();
     draw_loading_screen();
@@ -314,6 +325,10 @@ void main(void) {
 	main_menu();
     blinking_start_screen();
     game_countdown();
+    */
+
+
+
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
     
