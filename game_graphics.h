@@ -18,6 +18,8 @@ typedef enum {
     LUIGI = 4,
 } skin_t;
 #define LUIGI_GREEN 0x1fa94a
+#define TRAIN_SLATS 0xc048c0 
+#define TRAIN_RAIL 0xc0d5d4
 
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 
