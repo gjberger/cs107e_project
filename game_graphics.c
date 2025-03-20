@@ -126,6 +126,20 @@ void draw_background(void) {
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
+void draw_loading_screen(void) {
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+    gl_draw_string(0.4 * WIDTH, (0.7 * HEIGHT) + 2, "Loading...", GL_WHITE);
+    for (int i = 0; i < 20; i++) {
+        gl_draw_rect(0.18 * WIDTH, 0.8 * HEIGHT, 250, i, GL_WHITE);
+        timer_delay_ms(100);
+        gl_swap_buffer();
+    }
+}
+
 void draw_startscreen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);

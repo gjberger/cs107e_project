@@ -179,6 +179,44 @@ void check_if_dead(void) {
     }
 }
 
+void blinking_start_screen(void) {
+    long num = 0;
+    while (num < 5) {
+        draw_startscreen();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        draw_startscreen_2();
+        timer_delay_ms(500);
+        gl_swap_buffer();
+        num++;
+    }
+
+}
+
+void game_countdown(void) {
+    draw_startscreen_2();
+    draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(2, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(1, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+}
+
+void init_game_data(void) {
+    surfer.pos = CENTER;
+    surfer.alive = true;
+	surfer.seen_zero = true;
+    left_block.on = false;
+    middle_block.on = false;
+    right_block.on = false;
+}
+
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -193,37 +231,11 @@ void main(void) {
 	hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
 
-    surfer.pos = CENTER;
-    surfer.alive = true;
-	surfer.seen_zero = true;
-    left_block.on = false;
-    middle_block.on = false;
-    right_block.on = false;
+    init_game_data();
 
-  
-
-    long num = 0;
-    while (num < 5) {
-        draw_startscreen();
-        timer_delay_ms(500);
-        gl_swap_buffer();
-        draw_startscreen_2();
-        timer_delay_ms(500);
-        gl_swap_buffer();
-        num++;
-    }
-    draw_startscreen_2();
-    draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
-    draw_startscreen_2();
-    draw_num(2, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
-    draw_startscreen_2();
-    draw_num(1, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
+    draw_loading_screen();
+    blinking_start_screen();
+    game_countdown();
     int time_init = get_secs();
     while (surfer.alive) {
         update_screen(time_init);
