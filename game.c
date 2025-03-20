@@ -228,14 +228,16 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
-	hstimer_enable(HSTIMER0);
-	hstimer_enable(HSTIMER1);
 
     init_game_data();
-
     draw_loading_screen();
+    gl_swap_buffer();
     blinking_start_screen();
     game_countdown();
+	
+    hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
+    
     int time_init = get_secs();
     while (surfer.alive) {
         update_screen(time_init);
