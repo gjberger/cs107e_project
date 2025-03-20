@@ -177,6 +177,21 @@ void blinking_start_screen(void) {
     }
 }
 
+void game_countdown(void) {
+    draw_startscreen_2();
+    draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(2, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+    draw_startscreen_2();
+    draw_num(1, 0.45 * WIDTH, 0.7 * HEIGHT);
+    gl_swap_buffer();
+    timer_delay(1);
+}
+
 void draw_endscreen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);

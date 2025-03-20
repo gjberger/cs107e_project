@@ -179,21 +179,6 @@ void check_if_dead(void) {
     }
 }
 
-void game_countdown(void) {
-    draw_startscreen_2();
-    draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
-    draw_startscreen_2();
-    draw_num(2, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
-    draw_startscreen_2();
-    draw_num(1, 0.45 * WIDTH, 0.7 * HEIGHT);
-    gl_swap_buffer();
-    timer_delay(1);
-}
-
 void init_game_data(void) {
     surfer.pos = CENTER;
     surfer.alive = true;
