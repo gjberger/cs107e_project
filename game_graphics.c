@@ -416,7 +416,6 @@ void draw_barrier_bee(int x, int y) {
     gl_draw_rect(x + 14, 0.68 * HEIGHT + 22 + y, 10, 10, 0xbbeffd);
 }
 
-<<<<<<< HEAD
 
 void draw_menu(int cur_select) {
     gl_clear(GL_MAGENTA);
@@ -459,10 +458,6 @@ void draw_menu(int cur_select) {
     gl_swap_buffer();
 }
 
-
-
-
-=======
 void draw_barrier_fly(int x, int y) {
     // body
     gl_draw_rect(x, 0.68 * HEIGHT + y, 12, 12, 0x349a4c);
@@ -506,4 +501,3 @@ void draw_barrier_fly(int x, int y) {
     gl_draw_rect(x + 10, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
     gl_draw_rect(x + 15, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
 }
->>>>>>> fcefaaf55a3569c7cd29e5072b5e0f436741afa3
