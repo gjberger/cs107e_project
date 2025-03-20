@@ -43,3 +43,4 @@ void draw_score(int secs);
 void draw_num(int num, int x, int y);
 void character_pose_1(position_t pos, skin_t skin);
 void character_pose_2(position_t pos, skin_t skin);
+void draw_menu(int cur_select);

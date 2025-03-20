@@ -413,3 +413,49 @@ void draw_barrier_bee(int x, int y) {
     gl_draw_rect(x + 14, 0.68 * HEIGHT + 6 + y, 10, 10, 0xbbeffd);
     gl_draw_rect(x + 14, 0.68 * HEIGHT + 22 + y, 10, 10, 0xbbeffd);
 }
+
+
+void draw_menu(int cur_select) {
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+
+	if (cur_select == 0) {
+		gl_draw_line((.05 * WIDTH), (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()), (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()) - 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()) + 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (0.5 * gl_get_char_height()), GL_YELLOW);
+
+
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()) , (.14 * HEIGHT) + 350, "Play Game", GL_YELLOW);
+		gl_draw_string(.22 * WIDTH, (.14 * HEIGHT) + 350 + (2 * gl_get_char_height()), "Character Select", GL_WHITE);
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()), (.14 * HEIGHT) + 350 + (4 * gl_get_char_height()), "Top Scores", GL_WHITE);
+	} else if (cur_select == 1) {
+
+		gl_draw_line((.05 * WIDTH), (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()), (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()) - 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()) + 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (2.5 * gl_get_char_height()), GL_YELLOW);
+
+
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()) , (.14 * HEIGHT) + 350, "Play Game", GL_WHITE);
+		gl_draw_string(.22 * WIDTH, (.14 * HEIGHT) + 350 + (2 * gl_get_char_height()), "Character Select", GL_YELLOW);
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()), (.14 * HEIGHT) + 350 + (4 * gl_get_char_height()), "Top Scores", GL_WHITE);
+	} else if (cur_select == 2) {
+			
+		gl_draw_line((.05 * WIDTH), (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()), (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()) - 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()), GL_YELLOW);
+		gl_draw_line((.1 * WIDTH) + 10, (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()) + 10, (.1 * WIDTH) + 20, (.14 * HEIGHT) + 350 + (4.5 * gl_get_char_height()), GL_YELLOW);
+
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()) , (.14 * HEIGHT) + 350, "Play Game", GL_WHITE);
+		gl_draw_string(.22 * WIDTH, (.14 * HEIGHT) + 350 + (2 * gl_get_char_height()), "Character Select", GL_WHITE);
+		gl_draw_string((.22 * WIDTH) + (3 * gl_get_char_width()), (.14 * HEIGHT) + 350 + (4 * gl_get_char_height()), "Top Scores", GL_YELLOW);
+
+	}
+	
+    gl_swap_buffer();
+}
+
+
+
+
