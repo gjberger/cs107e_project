@@ -299,8 +299,9 @@ void main(void) {
 	interrupts_global_enable();
 
     init_game_data();
-    surfer.skin = MARIO;
-	
+    surfer.skin = LUIGI;
+
+    /*
     draw_acknowledgements();
     gl_swap_buffer();
     draw_loading_screen();
@@ -308,6 +309,9 @@ void main(void) {
 	main_menu();
     blinking_start_screen();
     game_countdown();
+    */
+
+
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
     

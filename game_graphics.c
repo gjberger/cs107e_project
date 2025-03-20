@@ -400,7 +400,79 @@ void draw_mario_2(int x) {
     gl_draw_rect(x + 8, 0.87 * HEIGHT + 13, 4, 4, 0xc81a27);
     gl_draw_rect(x + 9, 0.87 * HEIGHT + 14, 4, 4, 0xc81a27);
     gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
+}
 
+void draw_luigi(int x) {
+    // hat
+    gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, LUIGI_GREEN);
+
+    // head and hair
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 20, 0xe2ab7d);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 16, 0x7e3f14);
+    // ears
+    gl_draw_rect(x - 12, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+
+    // body
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 16, 25, 0x1f22b4);
+    gl_draw_rect(x - 3, 0.87 * HEIGHT + 10, 6, 6, LUIGI_GREEN);
+
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 3, 3, LUIGI_GREEN);
+    gl_draw_rect(x + 5, 0.87 * HEIGHT + 10, 3, 3, LUIGI_GREEN);
+
+    // shoes
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 35, 6, 4, GL_BLACK);
+    gl_draw_rect(x + 2, 0.87 * HEIGHT + 35, 6, 2, GL_BLACK);
+
+    // arms
+    // left
+    gl_draw_rect(x - 11, 0.87 * HEIGHT + 12, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT + 13, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 14, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
+
+    // right
+    gl_draw_rect(x + 7, 0.87 * HEIGHT + 12, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 8, 0.87 * HEIGHT + 15, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 21, 4, 4, 0xe2ab7d);
+
+}
+
+void draw_luigi_2(int x) {
+    // hat
+    gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, LUIGI_GREEN);
+
+    // head and hair
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 20, 0xe2ab7d);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 16, 0x7e3f14);
+    // ears
+    gl_draw_rect(x - 12, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+
+    // body
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 16, 25, 0x1f22b4);
+    gl_draw_rect(x - 3, 0.87 * HEIGHT + 10, 6, 6, LUIGI_GREEN);
+
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 3, 3, LUIGI_GREEN);
+    gl_draw_rect(x + 5, 0.87 * HEIGHT + 10, 3, 3, LUIGI_GREEN);
+
+    // shoes
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 35, 6, 2, GL_BLACK);
+    gl_draw_rect(x + 2, 0.87 * HEIGHT + 35, 6, 4, GL_BLACK);
+
+    // arms
+    // left
+    gl_draw_rect(x - 11, 0.87 * HEIGHT + 12, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT + 15, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 18, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 21, 4, 4, 0xe2ab7d);
+
+    // right
+    gl_draw_rect(x + 7, 0.87 * HEIGHT + 12, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 8, 0.87 * HEIGHT + 13, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 14, 4, 4, LUIGI_GREEN);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
 }
 
 
@@ -436,7 +508,16 @@ void character_pose_1(position_t pos, skin_t skin) {
         if (pos == RIGHT) {
             draw_mario(LANE3);
         }
-
+    } else if (skin == LUIGI) {
+        if (pos == LEFT) {
+            draw_luigi(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_luigi(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_luigi(LANE3);
+        }
     }
 }
 
@@ -472,6 +553,16 @@ void character_pose_2(position_t pos, skin_t skin) {
         }
         if (pos == RIGHT) {
             draw_mario_2(LANE3);
+        }
+    } else if (skin == LUIGI) {
+        if (pos == LEFT) {
+            draw_luigi_2(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_luigi_2(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_luigi_2(LANE3);
         }
     }
 }
