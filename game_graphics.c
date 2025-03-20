@@ -384,6 +384,8 @@ void draw_barrier(int x, int y, barrier_t type) {
         gl_draw_rect(x, 0.68 * HEIGHT + y, 40, 40, GL_BLACK);
     } else if (type == BEE) {
         draw_barrier_bee(x, y);
+    } else if (type == FLY) {
+        draw_barrier_fly(x, y);
     }
 }
 
@@ -414,6 +416,7 @@ void draw_barrier_bee(int x, int y) {
     gl_draw_rect(x + 14, 0.68 * HEIGHT + 22 + y, 10, 10, 0xbbeffd);
 }
 
+<<<<<<< HEAD
 
 void draw_menu(int cur_select) {
     gl_clear(GL_MAGENTA);
@@ -459,3 +462,48 @@ void draw_menu(int cur_select) {
 
 
 
+=======
+void draw_barrier_fly(int x, int y) {
+    // body
+    gl_draw_rect(x, 0.68 * HEIGHT + y, 12, 12, 0x349a4c);
+    gl_draw_rect(x, 0.68 * HEIGHT + 12 + y, 12, 12, 0x1b714d);
+
+    // eyes
+
+    gl_draw_rect(x, 0.68 * HEIGHT + y, 4, 4, 0xff4f01);
+    gl_draw_rect(x + 8, 0.68 * HEIGHT + y, 4, 4, 0xff4f01);
+
+    // front antennae
+    gl_draw_rect(x + 2, 0.68 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 2, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 7, 0.68 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 7, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    
+    gl_draw_rect(x - 1, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 1, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 10, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 10, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+
+    // front legs
+    // left
+    gl_draw_rect(x - 3, 0.68 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 5, 0.68 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 7, 0.68 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 9, 0.68 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 11, 0.68 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
+   
+    // right
+    gl_draw_rect(x + 12, 0.68 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 14, 0.68 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 16, 0.68 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 18, 0.68 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 20, 0.68 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
+
+
+    // wings
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x - 11, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x + 10, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x + 15, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
+}
+>>>>>>> fcefaaf55a3569c7cd29e5072b5e0f436741afa3
