@@ -22,6 +22,7 @@ static struct {
     int head;
     bool seen_zero;
     bool alive;
+    skin_t skin;
 } surfer;
 
 static struct {
@@ -212,6 +213,54 @@ void init_game_data(void) {
     right_block.on = false;
 }
 
+
+void draw_fly(void) {
+    gl_clear(GL_WHITE);
+
+    // body
+    gl_draw_rect(LANE2, 0.68 * HEIGHT, 12, 12, 0x349a4c);
+    gl_draw_rect(LANE2, 0.68 * HEIGHT + 12, 12, 12, 0x1b714d);
+   
+
+    // eyes
+
+    gl_draw_rect(LANE2, 0.68 * HEIGHT, 4, 4, 0xff4f01);
+    gl_draw_rect(LANE2 + 8, 0.68 * HEIGHT, 4, 4, 0xff4f01);
+
+    // front antennae
+    gl_draw_rect(LANE2 + 2, 0.68 * HEIGHT - 3, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 2, 0.68 * HEIGHT - 6, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 7, 0.68 * HEIGHT - 3, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 7, 0.68 * HEIGHT - 6, 3, 3, GL_BLACK);
+    
+    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT - 6, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT - 9, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 10, 0.68 * HEIGHT - 6, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 10, 0.68 * HEIGHT - 9, 3, 3, GL_BLACK);
+
+    // front legs
+    // left
+    gl_draw_rect(LANE2 - 3, 0.68 * HEIGHT + 7, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 - 5, 0.68 * HEIGHT + 5, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 - 7, 0.68 * HEIGHT + 3, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 - 9, 0.68 * HEIGHT + 1, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 - 11, 0.68 * HEIGHT - 1, 3, 3, GL_BLACK);
+   
+    // right
+    gl_draw_rect(LANE2 + 12, 0.68 * HEIGHT + 7, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 14, 0.68 * HEIGHT + 5, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 16, 0.68 * HEIGHT + 3, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 18, 0.68 * HEIGHT + 1, 3, 3, GL_BLACK);
+    gl_draw_rect(LANE2 + 20, 0.68 * HEIGHT - 1, 3, 3, GL_BLACK);
+
+
+    // wings
+    gl_draw_rect(LANE2 - 6, 0.68 * HEIGHT + 10, 8, 8, 0xc8cfd9);
+    gl_draw_rect(LANE2 - 11, 0.68 * HEIGHT + 15, 8, 8, 0xc8cfd9);
+    gl_draw_rect(LANE2 + 10, 0.68 * HEIGHT + 10, 8, 8, 0xc8cfd9);
+    gl_draw_rect(LANE2 + 15, 0.68 * HEIGHT + 15, 8, 8, 0xc8cfd9);
+}
+
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -223,14 +272,17 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
-   
+    draw_fly();
+    gl_swap_buffer();
+    while (1) {}
+
     init_game_data();
-    //draw_acknowledgements();
-    //gl_swap_buffer();
-    //draw_loading_screen();
-    //gl_swap_buffer();
-    //blinking_start_screen();
-    // game_countdown();
+    draw_acknowledgements();
+    gl_swap_buffer();
+    draw_loading_screen();
+    gl_swap_buffer();
+    blinking_start_screen();
+    game_countdown();
 	
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
