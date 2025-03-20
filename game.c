@@ -292,9 +292,35 @@ void main_menu(void) {
 			}
 		}
 	}
-
 }
 
+void draw_ghost(void) {
+    // body/head
+    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT - 6, 2, 2, RED_GHOST);
+    gl_draw_rect(LANE2 - 4, 0.68 * HEIGHT - 4, 8, 2, RED_GHOST);
+    gl_draw_rect(LANE2 - 7, 0.68 * HEIGHT - 2, 14, 2, RED_GHOST);
+    gl_draw_rect(LANE2 - 10, 0.68 * HEIGHT, 20, 14, RED_GHOST);
+
+    // eyes
+    gl_draw_rect(LANE2 - 6, 0.68 * HEIGHT + 2, 4, 4, GL_WHITE);
+    gl_draw_rect(LANE2 - 4, 0.68 * HEIGHT + 3, 2, 3, GHOST_EYE);
+    gl_draw_rect(LANE2 + 2, 0.68 * HEIGHT + 2, 4, 4, GL_WHITE);
+    gl_draw_rect(LANE2 + 4, 0.68 * HEIGHT + 3, 2, 3, GHOST_EYE);
+
+    // bottom half
+    gl_draw_rect(LANE2 - 10, 0.68 * HEIGHT + 14, 2, 6, RED_GHOST);
+    gl_draw_rect(LANE2 - 8, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
+    gl_draw_rect(LANE2 - 6, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
+    
+    gl_draw_rect(LANE2 - 2, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
+    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
+    gl_draw_rect(LANE2, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
+    
+    gl_draw_rect(LANE2 + 8, 0.68 * HEIGHT + 14, 2, 6, RED_GHOST);
+    gl_draw_rect(LANE2 + 6, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
+    gl_draw_rect(LANE2 + 4, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
+
+}
 
 void main(void) {
     uart_init();
@@ -310,6 +336,10 @@ void main(void) {
     init_game_data();
     surfer.skin = LUIGI;
 
+    draw_background();
+    draw_ghost();
+    gl_swap_buffer();
+    while (1) {}
    
     /*
     draw_acknowledgements();
