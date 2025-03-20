@@ -329,31 +329,87 @@ void draw_steve_2(int x) {
     gl_draw_line(x - 1, 0.85 * HEIGHT + 50, x - 1, 0.85 * HEIGHT + 65, GL_BLACK);
 }
 
-void character_pose_1(position_t pos) {
-    if (pos == LEFT) {
-        draw_character(LANE1);
+void character_pose_1(position_t pos, skin_t skin) {
+    if (skin == STICK) {
+        if (pos == LEFT) {
+            draw_character(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_character(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_character(LANE3);
+        }
     }
-    if (pos == CENTER) {
-        draw_character(LANE2);
-    }
-    if (pos == RIGHT) {
-        draw_character(LANE3);
+    else if (skin == STEVE) {
+        if (pos == LEFT) {
+            draw_steve(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_steve(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_steve(LANE3);
+        }
     }
 }
 
-void character_pose_2(position_t pos) {
-    if (pos == LEFT) {
-        draw_character_2(LANE1);
+void character_pose_2(position_t pos, skin_t skin) {
+    if (skin == STICK) {
+        if (pos == LEFT) {
+            draw_character_2(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_character_2(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_character_2(LANE3);
+        }
     }
-    if (pos == CENTER) {
-        draw_character_2(LANE2);
-    }
-    if (pos == RIGHT) {
-        draw_character_2(LANE3);
+    else if (skin == STEVE) {
+        if (pos == LEFT) {
+            draw_steve_2(LANE1);
+        }
+        if (pos == CENTER) {
+            draw_steve_2(LANE2);
+        }
+        if (pos == RIGHT) {
+            draw_steve_2(LANE3);
+        }
     }
 }
 
-void draw_barrier(int x, int y) {
-    gl_draw_rect(x, y, 40, 40, GL_BLACK);
+void draw_barrier(int x, int y, barrier_t type) {
+    if (type == BLOCK) {
+        gl_draw_rect(x, 0.68 * HEIGHT + y, 40, 40, GL_BLACK);
+    } else if (type == BEE) {
+        draw_barrier_bee(x, y);
+    }
 }
 
+void draw_barrier_bee(int x, int y) {
+    gl_draw_rect(x - 1, 0.68 * HEIGHT - 7 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 6, 0.68 * HEIGHT - 7 + y, 3, 3, GL_BLACK);
+
+    gl_draw_rect(x - 3, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 8, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+
+    gl_draw_rect(x - 5, 0.68 * HEIGHT - 11 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 10, 0.68 * HEIGHT - 11 + y, 3, 3, GL_BLACK);
+ 
+    gl_draw_rect(x + 1, 0.68 * HEIGHT - 5 + y, 6, 5, GL_BLACK);
+    gl_draw_rect(x - 3, 0.68 * HEIGHT + y, 14, 5, GL_BLACK);
+    gl_draw_rect(x - 3, 0.68 * HEIGHT + 5 + y, 14, 5, 0xffc40c);
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 10 + y, 20, 5, GL_BLACK);
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 15 + y, 20, 5, 0xffc40c);
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 20 + y, 20, 5, GL_BLACK);
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 25 + y, 20, 5, 0xffc40c);
+    gl_draw_rect(x - 3, 0.68 * HEIGHT + 30 + y, 14, 5, GL_BLACK);
+    gl_draw_rect(x + 1, 0.68 * HEIGHT + 35 + y, 6, 5, GL_BLACK);
+
+    gl_draw_rect(x - 16, 0.68 * HEIGHT + 6 + y, 10, 10, 0xbbeffd);
+    gl_draw_rect(x - 16, 0.68 * HEIGHT + 22 + y, 10, 10, 0xbbeffd);
+
+    gl_draw_rect(x + 14, 0.68 * HEIGHT + 6 + y, 10, 10, 0xbbeffd);
+    gl_draw_rect(x + 14, 0.68 * HEIGHT + 22 + y, 10, 10, 0xbbeffd);
+}

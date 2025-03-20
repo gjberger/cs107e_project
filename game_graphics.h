@@ -5,6 +5,16 @@
 #include "i2c.h"
 #include "mpu6050.h"
 
+typedef enum {
+    BLOCK = 1,
+    BEE = 2,
+} barrier_t;
+
+typedef enum {
+    STICK = 1,
+    STEVE = 2,
+} skin_t;
+
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 
 void draw_background(void);
@@ -25,10 +35,11 @@ void mid_to_right(int secs);
 void left_to_mid(int secs);
 void right_to_mid(int secs);
 int get_secs(void);
-void draw_barrier(int x, int y);
+void draw_barrier(int x, int y, barrier_t type);
+void draw_barrier_bee(int x, int y);
 void barrier_animation(position_t pos);
 void left_barrier_animate(void);
 void draw_score(int secs);
 void draw_num(int num, int x, int y);
-void character_pose_1(position_t pos);
-void character_pose_2(position_t pos);
+void character_pose_1(position_t pos, skin_t skin);
+void character_pose_2(position_t pos, skin_t skin);

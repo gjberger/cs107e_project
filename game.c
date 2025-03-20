@@ -28,18 +28,21 @@ static struct {
     bool on;
     int x;
     int y;
+    barrier_t barrier;
 } left_block;
 
 static struct {
     bool on;
     int x;
     int y;
+    barrier_t barrier;
 } middle_block;
 
 static struct {
     bool on;
     int x;
     int y;
+    barrier_t barrier;
 } right_block;
 
 void handle_board(void *dev) {
@@ -95,12 +98,33 @@ void handle_barriers(void *dev) {
         right_block.on = false;
     }
 
-    left_block.x = LANE1 + 15;
-    left_block.y = 0.68 * HEIGHT;
-    middle_block.x = LANE2 - 20;
-    middle_block.y = 0.68 * HEIGHT;
-    right_block.x = LANE3 - 50;
-    right_block.y = 0.68 * HEIGHT;
+    int random_barrier_l = rand(2) + 1;
+    int random_barrier_m = rand(2) + 1;
+    int random_barrier_r = rand(2) + 1;
+
+    left_block.barrier = random_barrier_l;
+    if (left_block.barrier == BLOCK) {
+        left_block.x = LANE1 + 15;
+    } else if (left_block.barrier == BEE) {
+        left_block.x = LANE1 + 35;
+    }
+    left_block.y = 0;
+    middle_block.barrier = random_barrier_m;
+    if (middle_block.barrier == BLOCK) {
+        middle_block.x = LANE2 - 20;
+    } else if (middle_block.barrier == BEE) {
+        middle_block.x = LANE2;
+
+    }
+    middle_block.y = 0;
+    right_block.barrier = random_barrier_r;
+    
+    if (right_block.barrier == BLOCK) {
+        right_block.x = LANE3 - 50;
+    } else if (right_block.barrier == BEE) {
+        right_block.x = LANE3 - 45;
+    }
+    right_block.y = 0;
 }
 
 void set_up_timer_interrupts(void) {
@@ -124,29 +148,29 @@ void update_screen(int time_init) {
         draw_background();
         draw_score(time_init);
         if (left_block.on) {
-            draw_barrier(left_block.x, left_block.y);
+            draw_barrier(left_block.x, left_block.y, left_block.barrier);
         }
         if (middle_block.on) {
-            draw_barrier(middle_block.x, middle_block.y);
+            draw_barrier(middle_block.x, middle_block.y, middle_block.barrier);
         }
         if (right_block.on) {
-            draw_barrier(right_block.x, right_block.y);
+            draw_barrier(right_block.x, right_block.y, right_block.barrier);
         }
-        character_pose_1(surfer.pos);
+        character_pose_1(surfer.pos, STEVE);
         gl_swap_buffer();
-        
+       
         draw_background();
         draw_score(time_init);
         if (left_block.on) {
-            draw_barrier(left_block.x, left_block.y);
+            draw_barrier(left_block.x, left_block.y, left_block.barrier);
         }
         if (middle_block.on) {
-            draw_barrier(middle_block.x, middle_block.y);
+            draw_barrier(middle_block.x, middle_block.y, middle_block.barrier);
         }
         if (right_block.on) {
-            draw_barrier(right_block.x, right_block.y);
+            draw_barrier(right_block.x, right_block.y, right_block.barrier);
         }
-        character_pose_2(surfer.pos);
+        character_pose_2(surfer.pos, STEVE);
         gl_swap_buffer();
 
         left_block.x = left_block.x - 2;
@@ -159,20 +183,20 @@ void update_screen(int time_init) {
 void check_if_dead(void) {
     if (surfer.pos == LEFT) {
         if (left_block.on) {
-            if ((left_block.y >= (0.79 * HEIGHT)) && (left_block.y <= (0.95 * HEIGHT))) {
+            if ((0.68 * HEIGHT + left_block.y >= (0.79 * HEIGHT)) && (0.68 * HEIGHT + left_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
     } else if (surfer.pos == CENTER) {
         if (middle_block.on) {
-            if ((middle_block.y >= (0.79 * HEIGHT)) && (middle_block.y <= (0.95 * HEIGHT))) {
+            if ((0.68 * HEIGHT + middle_block.y >= (0.79 * HEIGHT)) && (0.68 * HEIGHT + middle_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
     }
     else if (surfer.pos == RIGHT) {
         if (right_block.on) {
-            if ((right_block.y >= (0.79 * HEIGHT)) && (right_block.y <= (0.95 * HEIGHT))) {
+            if ((0.68 * HEIGHT + right_block.y >= (0.79 * HEIGHT)) && (0.68 * HEIGHT + right_block.y <= (0.95 * HEIGHT))) {
                 surfer.alive = false;
             }
         }
@@ -188,33 +212,6 @@ void init_game_data(void) {
     right_block.on = false;
 }
 
-void draw_bug(void) {
-    gl_draw_rect(LANE2 - 1, 0.8 * HEIGHT - 7, 3, 3, GL_BLACK);
-    gl_draw_rect(LANE2 + 6, 0.8 * HEIGHT - 7, 3, 3, GL_BLACK);
-    
-    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT - 9, 3, 3, GL_BLACK);
-    gl_draw_rect(LANE2 + 8, 0.8 * HEIGHT - 9, 3, 3, GL_BLACK);
-    
-    gl_draw_rect(LANE2 - 5, 0.8 * HEIGHT - 11, 3, 3, GL_BLACK);
-    gl_draw_rect(LANE2 + 10, 0.8 * HEIGHT - 11, 3, 3, GL_BLACK);
-
-    gl_draw_rect(LANE2 + 1, 0.8 * HEIGHT - 5, 6, 5, GL_BLACK);
-    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT, 14, 5, GL_BLACK);
-    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT + 5, 14, 5, 0xffc40c);
-    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 10, 20, 5, GL_BLACK);
-    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 15, 20, 5, 0xffc40c);
-    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 20, 20, 5, GL_BLACK);
-    gl_draw_rect(LANE2 - 6, 0.8 * HEIGHT + 25, 20, 5, 0xffc40c);
-    gl_draw_rect(LANE2 - 3, 0.8 * HEIGHT + 30, 14, 5, GL_BLACK);
-    gl_draw_rect(LANE2 + 1, 0.8 * HEIGHT + 35, 6, 5, GL_BLACK);
-
-    gl_draw_rect(LANE2 - 16, 0.8 * HEIGHT + 6, 10, 10, 0xbbeffd);
-    gl_draw_rect(LANE2 - 16, 0.8 * HEIGHT + 22, 10, 10, 0xbbeffd);
-    
-    gl_draw_rect(LANE2 + 14, 0.8 * HEIGHT + 6, 10, 10, 0xbbeffd);
-    gl_draw_rect(LANE2 + 14, 0.8 * HEIGHT + 22, 10, 10, 0xbbeffd);
-}
-
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -226,28 +223,14 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
-    draw_background();
-    draw_bug();
-    gl_swap_buffer();
-    while (1) {}
-    /*
-    draw_background();
-    draw_steve(LANE2);
-    gl_swap_buffer();
-    draw_background();
-    draw_steve_2(LANE2);
-    while (1) {
-        gl_swap_buffer();
-        timer_delay_ms(500);
-    }*/
-
+   
     init_game_data();
-    draw_acknowledgements();
-    gl_swap_buffer();
-    draw_loading_screen();
-    gl_swap_buffer();
-    blinking_start_screen();
-    game_countdown();
+    //draw_acknowledgements();
+    //gl_swap_buffer();
+    //draw_loading_screen();
+    //gl_swap_buffer();
+    //blinking_start_screen();
+    // game_countdown();
 	
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
