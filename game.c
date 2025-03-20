@@ -188,31 +188,6 @@ void init_game_data(void) {
     right_block.on = false;
 }
 
-void new_character(void) {
-    gl_clear(GL_WHITE);
-    
-    // head
-    gl_draw_rect(LANE2, 0.52 * HEIGHT - 20, 20, 20, 0x492816);
-    // torso
-    gl_draw_rect(LANE2, 0.52 * HEIGHT, 20, 40, GL_CYAN);
-    //arms 
-    gl_draw_rect(LANE2 - 10, 0.52 * HEIGHT, 10, 15, GL_CYAN);
-    gl_draw_rect(LANE2 - 10, 0.52 * HEIGHT + 15, 10, 10, 0xa88165);
-    gl_draw_rect(LANE2 + 20, 0.52 * HEIGHT, 10, 15, GL_CYAN);
-    gl_draw_rect(LANE2 + 20, 0.52 * HEIGHT + 15, 10, 10, 0xa88165);
-
-    // legs
-    // left
-    gl_draw_rect(LANE2, 0.5 * HEIGHT + 50, 10, 20, GL_INDIGO + 100);
-    gl_draw_rect(LANE2, 0.5 * HEIGHT + 70, 10, 4, GL_SILVER);
-    // right
-    gl_draw_rect(LANE2 + 10, 0.5 * HEIGHT + 50, 10, 20, GL_INDIGO + 100);
-    gl_draw_rect(LANE2 + 10, 0.5 * HEIGHT + 70, 10, 4, GL_SILVER);
-    // leg divider
-    gl_draw_line(LANE2 + 9, 0.5 * HEIGHT + 50, LANE2 + 9, 0.5 * HEIGHT + 70, GL_BLACK);
-    //shoes
-}
-
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -224,10 +199,14 @@ void main(void) {
 	set_up_timer2_interrupts();
 	interrupts_global_enable();
 
-    new_character();
+    draw_background();
+    draw_steve(LANE2);
     gl_swap_buffer();
+    draw_background();
+    draw_steve_2(LANE2);
     while (1) {
-
+        gl_swap_buffer();
+        timer_delay_ms(500);
     }
 
     init_game_data();

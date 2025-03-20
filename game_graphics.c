@@ -283,6 +283,52 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
+void draw_steve(int x) {
+    // head
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 20, 20, 20, 0x492816);
+    // torso
+    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 40, GL_CYAN);
+
+    //arms
+    gl_draw_rect(x - 20, 0.87 * HEIGHT, 10, 10, GL_CYAN);
+    gl_draw_rect(x - 20, 0.87 * HEIGHT + 10, 10, 7, 0xa88165);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT, 10, 15, GL_CYAN);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT + 15, 10, 10, 0xa88165);
+
+    // legs
+    // left
+    gl_draw_rect(x - 10, 0.85 * HEIGHT + 50, 10, 20, GL_INDIGO + 100);
+    gl_draw_rect(x - 10, 0.85 * HEIGHT + 70, 10, 4, GL_SILVER);
+    // right
+    gl_draw_rect(x, 0.85 * HEIGHT + 50, 10, 15, GL_INDIGO + 100);
+    gl_draw_rect(x, 0.85 * HEIGHT + 65, 10, 4, GL_SILVER);
+    // leg divider
+    gl_draw_line(x - 1, 0.85 * HEIGHT + 50, x - 1, 0.85 * HEIGHT + 65, GL_BLACK);
+}
+
+void draw_steve_2(int x) {
+    // head
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 20, 20, 20, 0x492816);
+    // torso
+    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 40, GL_CYAN);
+
+    //arms
+    gl_draw_rect(x - 20, 0.87 * HEIGHT, 10, 15, GL_CYAN);
+    gl_draw_rect(x - 20, 0.87 * HEIGHT + 15, 10, 10, 0xa88165);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT, 10, 10, GL_CYAN);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT + 10, 10, 7, 0xa88165);
+
+    // legs
+    // left
+    gl_draw_rect(x - 10, 0.85 * HEIGHT + 50, 10, 15, GL_INDIGO + 100);
+    gl_draw_rect(x - 10, 0.85 * HEIGHT + 65, 10, 4, GL_SILVER);
+    // right
+    gl_draw_rect(x, 0.85 * HEIGHT + 50, 10, 20, GL_INDIGO + 100);
+    gl_draw_rect(x, 0.85 * HEIGHT + 70, 10, 4, GL_SILVER);
+    // leg divider
+    gl_draw_line(x - 1, 0.85 * HEIGHT + 50, x - 1, 0.85 * HEIGHT + 65, GL_BLACK);
+}
+
 void character_pose_1(position_t pos) {
     if (pos == LEFT) {
         draw_character(LANE1);

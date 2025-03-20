@@ -17,6 +17,8 @@ void game_countdown(void);
 void draw_endscreen(void);
 void draw_character(int x);
 void draw_character_2(int x);
+void draw_steve(int x);
+void draw_steve_2(int x);
 void character_animation(int secs, position_t pos);
 void mid_to_left(int secs);
 void mid_to_right(int secs);
