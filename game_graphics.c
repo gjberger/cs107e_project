@@ -331,75 +331,75 @@ void draw_steve_2(int x) {
 
 void draw_mario(int x) {
     // hat
-    gl_draw_rect(x - 11, 0.87 * HEIGHT - 5, 22, 5, 0xc81a27);
+    gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, 0xc81a27);
 
     // head and hair
-    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 20, 0xe2ab7d);
-    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 16, 0x7e3f14);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 20, 0xe2ab7d);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 16, 0x7e3f14);
     // ears
-    gl_draw_rect(x - 12, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
-    gl_draw_rect(x + 10, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
 
     // body
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 20, 16, 25, 0x1f22b4);
-    gl_draw_rect(x - 3, 0.87 * HEIGHT + 20, 6, 6, 0xc81a27);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 16, 25, 0x1f22b4);
+    gl_draw_rect(x - 3, 0.87 * HEIGHT + 10, 6, 6, 0xc81a27);
 
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
-    gl_draw_rect(x + 5, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 3, 3, 0xc81a27);
+    gl_draw_rect(x + 5, 0.87 * HEIGHT + 10, 3, 3, 0xc81a27);
 
     // shoes
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 45, 6, 4, GL_BLACK);
-    gl_draw_rect(x + 2, 0.87 * HEIGHT + 45, 6, 2, GL_BLACK);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 35, 6, 4, GL_BLACK);
+    gl_draw_rect(x + 2, 0.87 * HEIGHT + 35, 6, 2, GL_BLACK);
 
     // arms
     // left
-    gl_draw_rect(x - 11, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 12, 0.87 * HEIGHT + 23, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 13, 0.87 * HEIGHT + 24, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 13, 0.87 * HEIGHT + 28, 4, 2, 0xe2ab7d);
+    gl_draw_rect(x - 11, 0.87 * HEIGHT + 12, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT + 13, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 14, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
 
     // right
-    gl_draw_rect(x + 7, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 8, 0.87 * HEIGHT + 25, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 9, 0.87 * HEIGHT + 28, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 9, 0.87 * HEIGHT + 31, 4, 4, 0xe2ab7d);
+    gl_draw_rect(x + 7, 0.87 * HEIGHT + 12, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 8, 0.87 * HEIGHT + 15, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 21, 4, 4, 0xe2ab7d);
 
 }
 
 void draw_mario_2(int x) {
     // hat
-    gl_draw_rect(x - 11, 0.87 * HEIGHT - 5, 22, 5, 0xc81a27);
+    gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, 0xc81a27);
 
     // head and hair
-    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 20, 0xe2ab7d);
-    gl_draw_rect(x - 10, 0.87 * HEIGHT, 20, 16, 0x7e3f14);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 20, 0xe2ab7d);
+    gl_draw_rect(x - 10, 0.87 * HEIGHT - 10, 20, 16, 0x7e3f14);
     // ears
-    gl_draw_rect(x - 12, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
-    gl_draw_rect(x + 10, 0.87 * HEIGHT + 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
+    gl_draw_rect(x + 10, 0.87 * HEIGHT - 5, 2, 6, 0xe2ab7d);
 
     // body
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 20, 16, 25, 0x1f22b4);
-    gl_draw_rect(x - 3, 0.87 * HEIGHT + 20, 6, 6, 0xc81a27);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 16, 25, 0x1f22b4);
+    gl_draw_rect(x - 3, 0.87 * HEIGHT + 10, 6, 6, 0xc81a27);
 
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
-    gl_draw_rect(x + 5, 0.87 * HEIGHT + 20, 3, 3, 0xc81a27);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 10, 3, 3, 0xc81a27);
+    gl_draw_rect(x + 5, 0.87 * HEIGHT + 10, 3, 3, 0xc81a27);
 
     // shoes
-    gl_draw_rect(x - 8, 0.87 * HEIGHT + 45, 6, 2, GL_BLACK);
-    gl_draw_rect(x + 2, 0.87 * HEIGHT + 45, 6, 4, GL_BLACK);
+    gl_draw_rect(x - 8, 0.87 * HEIGHT + 35, 6, 2, GL_BLACK);
+    gl_draw_rect(x + 2, 0.87 * HEIGHT + 35, 6, 4, GL_BLACK);
 
     // arms
     // left
-    gl_draw_rect(x - 11, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 12, 0.87 * HEIGHT + 25, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 13, 0.87 * HEIGHT + 28, 4, 4, 0xc81a27);
-    gl_draw_rect(x - 13, 0.87 * HEIGHT + 31, 4, 4, 0xe2ab7d);
+    gl_draw_rect(x - 11, 0.87 * HEIGHT + 12, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 12, 0.87 * HEIGHT + 15, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 18, 4, 4, 0xc81a27);
+    gl_draw_rect(x - 13, 0.87 * HEIGHT + 21, 4, 4, 0xe2ab7d);
 
     // right
-    gl_draw_rect(x + 7, 0.87 * HEIGHT + 22, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 8, 0.87 * HEIGHT + 23, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 9, 0.87 * HEIGHT + 24, 4, 4, 0xc81a27);
-    gl_draw_rect(x + 9, 0.87 * HEIGHT + 28, 4, 2, 0xe2ab7d);
+    gl_draw_rect(x + 7, 0.87 * HEIGHT + 12, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 8, 0.87 * HEIGHT + 13, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 14, 4, 4, 0xc81a27);
+    gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
 
 }
 
