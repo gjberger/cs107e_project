@@ -96,7 +96,6 @@ void draw_background(void) {
     gl_clear(GL_WHITE);
     // overarch line
     gl_draw_line(WIDTH / 8, 0.25 * HEIGHT, (7 * WIDTH) / 8, 0.25 * HEIGHT, GL_BLACK);
-    
 
     // left
     gl_draw_line(0, HEIGHT, 0.125 * WIDTH, 0.75 * HEIGHT, GL_BLACK);
@@ -124,6 +123,67 @@ void draw_background(void) {
 
     gl_draw_line(0, 0, 0.125 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
+}
+
+void draw_acknowledgements(void) {
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+    gl_swap_buffer();
+    gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+
+    timer_delay(3);
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "P", GL_WHITE);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Po", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Pow", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powe", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Power", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powere", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered b", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by R", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by RI", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by RIS", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by RISC", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by RISC-", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    gl_draw_string(0.2 * WIDTH, (0.7 * HEIGHT) + 2, "Powered by RISC-V", GL_WHITE);
+    timer_delay_ms(200);
+    gl_swap_buffer();
+    timer_delay(2);
 }
 
 void draw_loading_screen(void) {

@@ -201,6 +201,8 @@ void main(void) {
 
 
     init_game_data();
+    draw_acknowledgements();
+    gl_swap_buffer();
     draw_loading_screen();
     gl_swap_buffer();
     blinking_start_screen();

@@ -8,6 +8,7 @@
 void gl_draw_circle(int xCenter, int yCenter, int radius, color_t c);
 
 void draw_background(void);
+void draw_acknowledgements(void);
 void draw_loading_screen(void);
 void draw_startscreen(void);
 void draw_startscreen_2(void);
