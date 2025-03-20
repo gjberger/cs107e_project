@@ -22,6 +22,12 @@ static unsigned long button_debounce_confirm = 0;
 static unsigned long button_debounce_selector = 0;
 
 static struct {
+	int *list;
+	int num_filled;
+	int min_score;
+} top_scores;
+
+static struct {
     position_t pos;
     int x;
     int y;
@@ -222,23 +228,29 @@ void init_game_data(void) {
     left_block.on = false;
     middle_block.on = false;
     right_block.on = false;
+
+	top_scores.list = malloc(10 * sizeof(int));
+	for (int i = 0; i < 10; i++) {
+		top_scores.list[i] = -1;
+	}
+	top_socres.min_score = 0;
+	top_scores.num_filled = 0;
 }
 
+void character_select(void) {
 
-void main(void) {
-    uart_init();
-	interrupts_init();
-	timer_init();
 
-    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
 
-	set_up_timer_interrupts();
-	set_up_timer2_interrupts();
-	interrupts_global_enable();
+}
 
-    init_game_data();
-    surfer.skin = MARIO;
-/*
+void top_scores(void) {
+
+
+
+
+}
+
+void main_menu(void) {
 	draw_menu(cur_menu_item);
 	while(1) {
 		// not going to use interrupts for this, cause I think will need different functionality in different
@@ -268,16 +280,31 @@ void main(void) {
 			}
 		}
 	}
-	*/
+
+}
+
+
+void main(void) {
+    uart_init();
+	interrupts_init();
+	timer_init();
+
+    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
+
+	set_up_timer_interrupts();
+	set_up_timer2_interrupts();
+	interrupts_global_enable();
+
+    init_game_data();
+    surfer.skin = MARIO;
 	
-    /*
     draw_acknowledgements();
     gl_swap_buffer();
     draw_loading_screen();
     gl_swap_buffer();
+	main_menu();
     blinking_start_screen();
     game_countdown();
-	*/
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
     
@@ -289,5 +316,11 @@ void main(void) {
     
     draw_endscreen();
     gl_swap_buffer();
+	if (top_scores.list[top_scores.num_filled] == NULL) {
+		
+
+
+
+	}
     while(1) {}
 }
