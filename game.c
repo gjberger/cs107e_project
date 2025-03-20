@@ -15,8 +15,8 @@
 #define LANE1 (WIDTH / 6)
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
-#define SELECTOR GPIO_PB1
-#define CONFIRM GPIO_PB2
+#define SELECTOR GPIO_PB4
+#define CONFIRM GPIO_PB3
 
 static int cur_menu_item = 0;
 static unsigned long button_debounce_confirm = 0;
@@ -25,8 +25,7 @@ static unsigned long button_debounce_selector = 0;
 static struct {
 	int *list;
 	int num_filled;
-	int min_score;
-	int min_index;
+	int min_score_index;
 } top_scores;
 
 static struct {
@@ -235,9 +234,8 @@ void init_game_data(void) {
 	for (int i = 0; i < 10; i++) {
 		top_scores.list[i] = -1;
 	}
-	top_scores.min_score = 0;
 	top_scores.num_filled = 0;
-	top_scores.min_index = 0;
+	top_scores.min_score_index = 0;
 }
 
 void character_select(void) {
@@ -247,10 +245,15 @@ void character_select(void) {
 }
 
 void top_scores_screen(void) {
-
-
-
-
+	draw_top_scores(top_scores.list);
+	while(1) {
+		if ((timer_get_ticks() - button_debounce_confirm) > 2000) {
+			if (gpio_read(CONFIRM) == 0) {
+				button_debounce_confirm = timer_get_ticks();
+				return;
+			}
+		}	
+	}
 }
 
 void main_menu(void) {
@@ -260,21 +263,24 @@ void main_menu(void) {
 		// places
 		// also will prob put this in function later
 		if ((timer_get_ticks() - button_debounce_confirm) > 2000) {
-			button_debounce_confirm = timer_get_ticks();
 			if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 0)) {
-					// play the game
-					break;
+				button_debounce_confirm = timer_get_ticks();
+				// play the game
+				break;
 			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
-					// character selec screen	
+				button_debounce_confirm = timer_get_ticks();
+				// character selec screen	
 
 			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
-					// Top Scores Screen
+				button_debounce_confirm = timer_get_ticks();
+				// Top Scores Screen
+				top_scores_screen();
 			}
 		}
 
 		if ((timer_get_ticks() - button_debounce_selector) > 2000) {
-			button_debounce_selector = timer_get_ticks();
 			if (gpio_read(SELECTOR) == 0) {
+				button_debounce_selector = timer_get_ticks();
 				cur_menu_item++;
 				if (cur_menu_item > 2) {
 					cur_menu_item = 0;
@@ -319,15 +325,19 @@ void main(void) {
     
     draw_endscreen();
     gl_swap_buffer();
-	if (top_scores.list[top_scores.num_filled] == -1) {
-		if (time_init > top_scores.min_score) {
+	if (top_scores.num_filled <= 9) {
+		if (time_init > top_scores.list[top_scores.min_score_index]) {
 			top_scores.list[top_scores.num_filled] = time_init;
 			top_scores.num_filled++;
-		}		
+		} else {
+			top_scores.min_score_index = top_scores.num_filled;
+			top_scores.list[top_scores.num_filled] = time_init;	
+			top_scores.num_filled++;
+		}
 	} else {
-				
-
-
+		if (time_init > top_scores.list[top_scores.min_score_index]) {
+			top_scores.list[top_scores.min_score_index] = time_init;
+		}
 	}
     while(1) {}
 }
