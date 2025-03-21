@@ -65,3 +65,6 @@ void draw_menu(int cur_select);
 void draw_top_scores(int *scores);
 void draw_train_slats(void);
 void draw_train_slats_2(void);
+void draw_character_select(int cur_select);
+
+

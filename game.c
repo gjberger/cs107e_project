@@ -24,6 +24,8 @@ static void start_game();
 
 
 static int cur_menu_item = 0;
+static int cur_char_item = 0;
+
 static unsigned long button_debounce_confirm = 0;
 static unsigned long button_debounce_selector = 0;
 static int last_confirm_state = 0;
@@ -252,9 +254,9 @@ void check_if_dead(void) {
 static void init_once(void) {
 	top_scores.list = (int *)malloc(10 * sizeof(int));
 	for (int i = 0; i < 10; i++) {
-		top_scores.list[i] = 5;
+		top_scores.list[i] = -1;
 	}
-	top_scores.num_filled = 10;
+	top_scores.num_filled = 0;
 	top_scores.min_score_index = 0;
 
 	gpio_set_input(CONFIRM);
@@ -274,18 +276,55 @@ void init_game_data(void) {
 }
 
 void character_select(void) {
+	draw_character_select(cur_char_item);
+	static skin_t current_skin = 1;
+	character_pose_1(CENTER, current_skin);
+	gl_swap_buffer();
 
+	while(1) {
+		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
+			button_debounce_confirm = timer_get_ticks();
+			int state1 = gpio_read(CONFIRM);
+			if (state1 == 0 && last_confirm_state == 1 && (cur_char_item == 0)) {
+				// next skin
+				current_skin++;
+				if (current_skin > 4) {
+					current_skin = 1;
+				}
+				draw_character_select(cur_char_item);
+				character_pose_1(CENTER, current_skin);
+				gl_swap_buffer();
+			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_char_item == 1)) {
+				surfer.skin = current_skin;
+				draw_menu(cur_menu_item);
+				return;
+			}
+			last_confirm_state = state1;
+		}
 
+		if ((timer_get_ticks() - button_debounce_selector) > 500000) {
+			int state2 = gpio_read(SELECTOR);
+			button_debounce_selector = timer_get_ticks();
+			if (state2 == 0 && last_selector_state == 1) {
+				cur_char_item = (cur_char_item + 1) % 2;
+				draw_character_select(cur_char_item);
+				character_pose_1(CENTER, current_skin);
+				gl_swap_buffer();
+			}
 
+			last_selector_state = state2;
+		}
+	}
 }
 
 void top_scores_screen(void) {
 	draw_top_scores(top_scores.list);
 	while(1) {
-		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
-			button_debounce_confirm = timer_get_ticks();
+		if ((timer_get_ticks() - button_debounce_confirm) > 5000000) {
 			int state = gpio_read(CONFIRM);
 			if (state == 0 && last_confirm_state == 1) {
+				button_debounce_confirm = timer_get_ticks();
+				draw_menu(cur_menu_item);
 				return;
 			}
 			last_confirm_state = state;
@@ -294,7 +333,6 @@ void top_scores_screen(void) {
 }
 
 void main_menu(void) {
-
 	draw_menu(cur_menu_item);
 	while(1) {
 		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
@@ -305,11 +343,13 @@ void main_menu(void) {
 				break;
 			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_menu_item == 1)) {
 				// character selec screen	
+				last_confirm_state = 0;
+				character_select();
 
 			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_menu_item == 2)) {
 				// Top Scores Screen
-				top_scores_screen();
 				last_confirm_state = 0;
+				top_scores_screen();
 			}
 			last_confirm_state = state1;
 		}
@@ -352,7 +392,7 @@ static void dead_condition_reset(void) {
 	right_block.on = false;
 
 	while(1) {
-		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
+		if ((timer_get_ticks() - button_debounce_confirm) > 5000000) {
 			int state = gpio_read(CONFIRM);
 			if (state == 0 && last_confirm_state == 1) {
 					button_debounce_confirm = timer_get_ticks();
@@ -362,26 +402,6 @@ static void dead_condition_reset(void) {
 			last_confirm_state = state;
 		}
 	}
-}
-
-static void start_game(void) {
-	init_game_data();
-    surfer.skin = STEVE;
-	main_menu();
-	blinking_start_screen();
-	game_countdown();
-    hstimer_enable(HSTIMER0);
-	hstimer_enable(HSTIMER1);
-	int time_init = get_secs();
-	while (surfer.alive) {
-		update_screen(time_init);
-		check_if_dead();
-	}
-	draw_endscreen();
-	gl_swap_buffer();
-	add_to_top_scores(time_init);
-	dead_condition_reset();
-
 }
 
 void set_surfer_bounds(void) {
@@ -399,6 +419,29 @@ void set_surfer_bounds(void) {
         surfer.bottom_y = 0.935 * HEIGHT;
     }
 }
+
+static void start_game(void) {
+	init_game_data();
+    surfer.skin = STEVE;
+	main_menu();
+	set_surfer_bounds();
+	blinking_start_screen();
+	game_countdown();
+    hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
+	int time_init = get_secs();
+	while (surfer.alive) {
+		update_screen(time_init);
+		check_if_dead();
+	}
+	draw_endscreen();
+	gl_swap_buffer();
+	printf("%d\n", time_init);
+	add_to_top_scores(get_secs() - time_init);
+	dead_condition_reset();
+
+}
+
 
 void main(void) {
     uart_init();
