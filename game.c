@@ -255,9 +255,9 @@ void init_game_data(void) {
 
 	top_scores.list = (int *)malloc(10 * sizeof(int));
 	for (int i = 0; i < 10; i++) {
-		top_scores.list[i] = -1;
+		top_scores.list[i] = 5;
 	}
-	top_scores.num_filled = 0;
+	top_scores.num_filled = 10;
 	top_scores.min_score_index = 0;
 
 	gpio_set_input(CONFIRM);
@@ -290,7 +290,7 @@ void main_menu(void) {
 
 	draw_menu(cur_menu_item);
 	while(1) {
-		if ((timer_get_ticks() - button_debounce_confirm) > 200000) {
+		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
 			button_debounce_confirm = timer_get_ticks();
 			int state1 = gpio_read(CONFIRM);
 			if (state1 == 0 && last_confirm_state == 1 && (cur_menu_item == 0)) {
@@ -334,19 +334,22 @@ static void add_to_top_scores(int time_init) {
 			top_scores.list[top_scores.min_score_index] = time_init;
 		}
 	}
-
 }
 
 static void dead_condition_reset(void) {
+	hstimer_disable(HSTIMER0);
+	hstimer_disable(HSTIMER0);
 	while(1) {
-		if (gpio_read(CONFIRM) == 0) {
-			start_game();
+		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
+			if (gpio_read(CONFIRM) == 0) {
+					button_debounce_confirm = timer_get_ticks();
+					start_game();
+			}
 		}
 	}
 }
 
 static void start_game(void) {
-		
 	init_game_data();
     surfer.skin = LUIGI;
 	main_menu();
