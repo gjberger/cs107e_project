@@ -20,6 +20,9 @@
 #define SELECTOR GPIO_PB4
 #define CONFIRM GPIO_PB3
 
+static void start_game();
+
+
 static int cur_menu_item = 0;
 static unsigned long button_debounce_confirm = 0;
 static unsigned long button_debounce_selector = 0;
@@ -318,53 +321,7 @@ void main_menu(void) {
 	}
 }
 
-void main(void) {
-    uart_init();
-	interrupts_init();
-	timer_init();
-
-    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
-
-	set_up_timer_interrupts();
-	set_up_timer2_interrupts();
-	interrupts_global_enable();
-
-    init_game_data();
-    surfer.skin = STICK;
-
-    if (surfer.skin == STICK) {
-        surfer.top_y = 0.81 * HEIGHT;
-        surfer.bottom_y = 0.98 * HEIGHT;
-    } else if (surfer.skin == STEVE) {
-        surfer.top_y = 0.837 * HEIGHT;
-        surfer.bottom_y = 0.974 * HEIGHT;
-    } else if (surfer.skin == MARIO) {
-        surfer.top_y = 0.845 * HEIGHT;
-        surfer.bottom_y = 0.935 * HEIGHT;
-    } else if (surfer.skin == LUIGI) {
-        surfer.top_y = 0.845 * HEIGHT;
-        surfer.bottom_y = 0.935 * HEIGHT;
-    }
-
-    //draw_acknowledgements();
-    //gl_swap_buffer();
-    //draw_loading_screen();
-    //gl_swap_buffer();
-	main_menu();
-    blinking_start_screen();
-    game_countdown();
-
-    hstimer_enable(HSTIMER0);
-	hstimer_enable(HSTIMER1);
-    
-    int time_init = get_secs();
-    while (surfer.alive) {
-        update_screen(time_init);
-        check_if_dead();
-    }
-    
-    draw_endscreen();
-    gl_swap_buffer();
+static void add_to_top_scores(int time_init) {
 	if (top_scores.num_filled <= 9) {
 		if (time_init > top_scores.list[top_scores.min_score_index]) {
 			top_scores.list[top_scores.num_filled] = time_init;
@@ -379,8 +336,74 @@ void main(void) {
 			top_scores.list[top_scores.min_score_index] = time_init;
 		}
 	}
-    while(1) {
-			
 
+}
+
+static void dead_condition_reset(void) {
+	while(1) {
+		if (gpio_read(CONFIRM) == 0) {
+			start_game();
+		}
 	}
+}
+
+static void start_game(void) {
+		
+	init_game_data();
+    surfer.skin = STEVE;
+	main_menu();
+	blinking_start_screen();
+	game_countdown();
+    hstimer_enable(HSTIMER0);
+	hstimer_enable(HSTIMER1);
+	int time_init = get_secs();
+	while (surfer.alive) {
+		update_screen(time_init);
+		check_if_dead();
+	}
+	draw_endscreen();
+	gl_swap_buffer();
+	add_to_top_scores(time_init);
+	dead_condition_reset();
+
+}
+
+void set_surfer_bounds(void) {
+    if (surfer.skin == STICK) {
+        surfer.top_y = 0.81 * HEIGHT;
+        surfer.bottom_y = 0.98 * HEIGHT;
+    } else if (surfer.skin == STEVE) {
+        surfer.top_y = 0.837 * HEIGHT;
+        surfer.bottom_y = 0.974 * HEIGHT;
+    } else if (surfer.skin == MARIO) {
+        surfer.top_y = 0.845 * HEIGHT;
+        surfer.bottom_y = 0.935 * HEIGHT;
+    } else if (surfer.skin == LUIGI) {
+        surfer.top_y = 0.845 * HEIGHT;
+        surfer.bottom_y = 0.935 * HEIGHT;
+    }
+}
+
+void main(void) {
+    uart_init();
+	interrupts_init();
+	timer_init();
+
+    gl_init(WIDTH, HEIGHT, GL_DOUBLEBUFFER);
+
+	set_up_timer_interrupts();
+	set_up_timer2_interrupts();
+	interrupts_global_enable();
+
+    /*
+    */
+    //init_game_data();
+    //surfer.skin = LUIGI;
+
+    draw_acknowledgements();
+    gl_swap_buffer();
+    draw_loading_screen();
+    gl_swap_buffer();
+
+	start_game();
 }
