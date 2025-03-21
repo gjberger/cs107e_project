@@ -9,6 +9,8 @@
 #include "hstimer.h"
 #include "random.h"
 #include "malloc.h"
+#include "gpio.h"
+#include "gpio_extra.h"
 
 #define WIDTH 400
 #define HEIGHT 600
@@ -254,6 +256,11 @@ void init_game_data(void) {
 	}
 	top_scores.num_filled = 0;
 	top_scores.min_score_index = 0;
+
+	gpio_set_input(CONFIRM);
+	gpio_set_input(SELECTOR);
+	gpio_set_pullup(CONFIRM);
+	gpio_set_pullup(SELECTOR);
 }
 
 void character_select(void) {
@@ -265,7 +272,7 @@ void character_select(void) {
 void top_scores_screen(void) {
 	draw_top_scores(top_scores.list);
 	while(1) {
-		if ((timer_get_ticks() - button_debounce_confirm) > 2000) {
+		if ((timer_get_ticks() - button_debounce_confirm) > 200000) {
 			if (gpio_read(CONFIRM) == 0) {
 				button_debounce_confirm = timer_get_ticks();
 				return;
@@ -275,36 +282,36 @@ void top_scores_screen(void) {
 }
 
 void main_menu(void) {
+	static int last_selector_state = 1;
+	static int last_confirm_state = 1;
+
 	draw_menu(cur_menu_item);
 	while(1) {
-		// not going to use interrupts for this, cause I think will need different functionality in different
-		// places
-		// also will prob put this in function later
-		if ((timer_get_ticks() - button_debounce_confirm) > 2000) {
-			if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 0)) {
-				button_debounce_confirm = timer_get_ticks();
+		if ((timer_get_ticks() - button_debounce_confirm) > 200000) {
+			button_debounce_confirm = timer_get_ticks();
+			int state1 = gpio_read(CONFIRM);
+			if (state1 == 0 && last_confirm_state == 1 && (cur_menu_item == 0)) {
 				// play the game
 				break;
-			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
-				button_debounce_confirm = timer_get_ticks();
+			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_menu_item == 1)) {
 				// character selec screen	
 
-			} else if ((gpio_read(CONFIRM) == 0) && (cur_menu_item == 1)) {
-				button_debounce_confirm = timer_get_ticks();
+			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_menu_item == 2)) {
 				// Top Scores Screen
 				top_scores_screen();
 			}
+			last_confirm_state = state1;
 		}
 
-		if ((timer_get_ticks() - button_debounce_selector) > 2000) {
-			if (gpio_read(SELECTOR) == 0) {
-				button_debounce_selector = timer_get_ticks();
-				cur_menu_item++;
-				if (cur_menu_item > 2) {
-					cur_menu_item = 0;
-				}
+		if ((timer_get_ticks() - button_debounce_selector) > 500000) {
+			int state2 = gpio_read(SELECTOR);
+			button_debounce_selector = timer_get_ticks();
+			if (state2 == 0 && last_selector_state == 1) {
+				cur_menu_item = (cur_menu_item + 1) % 3;
 				draw_menu(cur_menu_item);
 			}
+
+			last_selector_state = state2;
 		}
 	}
 }
@@ -323,17 +330,13 @@ void main(void) {
     init_game_data();
     surfer.skin = LUIGI;
 
-    /*
-    draw_acknowledgements();
-    gl_swap_buffer();
-    draw_loading_screen();
-    gl_swap_buffer();
+    //draw_acknowledgements();
+    //gl_swap_buffer();
+    //draw_loading_screen();
+    //gl_swap_buffer();
 	main_menu();
     blinking_start_screen();
     game_countdown();
-    */
-
-
 
     hstimer_enable(HSTIMER0);
 	hstimer_enable(HSTIMER1);
@@ -360,5 +363,8 @@ void main(void) {
 			top_scores.list[top_scores.min_score_index] = time_init;
 		}
 	}
-    while(1) {}
+    while(1) {
+			
+
+	}
 }

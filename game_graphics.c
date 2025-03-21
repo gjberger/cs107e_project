@@ -260,6 +260,12 @@ void draw_endscreen(void) {
     gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
     gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
     gl_draw_string(0.43 * WIDTH, (0.7 * HEIGHT) + 2, "RIP", GL_WHITE);
+
+	gl_draw_string(0.43 * WIDTH - (4 * gl_get_char_width()), (0.9 * HEIGHT), "Play Again?", GL_YELLOW);
+
+	gl_draw_line((.05 * WIDTH), (.9 * HEIGHT) +  (0.5 * gl_get_char_height()), (.15 * WIDTH) + 20, (.9 * HEIGHT) + (0.5 * gl_get_char_height()), GL_YELLOW);
+	gl_draw_line((.2 * WIDTH) + -10, (.9 * HEIGHT) + (0.5 * gl_get_char_height()) - 10, (.15 * WIDTH) + 20, (.9 * HEIGHT) + (0.5 * gl_get_char_height()), GL_YELLOW);
+	gl_draw_line((.2 * WIDTH) -10, (.9 * HEIGHT) + (0.5 * gl_get_char_height()) + 10, (.15 * WIDTH) + 20, (.9 * HEIGHT) + (0.5 * gl_get_char_height()), GL_YELLOW);
 }
 
 // need to be able to give x, y coordinates, draw character depending on that
@@ -665,25 +671,30 @@ static void sort_top_scores(int *scores) {
 }
 
 void draw_top_scores(int *scores) {
+	gl_clear(GL_MAGENTA);
+    gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
+    gl_draw_rect(0.72 * WIDTH, 0.14 * HEIGHT, 20, 20, GL_YELLOW);
+    gl_draw_rect(0.76 * WIDTH, 0.133 * HEIGHT, 6, 6, GL_GREEN);
+    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
+
 	int *scores_copy = malloc(10 * sizeof(int));
 	memcpy(scores_copy, scores, 10 * sizeof(int));
 	sort_top_scores(scores_copy);
 
 	//header
-    gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 50, "TOP SCORES", GL_WHITE);
-	//gl_draw_line(0.2 * WIDTH - 5, ((0.14 * HEIGHT) + 50) + gl_get_char_height() + 2, (0.2 * WIDTH) + (gl_get_char_width() * 10) + 5, GL_WHITE);
+    gl_draw_string(0.2 * WIDTH + 3*gl_get_char_width(), (0.14 * HEIGHT) + 20, "TOP SCORES", GL_WHITE);
+	gl_draw_line(0.2 * WIDTH - 5, ((0.14 * HEIGHT) + 20) + gl_get_char_height() + 2, (0.2 * WIDTH) + (gl_get_char_width() * 10) + 5, ((0.14 * HEIGHT) + 20) + gl_get_char_height() + 2, GL_WHITE);
 	
 	for (int i = 9; i >= 0; i--) {
 		if (scores[i] == -1) {
 			continue;
 		}		
 
-		char buf[32];
-	//	num_to_str(scores[i], 10, buf);
-//		gl_draw
-
-
+		char buf[40];
+		snprintf(buf, 40, "%d) %d", (10 - i), scores[i]);
+		gl_draw_string(0.2 * WIDTH, (0.25 * HEIGHT) + (((10 - i) * gl_get_char_height()) + 2), buf, GL_WHITE);
 	}
+	gl_swap_buffer();
 }
 
 void draw_barrier_fly(int x, int y) {
