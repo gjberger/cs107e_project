@@ -245,14 +245,7 @@ void check_if_dead(void) {
     }
 }
 
-void init_game_data(void) {
-    surfer.pos = CENTER;
-    surfer.alive = true;
-	surfer.seen_zero = true;
-    left_block.on = false;
-    middle_block.on = false;
-    right_block.on = false;
-
+static void init_once(void) {
 	top_scores.list = (int *)malloc(10 * sizeof(int));
 	for (int i = 0; i < 10; i++) {
 		top_scores.list[i] = 5;
@@ -266,6 +259,16 @@ void init_game_data(void) {
 	gpio_set_pullup(SELECTOR);
 }
 
+void init_game_data(void) {
+    surfer.pos = CENTER;
+    surfer.alive = true;
+	surfer.seen_zero = true;
+    left_block.on = false;
+    middle_block.on = false;
+    right_block.on = false;
+
+}
+
 void character_select(void) {
 
 
@@ -273,13 +276,16 @@ void character_select(void) {
 }
 
 void top_scores_screen(void) {
+	static int last_state = 1;
 	draw_top_scores(top_scores.list);
 	while(1) {
-		if ((timer_get_ticks() - button_debounce_confirm) > 200000) {
-			if (gpio_read(CONFIRM) == 0) {
-				button_debounce_confirm = timer_get_ticks();
+		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
+			button_debounce_confirm = timer_get_ticks();
+			int state = gpio_read(CONFIRM);
+			if (state == 0 && last_state == 1) {
 				return;
 			}
+			last_state = state;
 		}	
 	}
 }
@@ -302,6 +308,7 @@ void main_menu(void) {
 			} else if ((gpio_read(CONFIRM) == 0) && last_confirm_state == 1 && (cur_menu_item == 2)) {
 				// Top Scores Screen
 				top_scores_screen();
+				last_confirm_state = 0;
 			}
 			last_confirm_state = state1;
 		}
@@ -337,14 +344,17 @@ static void add_to_top_scores(int time_init) {
 }
 
 static void dead_condition_reset(void) {
+	static int last_state = 1;
 	hstimer_disable(HSTIMER0);
 	hstimer_disable(HSTIMER0);
 	while(1) {
 		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
-			if (gpio_read(CONFIRM) == 0) {
+			int state = gpio_read(CONFIRM);
+			if (state == 0 && last_state == 1) {
 					button_debounce_confirm = timer_get_ticks();
 					start_game();
 			}
+			last_state = state;
 		}
 	}
 }
@@ -388,6 +398,7 @@ void main(void) {
     draw_loading_screen();
     gl_swap_buffer();
 
+	init_once();
 	start_game();
 	/*
 	main_menu();
