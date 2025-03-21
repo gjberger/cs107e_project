@@ -699,46 +699,46 @@ void draw_top_scores(int *scores) {
 
 void draw_barrier_fly(int x, int y) {
     // body
-    gl_draw_rect(x, 0.68 * HEIGHT + y, 12, 12, 0x349a4c);
-    gl_draw_rect(x, 0.68 * HEIGHT + 12 + y, 12, 12, 0x1b714d);
+    gl_draw_rect(x, 0.70 * HEIGHT + y, 12, 12, 0x349a4c);
+    gl_draw_rect(x, 0.70 * HEIGHT + 12 + y, 12, 12, 0x1b714d);
 
     // eyes
 
-    gl_draw_rect(x, 0.68 * HEIGHT + y, 4, 4, 0xff4f01);
-    gl_draw_rect(x + 8, 0.68 * HEIGHT + y, 4, 4, 0xff4f01);
+    gl_draw_rect(x, 0.70 * HEIGHT + y, 4, 4, 0xff4f01);
+    gl_draw_rect(x + 8, 0.70 * HEIGHT + y, 4, 4, 0xff4f01);
 
     // front antennae
-    gl_draw_rect(x + 2, 0.68 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 2, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 7, 0.68 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 7, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 2, 0.70 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 2, 0.70 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 7, 0.70 * HEIGHT - 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 7, 0.70 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
     
-    gl_draw_rect(x - 1, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x - 1, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 10, 0.68 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 10, 0.68 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 1, 0.70 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 1, 0.70 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 10, 0.70 * HEIGHT - 6 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 10, 0.70 * HEIGHT - 9 + y, 3, 3, GL_BLACK);
 
     // front legs
     // left
-    gl_draw_rect(x - 3, 0.68 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x - 5, 0.68 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x - 7, 0.68 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x - 9, 0.68 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x - 11, 0.68 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 3, 0.70 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 5, 0.70 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 7, 0.70 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 9, 0.70 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x - 11, 0.70 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
    
     // right
-    gl_draw_rect(x + 12, 0.68 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 14, 0.68 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 16, 0.68 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 18, 0.68 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
-    gl_draw_rect(x + 20, 0.68 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 12, 0.70 * HEIGHT + 7 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 14, 0.70 * HEIGHT + 5 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 16, 0.70 * HEIGHT + 3 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 18, 0.70 * HEIGHT + 1 + y, 3, 3, GL_BLACK);
+    gl_draw_rect(x + 20, 0.70 * HEIGHT - 1 + y, 3, 3, GL_BLACK);
 
 
     // wings
-    gl_draw_rect(x - 6, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
-    gl_draw_rect(x - 11, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
-    gl_draw_rect(x + 10, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
-    gl_draw_rect(x + 15, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x - 6, 0.70 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x - 11, 0.70 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x + 10, 0.70 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
+    gl_draw_rect(x + 15, 0.70 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
 }
 
 void draw_barrier_ghost_red(int x, int y) {
