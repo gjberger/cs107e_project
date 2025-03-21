@@ -38,6 +38,8 @@ static struct {
     bool seen_zero;
     bool alive;
     skin_t skin;
+    int top_y;
+    int bottom_y;
 } surfer;
 
 static struct {
@@ -328,7 +330,21 @@ void main(void) {
 	interrupts_global_enable();
 
     init_game_data();
-    surfer.skin = LUIGI;
+    surfer.skin = STICK;
+
+    if (surfer.skin == STICK) {
+        surfer.top_y = 0.81 * HEIGHT;
+        surfer.bottom_y = 0.98 * HEIGHT;
+    } else if (surfer.skin == STEVE) {
+        surfer.top_y = 0.837 * HEIGHT;
+        surfer.bottom_y = 0.974 * HEIGHT;
+    } else if (surfer.skin == MARIO) {
+        surfer.top_y = 0.845 * HEIGHT;
+        surfer.bottom_y = 0.935 * HEIGHT;
+    } else if (surfer.skin == LUIGI) {
+        surfer.top_y = 0.845 * HEIGHT;
+        surfer.bottom_y = 0.935 * HEIGHT;
+    }
 
     //draw_acknowledgements();
     //gl_swap_buffer();
