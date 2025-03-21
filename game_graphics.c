@@ -575,6 +575,8 @@ void draw_barrier(int x, int y, barrier_t type) {
         draw_barrier_bee(x, y);
     } else if (type == FLY) {
         draw_barrier_fly(x, y);
+    } else if (type == RED_GHOST) {
+        draw_barrier_ghost_red(x, y);
     }
 }
 
@@ -726,6 +728,34 @@ void draw_barrier_fly(int x, int y) {
     gl_draw_rect(x - 11, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
     gl_draw_rect(x + 10, 0.68 * HEIGHT + 10 + y, 8, 8, 0xc8cfd9);
     gl_draw_rect(x + 15, 0.68 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
+}
+
+void draw_barrier_ghost_red(int x, int y) {
+    printf("GHOST");
+    // body/head
+    gl_draw_rect(x - 1, 0.68 * HEIGHT - 6 + y, 2, 2, RED_GHOST);
+    gl_draw_rect(x - 4, 0.68 * HEIGHT - 4 + y, 8, 2, RED_GHOST);
+    gl_draw_rect(x - 7, 0.68 * HEIGHT - 2 + y, 14, 2, RED_GHOST);
+    gl_draw_rect(x - 10, 0.68 * HEIGHT + y, 20, 14, RED_GHOST);
+
+    // eyes
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 2 + y, 4, 4, GL_WHITE);
+    gl_draw_rect(x - 4, 0.68 * HEIGHT + 3 + y, 2, 3, GHOST_EYE);
+    gl_draw_rect(x + 2, 0.68 * HEIGHT + 2 + y, 4, 4, GL_WHITE);
+    gl_draw_rect(x + 4, 0.68 * HEIGHT + 3 + y, 2, 3, GHOST_EYE);
+
+    // bottom half
+    gl_draw_rect(x - 10, 0.68 * HEIGHT + 14 + y, 2, 6, RED_GHOST);
+    gl_draw_rect(x - 8, 0.68 * HEIGHT + 14 + y, 2, 4, RED_GHOST);
+    gl_draw_rect(x - 6, 0.68 * HEIGHT + 14 + y, 2, 2, RED_GHOST);
+    
+    gl_draw_rect(x - 2, 0.68 * HEIGHT + 14 + y, 2, 2, RED_GHOST);
+    gl_draw_rect(x - 1, 0.68 * HEIGHT + 14 + y, 2, 4, RED_GHOST);
+    gl_draw_rect(x, 0.68 * HEIGHT + 14 + y, 2, 2, RED_GHOST);
+    
+    gl_draw_rect(x + 8, 0.68 * HEIGHT + 14 + y, 2, 6, RED_GHOST);
+    gl_draw_rect(x + 6, 0.68 * HEIGHT + 14 + y, 2, 4, RED_GHOST);
+    gl_draw_rect(x + 4, 0.68 * HEIGHT + 14 + y, 2, 2, RED_GHOST);
 }
 
 void draw_train_slats(void) {

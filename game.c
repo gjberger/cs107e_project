@@ -112,9 +112,9 @@ void handle_barriers(void *dev) {
         right_block.on = false;
     }
 
-    int random_barrier_l = rand(3) + 1;
-    int random_barrier_m = rand(3) + 1;
-    int random_barrier_r = rand(3) + 1;
+    int random_barrier_l = rand(4) + 1;
+    int random_barrier_m = rand(4) + 1;
+    int random_barrier_r = rand(4) + 1;
 
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
@@ -124,6 +124,9 @@ void handle_barriers(void *dev) {
         left_block.y = 0;
         left_block.x = LANE1 + 35;
     } else if (left_block.barrier == FLY) {
+        left_block.x = LANE1 + 35;
+        left_block.y = 0;
+    } else if (left_block.barrier == RED_GHOST) {
         left_block.x = LANE1 + 35;
         left_block.y = 0;
     }
@@ -139,8 +142,11 @@ void handle_barriers(void *dev) {
     } else if (middle_block.barrier == FLY) {
         middle_block.x = LANE2 - 2;
         middle_block.y = 0;
+    } else if (middle_block.barrier == RED_GHOST) {
+        middle_block.x = LANE2 - 2;
+        middle_block.y = 0;
     }
-    right_block.barrier = random_barrier_r;
+    right_block.barrier = RED_GHOST; //random_barrier_r;
     
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
@@ -149,6 +155,9 @@ void handle_barriers(void *dev) {
         right_block.x = LANE3 - 45;
         right_block.y = 0;
     } else if (right_block.barrier == FLY) {
+        right_block.x = LANE3 - 45;
+        right_block.y = 0;
+    } else if (right_block.barrier == RED_GHOST) {
         right_block.x = LANE3 - 45;
         right_block.y = 0;
     }
@@ -300,34 +309,6 @@ void main_menu(void) {
 	}
 }
 
-void draw_ghost(void) {
-    // body/head
-    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT - 6, 2, 2, RED_GHOST);
-    gl_draw_rect(LANE2 - 4, 0.68 * HEIGHT - 4, 8, 2, RED_GHOST);
-    gl_draw_rect(LANE2 - 7, 0.68 * HEIGHT - 2, 14, 2, RED_GHOST);
-    gl_draw_rect(LANE2 - 10, 0.68 * HEIGHT, 20, 14, RED_GHOST);
-
-    // eyes
-    gl_draw_rect(LANE2 - 6, 0.68 * HEIGHT + 2, 4, 4, GL_WHITE);
-    gl_draw_rect(LANE2 - 4, 0.68 * HEIGHT + 3, 2, 3, GHOST_EYE);
-    gl_draw_rect(LANE2 + 2, 0.68 * HEIGHT + 2, 4, 4, GL_WHITE);
-    gl_draw_rect(LANE2 + 4, 0.68 * HEIGHT + 3, 2, 3, GHOST_EYE);
-
-    // bottom half
-    gl_draw_rect(LANE2 - 10, 0.68 * HEIGHT + 14, 2, 6, RED_GHOST);
-    gl_draw_rect(LANE2 - 8, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
-    gl_draw_rect(LANE2 - 6, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
-    
-    gl_draw_rect(LANE2 - 2, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
-    gl_draw_rect(LANE2 - 1, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
-    gl_draw_rect(LANE2, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
-    
-    gl_draw_rect(LANE2 + 8, 0.68 * HEIGHT + 14, 2, 6, RED_GHOST);
-    gl_draw_rect(LANE2 + 6, 0.68 * HEIGHT + 14, 2, 4, RED_GHOST);
-    gl_draw_rect(LANE2 + 4, 0.68 * HEIGHT + 14, 2, 2, RED_GHOST);
-
-}
-
 void main(void) {
     uart_init();
 	interrupts_init();
@@ -342,11 +323,6 @@ void main(void) {
     init_game_data();
     surfer.skin = LUIGI;
 
-    draw_background();
-    draw_ghost();
-    gl_swap_buffer();
-    while (1) {}
-   
     /*
     draw_acknowledgements();
     gl_swap_buffer();

@@ -9,6 +9,10 @@ typedef enum {
     BLOCK = 1,
     BEE = 2,
     FLY = 3,
+    RED_GHOST = 4,
+    ORANGE_GHOST = 5,
+    TURQOUISE_GHOST = 6,
+    PINK_GHOST = 7,
 } barrier_t;
 
 typedef enum {
@@ -50,6 +54,7 @@ int get_secs(void);
 void draw_barrier(int x, int y, barrier_t type);
 void draw_barrier_bee(int x, int y);
 void draw_barrier_fly(int x, int y);
+void draw_barrier_ghost_red(int x, int y);
 void barrier_animation(position_t pos);
 void left_barrier_animate(void);
 void draw_score(int secs);
