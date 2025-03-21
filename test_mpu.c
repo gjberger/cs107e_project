@@ -1,3 +1,11 @@
+/*
+ * File: test_mpu.c
+ *
+ * File for testing the mpu-6050 module and some of the buttons
+ *
+ *
+ * */
+
 #include "i2c.h"
 #include "mpu6050.h"
 #include "timer.h"
@@ -18,6 +26,7 @@ static struct {
     bool alive;
 } surfer;
 
+// function to test the controller buttons
 static void test_buttons(void) {
 	gpio_set_input(CONFIRM);
 	gpio_set_input(SELECTOR);
@@ -28,6 +37,7 @@ static void test_buttons(void) {
 	timer_delay_ms(20);
 }
 
+// tests the handler function that is implemeted in game.c / ensures the logic is correct
 static void test_handle_board(i2c_device_t *dev) {
 	position_t pos = get_cur_position(dev);
 

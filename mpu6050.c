@@ -1,16 +1,28 @@
+/*
+ * File: mpu6050.c
+ *
+ * This file implements a mini library that can be used with the mpu-6050 module to configure and 
+ * read gyro/accel data
+ *
+ *
+ */
+
+
 #include "assert.h"
 #include "i2c.h"
 #include "mpu6050.h"
 #include "malloc.h"
 #include "math_float.h"
 
+// these constants defined with reference to the MPU-6050 data sheet
+// currently uses most sensitive settings and the widest bandwidth low pass filter
 #define MPU_RATE 0x07
 #define GYRO_SENSIT 0x00
 #define ACCEL_SENSIT 0x00
 #define DLPF 0x00
 #define WAKE_UP 0x00
 
-//#define SAMPLE_RATE 0.005
+// ALPHA is the weighting of the accelerometer, gyroscope gets weight 1 - ALPHA
 #define ALPHA 0.04
 #define GYRO_LSB 131.0
 #define THRESHOLD_ANGLE 9
@@ -20,6 +32,7 @@ i2c_device_t *mpu_init(void) {
 	return i2c_new(0x68);
 }
 
+// the config functions set registers in the MPU-6050 to specific values
 static void config_pwr(i2c_device_t *dev) {
 	i2c_write_reg(dev, 0x6b, WAKE_UP);	
 }
@@ -49,6 +62,10 @@ void config_mpu(i2c_device_t *dev) {
 	config_accel_sensit(dev);
 }
 
+// accelerometer/gyro data is written into two registers holding the upper and lower halves
+// the read functions get the values in those registers and combine
+// enables individual axis reading or reading all of the data from each axis and storing in
+// an array
 int16_t read_accel_x(i2c_device_t *dev) {
 	int16_t data_x = (i2c_read_reg(dev, 0x3b) << 8) | i2c_read_reg(dev, 0x3c);
 	return data_x;
@@ -95,10 +112,9 @@ int16_t *read_gyro_data(i2c_device_t *dev) {
 	return ptr;
 }
 
-// maybe need some kind of calibration function for when it starts up
 
-
-// get the angle of the chip as calc by the accelerometer
+// this function grabs the accelerometer data and calculates the angle of the baord with only 
+// accelerometer data
 float accel_angle(i2c_device_t *dev) {
 	int16_t ax = read_accel_x(dev);
 	int16_t az = read_accel_z(dev);
@@ -108,7 +124,7 @@ float accel_angle(i2c_device_t *dev) {
 
 }
 
-//get the change in the angle of the chip as calc by the gyroscope
+// this function grabs the gyro data and calculates the angle of the board w oly the gyro data
 float gyro_angle(i2c_device_t *dev) {
 	int16_t raw_angle = read_gyro_y(dev);
 	float real_angle = raw_angle / GYRO_LSB;
@@ -116,7 +132,8 @@ float gyro_angle(i2c_device_t *dev) {
 	return gyro_angle;
 }
 
-// use alpha to combine the measurements, see top for ALPHA, will need to test
+// this functions implements a complementary filter
+// acccel angle calculation is weighted by ALPHA and gyro by 1 - ALPHA
 float get_tilt_angle(i2c_device_t *dev) {
 	static float cur_angle = 0;
 
@@ -128,33 +145,16 @@ float get_tilt_angle(i2c_device_t *dev) {
 
 }
 
-// when upside down, angle sometimes wraps around so need to accound for small negatives and big positives
+// this function returns a position_t value (LEFT, CENTER, RIGHT) based on the board's angle
 position_t get_cur_position(i2c_device_t *dev) {
 	static position_t cur_pos = CENTER;
 
 	float cur_angle = get_tilt_angle(dev);
 
-	// for when mounted upside down
-	/*
-	if ((cur_angle < -(180 - THRESHOLD_ANGLE)) || (cur_angle > (180 - THRESHOLD_ANGLE))) {
-		if (cur_pos != CENTER) {
-			cur_pos = CENTER;
-		}
-	}else if ((cur_angle > -(180 - THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
-		cur_pos = LEFT;
-	}else if ((cur_angle < (180 - THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
-		cur_pos = RIGHT;
-	}
-
-	*/
-
-	// this code is for when mpu is face up
 	if ((cur_angle > (THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
 		cur_pos = RIGHT;
-		//cur_pos = LEFT;
 	} else if ((cur_angle < (-THRESHOLD_ANGLE)) && (cur_pos == CENTER)) {
 		cur_pos = LEFT;
-		//cur_pos = RIGHT;
 	} else if ((cur_angle > (-THRESHOLD_ANGLE)) && (cur_angle < (THRESHOLD_ANGLE)) && (cur_pos != CENTER)) {
 		cur_pos = CENTER;
 	}
