@@ -6,6 +6,7 @@
 
 ## Member contribution
 A short description of the work performed by each member of the team.
+
 Finley:
 - Generally worked more on the hardware / hardware integration for the game
     - Set up, wiring, and reading from the mpu-6050 module
