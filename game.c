@@ -118,7 +118,7 @@ void handle_barriers(void *dev) {
     int random_barrier_m = rand(4) + 1;
     int random_barrier_r = rand(4) + 1;
 
-    left_block.barrier = RED_GHOST;
+    left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
         left_block.y = 0;
         left_block.x = LANE1 + 15;
