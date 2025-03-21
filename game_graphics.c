@@ -614,6 +614,8 @@ void draw_barrier_bee(int x, int y) {
 }
 
 
+// this function draws the main menu and controls the highlighting and arrow indicating which option
+// is currently selected
 void draw_menu(int cur_select) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -655,6 +657,8 @@ void draw_menu(int cur_select) {
     gl_swap_buffer();
 }
 
+// this function gets the list of top scores and sorts it lowest to highest
+// output is then printed in the draw_top_scores function
 static void sort_top_scores(int *scores) {
 	for (int i = 0; i < 9; i++) {
 		int min_index = i;
@@ -670,6 +674,7 @@ static void sort_top_scores(int *scores) {
 	}
 }
 
+// this function draws the charcter select menu
 void draw_character_select(int cur_select) {
 	int test_height = 100;
 	gl_clear(GL_MAGENTA);
@@ -703,6 +708,9 @@ void draw_character_select(int cur_select) {
 
 }
 
+// this function draws the top scores menu
+// To do so, it gets the list of top scores, sorts it, then prints in the correct order
+// the helper function sort_top_scores is used 
 void draw_top_scores(int *scores) {
 	gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);

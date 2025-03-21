@@ -1,3 +1,11 @@
+/* File: game.c
+ *
+ * This file has the main code for the game play and logic
+ *
+ *
+ */
+
+
 #include "uart.h"
 #include "printf.h"
 #include "gl.h"
@@ -31,6 +39,8 @@ static unsigned long button_debounce_selector = 0;
 static int last_confirm_state = 0;
 static int last_selector_state = 0;
 
+// struct to hold the information for displaying the top scores
+// list is a dynamically allocated array of the top scores
 static struct {
 	int *list;
 	int num_filled;
@@ -70,6 +80,8 @@ static struct {
     barrier_t barrier;
 } right_block;
 
+// handler function for reading data from the mpu-6050 and updating the board / characater position
+// this is the handler for the HSTIMER0 interrupt, triggers every 5ms
 void handle_board(void *dev) {
 	hstimer_interrupt_clear(HSTIMER0);
 
@@ -174,6 +186,8 @@ void handle_barriers(void *dev) {
     }
 }
 
+// this function configures interrupts for HSTIMER0
+// interrupts for the mpu-6050 data sampling
 void set_up_timer_interrupts(void) {
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
@@ -251,6 +265,8 @@ void check_if_dead(void) {
     }
 }
 
+// the data in this function only needs to be intialized once when the program is first run
+// re init is not needed when the player dies
 static void init_once(void) {
 	top_scores.list = (int *)malloc(10 * sizeof(int));
 	for (int i = 0; i < 10; i++) {
@@ -265,6 +281,7 @@ static void init_once(void) {
 	gpio_set_pullup(SELECTOR);
 }
 
+// this data requires intialization every time the game begins
 void init_game_data(void) {
     surfer.pos = CENTER;
     surfer.alive = true;
@@ -275,6 +292,10 @@ void init_game_data(void) {
 
 }
 
+// this function controls the charcater selection and the section of the menu
+// the user can move throught the options with the SELECTOR button and pick and option with CONFIRM
+// a preview of the charcter skin is shown on the screen
+// uses the draw_charcter_select function in game_graphics.c to redraw the screen and the options + skin
 void character_select(void) {
 	draw_character_select(cur_char_item);
 	static skin_t current_skin = 1;
@@ -317,6 +338,9 @@ void character_select(void) {
 	}
 }
 
+// this function controls the top score display and the section of the menu
+// user can return to the main menu via the CONFIRM button
+// uses the function draw_top_scores located in game_graphics.c to draw the scores
 void top_scores_screen(void) {
 	draw_top_scores(top_scores.list);
 	while(1) {
@@ -332,6 +356,9 @@ void top_scores_screen(void) {
 	}
 }
 
+// this function controls the logic and display of the main menu
+// can access the charcter select menu or the top scores menu from here
+// buttons allowing toggling through the options and selecting
 void main_menu(void) {
 	draw_menu(cur_menu_item);
 	while(1) {
@@ -367,6 +394,10 @@ void main_menu(void) {
 	}
 }
 
+// this function controls the top scores list
+// when the player dies, their score is calculated and stored in the top scores list
+// if the list is full (10 values) the smallest is discarded
+// sorting and display happens only when the user opens the top scores menu
 static void add_to_top_scores(int time_init) {
 	if (top_scores.num_filled <= 9) {
 		if (time_init > top_scores.list[top_scores.min_score_index]) {
@@ -384,6 +415,8 @@ static void add_to_top_scores(int time_init) {
 	}
 }
 
+// this function puts a hold on the game when the user dies
+// the user can return to the main menu by pressing the CONFIRM button
 static void dead_condition_reset(void) {
 	hstimer_disable(HSTIMER0);
 	hstimer_disable(HSTIMER0);
@@ -420,6 +453,9 @@ void set_surfer_bounds(void) {
     }
 }
 
+// this is the main gameplay logic function
+// during gameplay, the state is in the while loop
+// when the player dies, the game is reset and the player can choose to return to the main menu
 static void start_game(void) {
 	init_game_data();
 	main_menu();

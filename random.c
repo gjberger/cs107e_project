@@ -7,6 +7,7 @@ uint64_t get_seed(void) {
 }
 
 // middle-square Weyl Sequence randon number generator
+// seeded based off of timer_get_ticks()
 uint32_t randGen(void) {
 	static uint64_t x = 0;
 	static uint64_t w = 0;
