@@ -26,6 +26,8 @@ static void start_game();
 static int cur_menu_item = 0;
 static unsigned long button_debounce_confirm = 0;
 static unsigned long button_debounce_selector = 0;
+static int last_confirm_state = 0;
+static int last_selector_state = 0;
 
 static struct {
 	int *list;
@@ -278,23 +280,20 @@ void character_select(void) {
 }
 
 void top_scores_screen(void) {
-	static int last_state = 1;
 	draw_top_scores(top_scores.list);
 	while(1) {
 		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
 			button_debounce_confirm = timer_get_ticks();
 			int state = gpio_read(CONFIRM);
-			if (state == 0 && last_state == 1) {
+			if (state == 0 && last_confirm_state == 1) {
 				return;
 			}
-			last_state = state;
+			last_confirm_state = state;
 		}	
 	}
 }
 
 void main_menu(void) {
-	static int last_selector_state = 1;
-	static int last_confirm_state = 1;
 
 	draw_menu(cur_menu_item);
 	while(1) {
@@ -346,17 +345,21 @@ static void add_to_top_scores(int time_init) {
 }
 
 static void dead_condition_reset(void) {
-	static int last_state = 1;
 	hstimer_disable(HSTIMER0);
 	hstimer_disable(HSTIMER0);
+	left_block.on = false;
+	middle_block.on = false;
+	right_block.on = false;
+
 	while(1) {
 		if ((timer_get_ticks() - button_debounce_confirm) > 500000) {
 			int state = gpio_read(CONFIRM);
-			if (state == 0 && last_state == 1) {
+			if (state == 0 && last_confirm_state == 1) {
 					button_debounce_confirm = timer_get_ticks();
+					last_confirm_state = 0;
 					start_game();
 			}
-			last_state = state;
+			last_confirm_state = state;
 		}
 	}
 }
@@ -413,10 +416,10 @@ void main(void) {
     //init_game_data();
     //surfer.skin = LUIGI;
 
-    draw_acknowledgements();
-    gl_swap_buffer();
-    draw_loading_screen();
-    gl_swap_buffer();
+    //draw_acknowledgements();
+    //gl_swap_buffer();
+    //draw_loading_screen();
+    //gl_swap_buffer();
 
 	init_once();
 	start_game();
