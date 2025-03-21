@@ -74,20 +74,18 @@ static void test_angle_measure(i2c_device_t *dev) {
 void main(void) {
 	uart_init();
 	gpio_init();
-	/*
 	i2c_device_t *dev = mpu_init();
 	config_mpu(dev);
 	surfer.seen_zero = true;
 	surfer.pos = CENTER;
-	*/
 	while(1) {
 		//print_accel_data(dev);	
 		//print_gyro_data(dev);
 		//test_position(dev);
 		//test_handle_board(dev);
-		//test_angle_measure(dev);
+		test_angle_measure(dev);
 		//timer_delay_ms(SAMPLE_RATE * 1000);
-		test_buttons();
+	//	test_buttons();
 	}
 
 }
