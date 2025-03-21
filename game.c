@@ -116,7 +116,7 @@ void handle_barriers(void *dev) {
     int random_barrier_m = rand(4) + 1;
     int random_barrier_r = rand(4) + 1;
 
-    left_block.barrier = random_barrier_l;
+    left_block.barrier = RED_GHOST;
     if (left_block.barrier == BLOCK) {
         left_block.y = 0;
         left_block.x = LANE1 + 15;
@@ -146,7 +146,7 @@ void handle_barriers(void *dev) {
         middle_block.x = LANE2 - 2;
         middle_block.y = 0;
     }
-    right_block.barrier = RED_GHOST; //random_barrier_r;
+    right_block.barrier = random_barrier_r;
     
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
@@ -181,7 +181,7 @@ void set_up_timer2_interrupts(void) {
 
 void update_screen(int time_init) {
         draw_background();
-        draw_train_slats();
+        // draw_train_slats();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
@@ -196,7 +196,7 @@ void update_screen(int time_init) {
         gl_swap_buffer();
       
         draw_background();
-        draw_train_slats_2();
+        // draw_train_slats_2();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
