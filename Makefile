@@ -3,7 +3,7 @@
 # Additional source file(s) mymodule.c (edit SOURCES to change)
 # Link against your libmango + reference libmango (edit LDLIBS, LDFLAGS to change)
 
-PROGRAM =  test_mpu.bin #game.bin #  #  #game.bin   
+PROGRAM =  game.bin #test_mpu.bin  # game.bin #  #  #game.bin   
 TEST_MPU_PROGRAM = test_mpu.bin
 
 SOURCES = $(PROGRAM:.bin=.c) mpu6050.c i2c.c math_float.c game_graphics.c random.c

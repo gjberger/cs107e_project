@@ -123,9 +123,9 @@ void handle_barriers(void *dev) {
         right_block.on = false;
     }
 
-    int random_barrier_l = rand(4) + 1;
-    int random_barrier_m = rand(4) + 1;
-    int random_barrier_r = rand(4) + 1;
+    int random_barrier_l = rand(3) + 1;
+    int random_barrier_m = rand(3) + 1;
+    int random_barrier_r = rand(3) + 1;
 
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
@@ -422,7 +422,6 @@ void set_surfer_bounds(void) {
 
 static void start_game(void) {
 	init_game_data();
-    surfer.skin = STEVE;
 	main_menu();
 	set_surfer_bounds();
 	blinking_start_screen();
@@ -463,6 +462,8 @@ void main(void) {
     //gl_swap_buffer();
     //draw_loading_screen();
     //gl_swap_buffer();
+
+    surfer.skin = STEVE;
 
 	init_once();
 	start_game();
