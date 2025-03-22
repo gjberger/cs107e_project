@@ -75,6 +75,7 @@ Also, I learned a lot about graphics, how to create movement, how to manage fram
 I don't think we really had many complications as a result of our very solid planning. If anything, sometimes figuring out how to draw, drawing relatively on the screen, managing the barrier
 movement, and using interrupts to spawn barriers was a bit odd, but I think all was smoothly implemented in the end.
 
+Huge shoutout to Finley -- great partner!
 ## Photos
 I've added a pic of the planning we did in advance, and a picture of Francis on the board,
 and me on the board.
