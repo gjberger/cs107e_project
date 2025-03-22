@@ -226,10 +226,13 @@ void set_up_timer2_interrupts(void) {
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
-// This function, inspired by the MVC (model-view-controller)
+// This function, inspired by the MVC (model-view-controller),
+// updates the view for the user dependent on the players
+// current position, the blocks current position, etc. It
+// displays the character in both poses to appear as animated,
+// essentially doing stop motion.
 void update_screen(int time_init) {
         draw_background();
-        // draw_train_slats();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
@@ -244,7 +247,6 @@ void update_screen(int time_init) {
         gl_swap_buffer();
       
         draw_background();
-        // draw_train_slats_2();
         draw_score(time_init);
         if (left_block.on) {
             draw_barrier(left_block.x, left_block.y, left_block.barrier);
@@ -265,6 +267,7 @@ void update_screen(int time_init) {
         right_block.y = right_block.y + 6;
 }
 
+// This function checks if a character is dead dependent on block position.
 void check_if_dead(void) {
     if (surfer.pos == LEFT) {
         if (left_block.on) {
@@ -304,7 +307,8 @@ static void init_once(void) {
 	gpio_set_pullup(SELECTOR);
 }
 
-// this data requires intialization every time the game begins
+// This function resets the player position, sets it as alive,
+// turns the barriers off, etc.
 void init_game_data(void) {
     surfer.pos = CENTER;
     surfer.alive = true;
@@ -460,6 +464,8 @@ static void dead_condition_reset(void) {
 	}
 }
 
+// This function sets the surfer's bounds (bottom y and top y) dependent
+// on what skin is chosen. Each skin is different sized.
 void set_surfer_bounds(void) {
     if (surfer.skin == STICK) {
         surfer.top_y = 0.81 * HEIGHT;
@@ -500,7 +506,7 @@ static void start_game(void) {
 
 }
 
-
+// Main drives the game.
 void main(void) {
     uart_init();
 	interrupts_init();
