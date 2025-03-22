@@ -1,11 +1,6 @@
 /* File: game.c
- *
  * This file has the main code for the game play and logic
- *
- *
  */
-
-
 #include "uart.h"
 #include "printf.h"
 #include "gl.h"
@@ -28,12 +23,10 @@
 #define SELECTOR GPIO_PB4
 #define CONFIRM GPIO_PB3
 
+// Module-level variables and functions for game.
 static void start_game();
-
-
 static int cur_menu_item = 0;
 static int cur_char_item = 0;
-
 static unsigned long button_debounce_confirm = 0;
 static unsigned long button_debounce_selector = 0;
 static int last_confirm_state = 0;
@@ -47,6 +40,14 @@ static struct {
 	int min_score_index;
 } top_scores;
 
+/* Struct to hold information for player, including:
+ * - position
+ * - whether or not the player has returned to neutral on skateboard
+ * - character height range (top y, bottom y)
+ * - character's selected skin
+ * - alive or not
+ */ 
+
 static struct {
     position_t pos;
     int x;
@@ -59,6 +60,9 @@ static struct {
     int bottom_y;
 } surfer;
 
+// Three static structs for blocks in left, right, and center
+// lanes. Contains type of barrier (fly, bee, etc) -- randomly
+// generated.
 static struct {
     bool on;
     int x;
@@ -105,9 +109,21 @@ void handle_board(void *dev) {
 	surfer.seen_zero = false;
 }
 
+// Handler function to randomly generate a barrier permutation, 
+// and barrier type.
+// Note, the possible permuations are essentially binary:
+// 000
+// 001
+// 010
+// 011
+// 100
+// 101
+// 110
+// (111 not included because that would mean imminent loss for the character)
 void handle_barriers(void *dev) {
 	hstimer_interrupt_clear(HSTIMER1);
-    uart_putstring("barrier\n");
+
+    // Randomly generate a permutation.
     int random = rand(6) + 1;
     if (random == 1) {
         left_block.on = false;
@@ -135,10 +151,12 @@ void handle_barriers(void *dev) {
         right_block.on = false;
     }
 
+    // Randomly generate a type for each barrier.
     int random_barrier_l = rand(3) + 1;
     int random_barrier_m = rand(3) + 1;
     int random_barrier_r = rand(3) + 1;
 
+    // Set left block x and y coordinates.
     left_block.barrier = random_barrier_l;
     if (left_block.barrier == BLOCK) {
         left_block.y = 0;
@@ -155,6 +173,7 @@ void handle_barriers(void *dev) {
     }
 
 
+    // Set middle block x and y coordinates.
     middle_block.barrier = random_barrier_m;
     if (middle_block.barrier == BLOCK) {
         middle_block.x = LANE2 - 20;
@@ -169,8 +188,9 @@ void handle_barriers(void *dev) {
         middle_block.x = LANE2 - 2;
         middle_block.y = 0;
     }
-    right_block.barrier = random_barrier_r;
     
+    // Set right block x and y coordinates.
+    right_block.barrier = random_barrier_r;
     if (right_block.barrier == BLOCK) {
         right_block.x = LANE3 - 50;
         right_block.y = 0;
@@ -198,12 +218,15 @@ void set_up_timer_interrupts(void) {
 	interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER0);
 }
 
+// This function configures interrupts for barriers so that
+// they appear every 15 seconds.
 void set_up_timer2_interrupts(void) {
     hstimer_init(HSTIMER1, 15000000);
     interrupts_register_handler(INTERRUPT_SOURCE_HSTIMER1, handle_barriers, NULL);
     interrupts_enable_source(INTERRUPT_SOURCE_HSTIMER1);
 }
 
+// This function, inspired by the MVC (model-view-controller)
 void update_screen(int time_init) {
         draw_background();
         // draw_train_slats();
