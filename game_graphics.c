@@ -1,3 +1,6 @@
+/* File: game_graphics.c
+ * This file implements all the drawing for the game.
+ */
 #include "uart.h"
 #include "printf.h"
 #include "gl.h"
@@ -15,13 +18,14 @@
 #define LANE1 (WIDTH / 6)
 #define LANE2 (WIDTH / 2)
 #define LANE3 (5 * WIDTH / 6)
-// This helper function allows you convert from a number to
-// it's char value on the ASCII table.
 
+// This function returns the number of seconds since program start.
 int get_secs(void) {
     return (timer_get_ticks() / (24 * 1000000));
 }
 
+// This helper function allows you convert from a number to
+// it's char value on the ASCII table.
 static char num_to_char(int num) {
     char c = (char)num;
     if (num < 10) {
@@ -34,6 +38,7 @@ static char num_to_char(int num) {
     return c;
 }
 
+// Taken from Gabe's printf.
 // This function takes a number and a base, and converts it into a string.
 static void num_to_string(unsigned long num, int base, char *outstr) {
 
@@ -80,6 +85,7 @@ static void num_to_string(unsigned long num, int base, char *outstr) {
     }
 }
 
+// This function draws the score dependent on the current time.
 void draw_score(int secs) {
     char buf[10];
     num_to_string(get_secs() - secs, 10, buf);
@@ -87,12 +93,15 @@ void draw_score(int secs) {
     gl_draw_string(0.8 * WIDTH, 0.05 * WIDTH, buf, GL_BLACK);
 }
 
+// This function draws a number, 'num' at (x,y).
 void draw_num(int num, int x, int y) {
     char buf[10];
     num_to_string(num, 10, buf);
     gl_draw_string(x, y, buf, GL_WHITE);
 }
 
+// This function draws the background, ie, the three lanes, the mango banner,
+// etc.
 void draw_background(void) {
     gl_clear(GL_WHITE);
     // overarch line
@@ -126,6 +135,7 @@ void draw_background(void) {
     gl_draw_line(WIDTH, 0, 0.875 * WIDTH, 0.25 * HEIGHT, GL_BLACK);
 }
 
+// This function draws out the RISC-V acknowledgement screen.
 void draw_acknowledgements(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -187,6 +197,7 @@ void draw_acknowledgements(void) {
     timer_delay(2);
 }
 
+// This function draws the loading screen.
 void draw_loading_screen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -208,6 +219,9 @@ void draw_loading_screen(void) {
     }
 }
 
+// This function draws startcreen 1, which display start. 
+// startscreen_2 doesn't contain "start" and is used to make
+// a blinking "start" effect.
 void draw_startscreen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -217,6 +231,7 @@ void draw_startscreen(void) {
     gl_draw_string(0.4 * WIDTH, (0.7 * HEIGHT) + 2, "Start", GL_WHITE);
 }
 
+// The aforementioned startscreen_2.
 void draw_startscreen_2(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -225,6 +240,7 @@ void draw_startscreen_2(void) {
     gl_draw_string(0.2 * WIDTH, (0.14 * HEIGHT) + 2, "CS107E Surfers", GL_BLACK);
 }
 
+// Uses both startscreen functions to blink start.
 void blinking_start_screen(void) {
     long num = 0;
     while (num < 5) {
@@ -238,6 +254,7 @@ void blinking_start_screen(void) {
     }
 }
 
+// Creates game countdown.
 void game_countdown(void) {
     draw_startscreen_2();
     draw_num(3, 0.45 * WIDTH, 0.7 * HEIGHT);
@@ -253,6 +270,7 @@ void game_countdown(void) {
     timer_delay(1);
 }
 
+// Game endscreen, happens when you die. Can click back to menu.
 void draw_endscreen(void) {
     gl_clear(GL_MAGENTA);
     gl_draw_rect(0.18 * WIDTH, 0.11 * HEIGHT, 250, 50, GL_MAGENTA);
@@ -268,7 +286,7 @@ void draw_endscreen(void) {
 	gl_draw_line((.2 * WIDTH) -10, (.9 * HEIGHT) + (0.5 * gl_get_char_height()) + 10, (.15 * WIDTH) + 20, (.9 * HEIGHT) + (0.5 * gl_get_char_height()), GL_YELLOW);
 }
 
-// need to be able to give x, y coordinates, draw character depending on that
+// Draws stick character based on 'x'.
 void draw_character(int x) {
     //gl_draw_rect(((x * WIDTH) / WIDTH) - RECT_OFFSET, 0.8 * HEIGHT, 40, 200, GL_WHITE);
     gl_draw_circle(((x * WIDTH) / WIDTH), 0.87 * HEIGHT, 15, GL_BLACK);
@@ -281,6 +299,7 @@ void draw_character(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, (0.98 * HEIGHT) - LEG_OFFSET, GL_BLACK);
 }
 
+// Draws stick character 2 based on 'x'.
 void draw_character_2(int x) {
     //gl_draw_rect(0.45 * WIDTH, 0.8 * HEIGHT, 40, 200, GL_WHITE);
     gl_draw_circle(((x * WIDTH) / WIDTH), 0.87 * HEIGHT, 15, GL_BLACK);
@@ -290,6 +309,7 @@ void draw_character_2(int x) {
     gl_draw_line(((x * WIDTH) / WIDTH), 0.95 * HEIGHT, ((x * WIDTH) / WIDTH) + LEG_OFFSET, 0.98 * HEIGHT, GL_BLACK);
 }
 
+// Draws Steve in position 1.
 void draw_steve(int x) {
     // head
     gl_draw_rect(x - 10, 0.87 * HEIGHT - 20, 20, 20, 0x492816);
@@ -313,6 +333,7 @@ void draw_steve(int x) {
     gl_draw_line(x - 1, 0.85 * HEIGHT + 50, x - 1, 0.85 * HEIGHT + 65, GL_BLACK);
 }
 
+// Draws Steve in position 2.
 void draw_steve_2(int x) {
     // head
     gl_draw_rect(x - 10, 0.87 * HEIGHT - 20, 20, 20, 0x492816);
@@ -336,6 +357,7 @@ void draw_steve_2(int x) {
     gl_draw_line(x - 1, 0.85 * HEIGHT + 50, x - 1, 0.85 * HEIGHT + 65, GL_BLACK);
 }
 
+// Draws Mario in position 1.
 void draw_mario(int x) {
     // hat
     gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, 0xc81a27);
@@ -373,6 +395,7 @@ void draw_mario(int x) {
 
 }
 
+// Draws Mario in position 2.
 void draw_mario_2(int x) {
     // hat
     gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, 0xc81a27);
@@ -409,6 +432,7 @@ void draw_mario_2(int x) {
     gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
 }
 
+// Draws Luigi in position 1.
 void draw_luigi(int x) {
     // hat
     gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, LUIGI_GREEN);
@@ -446,6 +470,7 @@ void draw_luigi(int x) {
 
 }
 
+// Draws Luigi in position 2.
 void draw_luigi_2(int x) {
     // hat
     gl_draw_rect(x - 11, 0.87 * HEIGHT - 15, 22, 5, LUIGI_GREEN);
@@ -482,7 +507,8 @@ void draw_luigi_2(int x) {
     gl_draw_rect(x + 9, 0.87 * HEIGHT + 18, 4, 2, 0xe2ab7d);
 }
 
-
+// General character pose 1 function, draws character depending
+// on chosen skin and x coordinate.
 void character_pose_1(position_t pos, skin_t skin) {
     if (skin == STICK) {
         if (pos == LEFT) {
@@ -528,6 +554,8 @@ void character_pose_1(position_t pos, skin_t skin) {
     }
 }
 
+// General character pose 2 function, draws character depending
+// on chosen skin and x coordinate.
 void character_pose_2(position_t pos, skin_t skin) {
     if (skin == STICK) {
         if (pos == LEFT) {
@@ -574,6 +602,7 @@ void character_pose_2(position_t pos, skin_t skin) {
     }
 }
 
+// General barrier drawing function.
 void draw_barrier(int x, int y, barrier_t type) {
     if (type == BLOCK) {
         gl_draw_rect(x, 0.68 * HEIGHT + y, 40, 40, GL_BLACK);
@@ -586,6 +615,7 @@ void draw_barrier(int x, int y, barrier_t type) {
     }
 }
 
+// Draws bee barrier.
 void draw_barrier_bee(int x, int y) {
     gl_draw_rect(x - 1, 0.68 * HEIGHT - 7 + y, 3, 3, GL_BLACK);
     gl_draw_rect(x + 6, 0.68 * HEIGHT - 7 + y, 3, 3, GL_BLACK);
@@ -739,6 +769,7 @@ void draw_top_scores(int *scores) {
 	gl_swap_buffer();
 }
 
+// Draws fly barrier.
 void draw_barrier_fly(int x, int y) {
     // body
     gl_draw_rect(x, 0.70 * HEIGHT + y, 12, 12, 0x349a4c);
@@ -783,6 +814,7 @@ void draw_barrier_fly(int x, int y) {
     gl_draw_rect(x + 15, 0.70 * HEIGHT + 15 + y, 8, 8, 0xc8cfd9);
 }
 
+// This draws the pacman red ghost barrier.
 void draw_barrier_ghost_red(int x, int y) {
     printf("GHOST");
     // body/head
@@ -811,6 +843,8 @@ void draw_barrier_ghost_red(int x, int y) {
     gl_draw_rect(x + 4, 0.68 * HEIGHT + 14 + y, 2, 2, RED_GHOST);
 }
 
+// This and the next function draws train slats, to simulate running on a moving surface.
+// We thought it looked better without.,
 void draw_train_slats(void) {
     // left
     gl_draw_line(LANE1 - 15, 0.75 * HEIGHT + 1, LANE1 + 83, 0.75 * HEIGHT + 1, TRAIN_SLATS);
