@@ -70,7 +70,8 @@ I like the loading screen, countdown, and RISC-V acknowledgement -- I think thos
 As mentioned above, I also really like the broader game logic and how I managed the data and model using MVC.
 
 Also, I learned a lot about graphics, how to create movement, how to manage framebuffers, etc. Initially, because of the number of permutations we had, Ben encouraged us to use like
-20 framebuffers. I thought long and hard about this and realized that would needlessly complicate the process, and decided on MVC and 2 framebuffers and it worked really nicely.
+20 framebuffers. I thought long and hard about this and realized that would needlessly complicate the process, and decided on MVC and 2 framebuffers and it worked really nicely. It was initially challenging
+to figure out how to redraw the character, but constantly redrawing everything worked a treat.
 
 I don't think we really had many complications as a result of our very solid planning. If anything, sometimes figuring out how to draw, drawing relatively on the screen, managing the barrier
 movement, and using interrupts to spawn barriers was a bit odd, but I think all was smoothly implemented in the end.
