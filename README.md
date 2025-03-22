@@ -53,6 +53,7 @@ Any trying or heroic moments you would like to share? Of what are you particular
 the effort you put into it? the end product? the process you followed?
 what you learned along the way? Tell us about it!
 
+Gabe:
 I think it would have been hard for the game design process to go smoother than it did. To start off, Finley and I set very precise goals
 with a very specific timeline. We also did the vast majority of the planning upfront, essentially implementing the entire game on the whiteboard
 in Gates B02 to get the rough idea of how we'd code it, then doing just that.
@@ -77,6 +78,21 @@ I don't think we really had many complications as a result of our very solid pla
 movement, and using interrupts to spawn barriers was a bit odd, but I think all was smoothly implemented in the end.
 
 Huge shoutout to Finley -- great partner!
+
+-----
+Finley:
+The process was great, I had a lot of fun and learned a lot.
+
+From the start Gabe and I had a pretty good idea of what we wanted it to look like.  As Gabe mentioned above,
+that made every step of the way easier.
+
+I really enjoyed working with the MPU 6050 and learning all about its optional features and how those could be controlled.  Similarily, I was very satisifed with the complementary filtering we used to better calculate the angle.  
+It was really neat to learn about why it was needed and how it solved the problem.
+
+Other than that, I'll just echo everything that Gabe wrote above.  I had a great experience and really enjoyed 
+working with him!
+
+
 ## Photos
-I've added a pic of the planning we did in advance, and a picture of Francis on the board,
-and me on the board.
+We've added a pic of the planning we did in advance, and a picture of Francis on the board,
+and Gabe on the board.
