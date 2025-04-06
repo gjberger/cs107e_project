@@ -1,3 +1,4 @@
+# 107e Surfers
 107e Surfers is a simple skateboarding game for the Mango Pi. The player moves between three lanes by tilting the skateboard, using input from the MPU-6050 motion sensor. The goal is to avoid randomly spawning obstacles.
 
 Features:
