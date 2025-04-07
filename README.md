@@ -6,4 +6,3 @@ The graphics are controlled using model-view-controller. `game.c` contains modul
 Everything runs on bare metal—no OS, no external libraries.
 
 I collaborated on this project with [Finley Desai](https://www.linkedin.com/in/your-username/).
-).
