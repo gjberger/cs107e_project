@@ -3,6 +3,9 @@
 
 The graphics are controlled using model-view-controller. `game.c` contains module-level representations for the character, barriers, and code to randomly generate a given permutation of barriers that show up. The type of barrier (bee, fly, block) is also randomly generated.
 
+![Me playing](cs107e_project/gabe.jpg)
+
+
 Everything runs on bare metal—no OS, no external libraries.
 
 I collaborated on this project with [Finley Desai](https://www.linkedin.com/in/your-username/).
