@@ -5,6 +5,7 @@ The graphics are controlled using model-view-controller. `game.c` contains modul
 
 ![Me playing](gabe.jpg)
 
+[Demo](https://youtu.be/-RlIWbqkDPk)
 
 Everything runs on bare metal—no OS, no external libraries.
 
